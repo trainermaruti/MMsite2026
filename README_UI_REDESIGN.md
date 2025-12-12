@@ -25,7 +25,7 @@
    - Navigate to `/`
    - Verify new hero section displays correctly
    - Check CTA buttons ("Book a Workshop", "See Courses")
-   - Verify stats display (50+ Trainings, 2000+ Students, 30+ Companies)
+   - Verify stats display (50+ Trainings, 3000+ Students, 30+ Companies)
 
 3. **Test responsive design**
    - Open browser DevTools (F12)

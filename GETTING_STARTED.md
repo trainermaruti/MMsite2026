@@ -83,7 +83,7 @@ Contact Page           → http://localhost:5204/Contact
 ### 🏠 Home Page (`/`)
 **What it shows:**
 - Hero section with welcome message
-- Quick stats (50+ trainings, 2000+ students, etc.)
+- Quick stats (50+ trainings, 3000+ Students, etc.)
 - Three feature cards with CTAs
 - About section preview
 - Contact CTA

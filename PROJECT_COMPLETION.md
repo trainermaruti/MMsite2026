@@ -24,7 +24,7 @@
 
 #### 🏠 Home Page
 - Hero banner with welcome message
-- Quick statistics dashboard (50+ trainings, 2000+ students, etc.)
+- Quick statistics dashboard (50+ trainings, 3000+ Students, etc.)
 - Feature cards (Training, Courses, Events)
 - About section preview
 - Contact CTA button

@@ -9,7 +9,7 @@
 - [ ] Badge "Available for Corporate Training" displays with checkmark icon
 - [ ] Lead paragraph text visible and readable
 - [ ] Two CTA buttons present: "Book a Workshop" and "See Courses"
-- [ ] Stats row displays: 50+ Trainings, 2000+ Students, 30+ Companies
+- [ ] Stats row displays: 50+ Trainings, 3000+ Students, 30+ Companies
 - [ ] Stats separated by vertical borders
 
 ### Hero Portrait

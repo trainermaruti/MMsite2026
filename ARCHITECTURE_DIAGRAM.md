@@ -136,7 +136,7 @@ Visitor views local content ✅
 │  └─ 3 CTAs: Trainings | Courses | Events                   │
 ├─────────────────────────────────────────────────────────────┤
 │  Stats Section                                              │
-│  └─ 50+ Trainings | 2000+ Students | 25+ Courses | etc.    │
+│  └─ 50+ Trainings | 3000+ Students | 25+ Courses | etc.    │
 ├─────────────────────────────────────────────────────────────┤
 │  Feature Cards                                              │
 │  └─ Expert Training | Video Courses | Upcoming Events      │

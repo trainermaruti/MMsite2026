@@ -34,7 +34,7 @@ namespace MarutiTrainingPortal.Services
             { "certificate", "You can verify your training certificate on our Verify page. Just enter your certificate ID!" },
             { "contact", "You can reach us through our Contact page, or directly via email and WhatsApp. We're here to help!" },
             { "pricing", "Course pricing varies by topic and duration. Please visit the Courses page for specific pricing, or contact us for custom corporate training quotes." },
-            { "instructor", "Our trainings are led by Maruti Makwana, an Azure Certified Trainer and AI Specialist with experience training 2000+ students." },
+            { "instructor", "Our trainings are led by Maruti Makwana, an Azure Certified Trainer and AI Specialist with experience training 3000+ Students." },
             { "help", "I can help you with:\n- Finding courses and trainings\n- Upcoming events\n- Certificate verification\n- Contact information\n\nWhat would you like to know?" }
         };
 
