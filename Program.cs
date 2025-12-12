@@ -83,8 +83,14 @@ builder.Services.AddScoped<ChatbotService>();
 builder.Services.AddScoped<MarutiTrainingPortal.Repositories.IContactMessageRepository, MarutiTrainingPortal.Repositories.ContactMessageRepository>();
 builder.Services.AddScoped<MarutiTrainingPortal.Services.IContactMessageService, MarutiTrainingPortal.Services.ContactMessageService>();
 
+// Add Message Cleanup Service (28-day auto-delete)
+builder.Services.AddScoped<IMessageCleanupService, MessageCleanupService>();
+
 // Add Rate Limit Cleanup Background Service
 builder.Services.AddHostedService<MarutiTrainingPortal.Middleware.RateLimitCleanupService>();
+
+// Add Message Cleanup Background Service (auto-delete messages older than 28 days)
+builder.Services.AddHostedService<MarutiTrainingPortal.Services.MessageCleanupBackgroundService>();
 
 // Add session for rate limiting
 builder.Services.AddDistributedMemoryCache();

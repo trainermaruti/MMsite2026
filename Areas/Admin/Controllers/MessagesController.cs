@@ -9,10 +9,14 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
     public class MessagesController : Controller
     {
         private readonly IContactMessageService _messageService;
+        private readonly IMessageCleanupService _cleanupService;
 
-        public MessagesController(IContactMessageService messageService)
+        public MessagesController(
+            IContactMessageService messageService,
+            IMessageCleanupService cleanupService)
         {
             _messageService = messageService;
+            _cleanupService = cleanupService;
         }
 
         // GET: Admin/Messages
@@ -107,6 +111,57 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
             var fileName = $"contact-messages-{DateTime.UtcNow:yyyyMMdd-HHmmss}.csv";
 
             return File(csvBytes, "text/csv", fileName);
+        }
+
+        // GET: Admin/Messages/Cleanup - Show cleanup information
+        [HttpGet]
+        public async Task<IActionResult> Cleanup()
+        {
+            var expiredCount = await _cleanupService.GetExpiredMessageCountAsync(daysOld: 28);
+            var expiringMessages = await _cleanupService.GetExpiringMessagesAsync(daysOld: 21);
+
+            var viewModel = new Dictionary<string, object>
+            {
+                { "ExpiredCount", expiredCount },
+                { "ExpiringCount", expiringMessages.Count },
+                { "ExpiringMessages", expiringMessages.OrderBy(m => m.CreatedDate).ToList() }
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: Admin/Messages/DeleteExpired - Manually trigger 28-day cleanup
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteExpired()
+        {
+            try
+            {
+                var deletedCount = await _cleanupService.DeleteExpiredMessagesAsync(daysOld: 28);
+                TempData["SuccessMessage"] = $"Successfully deleted {deletedCount} message(s) older than 28 days.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error during cleanup: {ex.Message}";
+            }
+
+            return RedirectToAction(nameof(Cleanup));
+        }
+
+        // POST: Admin/Messages/DeleteById - Delete specific message manually
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteById(int id)
+        {
+            var success = await _cleanupService.DeleteMessageAsync(id);
+
+            if (!success)
+            {
+                return BadRequest(new { success = false, error = "Message not found" });
+            }
+
+            TempData["SuccessMessage"] = "Message deleted successfully.";
+            return RedirectToAction(nameof(Index));
         }
     }
 }

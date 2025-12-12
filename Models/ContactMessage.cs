@@ -15,7 +15,6 @@ namespace MarutiTrainingPortal.Models
         [StringLength(200, ErrorMessage = "Email cannot exceed 200 characters")]
         public string Email { get; set; } = string.Empty;
         
-        [Phone(ErrorMessage = "Please enter a valid phone number")]
         [StringLength(20, ErrorMessage = "Phone number cannot exceed 20 characters")]
         public string? PhoneNumber { get; set; }
         

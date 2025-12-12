@@ -20,7 +20,6 @@ namespace MarutiTrainingPortal.Repositories
             string? filter = "All")
         {
             var query = _context.ContactMessages
-                .Where(m => !m.IsDeleted)
                 .Include(m => m.Event)
                 .AsQueryable();
 
@@ -58,13 +57,13 @@ namespace MarutiTrainingPortal.Repositories
         {
             return await _context.ContactMessages
                 .Include(m => m.Event)
-                .FirstOrDefaultAsync(m => m.Id == id && !m.IsDeleted);
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task<bool> MarkAsReadAsync(int id, bool isRead = true)
         {
             var message = await _context.ContactMessages
-                .FirstOrDefaultAsync(m => m.Id == id && !m.IsDeleted);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (message == null) return false;
 
@@ -92,21 +91,19 @@ namespace MarutiTrainingPortal.Repositories
         public async Task<int> GetNewCountAsync()
         {
             return await _context.ContactMessages
-                .Where(m => !m.IsDeleted && !m.IsRead)
+                .Where(m => !m.IsRead)
                 .CountAsync();
         }
 
         public async Task<int> GetTotalCountAsync()
         {
             return await _context.ContactMessages
-                .Where(m => !m.IsDeleted)
                 .CountAsync();
         }
 
         public async Task<List<ContactMessage>> ExportAsync(string? filter = "All")
         {
             var query = _context.ContactMessages
-                .Where(m => !m.IsDeleted)
                 .Include(m => m.Event)
                 .AsQueryable();
 
