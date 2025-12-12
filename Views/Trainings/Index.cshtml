@@ -12,49 +12,7 @@
         </div>
     </div>
 
-    <!-- Modern Search/Filter Bar -->
-    <div class="card shadow-sm mb-4" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px;">
-        <div class="card-body p-4">
-            <form id="trainingSearchForm">
-                <div class="d-flex gap-3 align-items-center flex-wrap">
-                    <div style="flex: 1; min-width: 250px;">
-                        <div class="input-group">
-                            <span class="input-group-text" style="background: transparent; border-right: none; border-color: var(--border-color);">
-                                <i class="fas fa-search" style="color: var(--text-primary) !important; opacity: 1 !important;"></i>
-                            </span>
-                            <input type="text" class="form-control" id="searchTitle" placeholder="Search trainings..." 
-                                   style="border-left: none; background: transparent; color: var(--text-primary); border-color: var(--border-color);">
-                        </div>
-                    </div>
-                    <div style="flex: 0 0 200px;">
-                        <input type="text" class="form-control" id="searchCompany" placeholder="Filter by company..." 
-                               style="background: transparent; color: var(--text-primary); border-color: var(--border-color);">
-                    </div>
-                    <div style="flex: 0 0 200px;">
-                        <input type="text" class="form-control" id="searchTopic" placeholder="Filter by topic..." 
-                               style="background: transparent; color: var(--text-primary); border-color: var(--border-color);">
-                    </div>
-                    <div style="flex: 0 0 auto;">
-                        <button type="button" class="btn search-filter-btn" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important; border: none !important; padding: 10px 20px;">
-                            <i class="fas fa-search" style="color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; opacity: 1 !important;"></i>
-                        </button>
-                    </div>
-                    <div style="flex: 0 0 auto;">
-                        <button type="button" class="btn reset-filter-btn" id="clearSearch" title="Clear filters" style="background: rgba(59, 130, 246, 0.1) !important; border: 1px solid rgba(59, 130, 246, 0.3) !important; padding: 10px 20px;">
-                            <i class="fas fa-redo" style="color: #3b82f6 !important; -webkit-text-fill-color: #3b82f6 !important; opacity: 1 !important;"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <style>
-        html.light-mode .reset-filter-btn i,
-        html.light-theme .reset-filter-btn i {
-            color: #000000 !important;
-            -webkit-text-fill-color: #000000 !important;
-        }
-    </style>
+
 
     @if (Model == null || Model.Count == 0)
     {
@@ -135,74 +93,6 @@
                 box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
             }
         </style>
-
-        <script>
-            // Training Search and Filter Functionality
-            const searchTitle = document.getElementById('searchTitle');
-            const searchCompany = document.getElementById('searchCompany');
-            const searchTopic = document.getElementById('searchTopic');
-            const sortBy = document.getElementById('sortBy');
-            const clearSearch = document.getElementById('clearSearch');
-            const trainingCards = document.querySelectorAll('.col-md-6');
-            
-            function filterTrainings() {
-                const titleQuery = searchTitle.value.toLowerCase();
-                const companyQuery = searchCompany.value.toLowerCase();
-                const topicQuery = searchTopic.value.toLowerCase();
-                
-                let visibleCards = [];
-                
-                trainingCards.forEach(card => {
-                    const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
-                    const company = card.querySelector('.card-text:has(strong)')?.textContent.toLowerCase() || '';
-                    const description = card.querySelector('.card-text:last-of-type')?.textContent.toLowerCase() || '';
-                    
-                    const matchesTitle = !titleQuery || title.includes(titleQuery) || description.includes(titleQuery);
-                    const matchesCompany = !companyQuery || company.includes(companyQuery);
-                    const matchesTopic = !topicQuery || title.includes(topicQuery) || description.includes(topicQuery);
-                    
-                    if (matchesTitle && matchesCompany && matchesTopic) {
-                        card.style.display = '';
-                        visibleCards.push(card);
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-                
-                // Apply sorting
-                const sortValue = sortBy.value;
-                if (sortValue && visibleCards.length > 0) {
-                    const parent = visibleCards[0].parentNode;
-                    visibleCards.sort((a, b) => {
-                        if (sortValue === 'company') {
-                            const companyA = a.querySelector('.card-text:has(strong)')?.textContent || '';
-                            const companyB = b.querySelector('.card-text:has(strong)')?.textContent || '';
-                            return companyA.localeCompare(companyB);
-                        } else {
-                            const dateTextA = a.querySelector('.card-text:nth-of-type(2)')?.textContent || '';
-                            const dateTextB = b.querySelector('.card-text:nth-of-type(2)')?.textContent || '';
-                            const dateA = new Date(dateTextA.split('Date:')[1]?.trim() || 0);
-                            const dateB = new Date(dateTextB.split('Date:')[1]?.trim() || 0);
-                            return sortValue === 'date-desc' ? dateB - dateA : dateA - dateB;
-                        }
-                    });
-                    visibleCards.forEach(card => parent.appendChild(card));
-                }
-            }
-            
-            searchTitle.addEventListener('input', filterTrainings);
-            searchCompany.addEventListener('input', filterTrainings);
-            searchTopic.addEventListener('input', filterTrainings);
-            sortBy.addEventListener('change', filterTrainings);
-            
-            clearSearch.addEventListener('click', () => {
-                searchTitle.value = '';
-                searchCompany.value = '';
-                searchTopic.value = '';
-                sortBy.value = 'date-desc';
-                filterTrainings();
-            });
-        </script>
     }
     </div>
 </div>

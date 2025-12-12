@@ -46,7 +46,7 @@
                                     <div style="position: relative; width: 100%; height: 200px; overflow: hidden;">
                                         <img src="@trainingEvent.BannerUrl" alt="@trainingEvent.Title" style="width: 100%; height: 100%; object-fit: cover;">
                                         <div style="position: absolute; bottom: 16px; left: 16px;">
-                                            <span class="badge" style="background: rgba(30, 58, 138, 0.9); color: #fff; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
+                                            <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
                                                 @trainingEvent.EventType
                                             </span>
                                         </div>
@@ -55,7 +55,7 @@
                                 else
                                 {
                                     <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24px; position: relative; min-height: 120px; display: flex; align-items: center;">
-                                        <span class="badge" style="background: rgba(255, 255, 255, 0.2); color: #fff; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
+                                        <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
                                             @trainingEvent.EventType
                                         </span>
                                     </div>
@@ -99,7 +99,7 @@
                                 <div style="position: relative; width: 100%; height: 200px; overflow: hidden;">
                                     <img src="@trainingEvent.BannerUrl" alt="@trainingEvent.Title" style="width: 100%; height: 100%; object-fit: cover;">
                                     <div style="position: absolute; bottom: 16px; left: 16px;">
-                                        <span class="badge" style="background: rgba(30, 58, 138, 0.9); color: #fff; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
+                                        <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
                                             @trainingEvent.EventType
                                         </span>
                                     </div>
@@ -107,8 +107,8 @@
                             }
                             else
                             {
-                                <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24px; position: relative; min-height: 120px; display: flex; align-items: center;">
-                                    <span class="badge" style="background: rgba(255, 255, 255, 0.2); color: #fff; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
+                                <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24x; position: relative; min-height: 120px; display: flex; align-items: center;">
+                                    <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
                                         @trainingEvent.EventType
                                     </span>
                                 </div>
@@ -168,16 +168,65 @@
         /* Event card buttons - white icons in both modes */
         .btn-primary i,
         .btn-secondary i,
-        .btn-outline-primary i {
+        .btn-outline-primary i,
+        .btn-primary:hover i,
+        .btn-secondary:hover i,
+        .btn-outline-primary:hover i,
+        .btn-primary:active i,
+        .btn-secondary:active i,
+        .btn-outline-primary:active i,
+        .btn-primary:focus i,
+        .btn-secondary:focus i,
+        .btn-outline-primary:focus i,
+        .btn-primary:disabled i,
+        .btn-secondary:disabled i,
+        .btn-outline-primary:disabled i {
             color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
         }
 
+        /* Light mode - ensure white icons */
         html.light-mode .btn-primary i,
         html.light-mode .btn-secondary i,
         html.light-mode .btn-outline-primary i,
+        html.light-mode .btn-primary:hover i,
+        html.light-mode .btn-secondary:hover i,
+        html.light-mode .btn-outline-primary:hover i,
+        html.light-mode .btn-primary:active i,
+        html.light-mode .btn-secondary:active i,
+        html.light-mode .btn-outline-primary:active i,
+        html.light-mode .btn-primary:focus i,
+        html.light-mode .btn-secondary:focus i,
+        html.light-mode .btn-outline-primary:focus i,
+        html.light-mode .btn-primary:disabled i,
+        html.light-mode .btn-secondary:disabled i,
+        html.light-mode .btn-outline-primary:disabled i,
         html.light-theme .btn-primary i,
         html.light-theme .btn-secondary i,
-        html.light-theme .btn-outline-primary i {
+        html.light-theme .btn-outline-primary i,
+        html.light-theme .btn-primary:hover i,
+        html.light-theme .btn-secondary:hover i,
+        html.light-theme .btn-outline-primary:hover i,
+        html.light-theme .btn-primary:active i,
+        html.light-theme .btn-secondary:active i,
+        html.light-theme .btn-outline-primary:active i,
+        html.light-theme .btn-primary:focus i,
+        html.light-theme .btn-secondary:focus i,
+        html.light-theme .btn-outline-primary:focus i,
+        html.light-theme .btn-primary:disabled i,
+        html.light-theme .btn-secondary:disabled i,
+        html.light-theme .btn-outline-primary:disabled i {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+
+        /* Event type badge - white text in all modes */
+        .badge-event-type {
+            color: #ffffff !important;
+        }
+
+        html.light-mode .badge-event-type,
+        html.light-theme .badge-event-type {
             color: #ffffff !important;
         }
 
@@ -197,60 +246,7 @@
         }
         </style>
 
-        <script>
-            // Event Search and Filter Functionality
-            document.addEventListener('DOMContentLoaded', function() {
-                const searchTitle = document.getElementById('searchTitle');
-                const searchType = document.getElementById('searchType');
-                const searchLocation = document.getElementById('searchLocation');
-                const searchStatus = document.getElementById('searchStatus');
-                const clearSearch = document.getElementById('clearSearch');
-                const searchBtn = document.querySelector('.search-filter-btn');
-                
-                function filterEvents() {
-                    const eventCards = document.querySelectorAll('.card.mb-4');
-                    const titleQuery = searchTitle?.value.toLowerCase() || '';
-                    const typeFilter = searchType?.value.toLowerCase() || '';
-                    const locationFilter = searchLocation?.value.toLowerCase() || '';
-                    const statusFilter = searchStatus?.value.toLowerCase() || '';
-                    
-                    eventCards.forEach(card => {
-                        const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
-                        const description = card.querySelector('.card-text')?.textContent.toLowerCase() || '';
-                        const location = card.textContent.toLowerCase();
-                        const badges = Array.from(card.querySelectorAll('.badge')).map(b => b.textContent.toLowerCase());
-                        
-                        const matchesTitle = !titleQuery || title.includes(titleQuery) || description.includes(titleQuery);
-                        const matchesType = !typeFilter || badges.some(b => b.includes(typeFilter));
-                        const matchesLocation = !locationFilter || location.includes(locationFilter);
-                        const matchesStatus = !statusFilter || badges.some(b => b.includes(statusFilter));
-                        
-                        const parentElement = card.closest('a') || card;
-                        if (matchesTitle && matchesType && matchesLocation && matchesStatus) {
-                            parentElement.style.display = '';
-                        } else {
-                            parentElement.style.display = 'none';
-                        }
-                    });
-                }
-                
-                if (searchTitle) searchTitle.addEventListener('input', filterEvents);
-                if (searchType) searchType.addEventListener('change', filterEvents);
-                if (searchLocation) searchLocation.addEventListener('change', filterEvents);
-                if (searchStatus) searchStatus.addEventListener('change', filterEvents);
-                if (searchBtn) searchBtn.addEventListener('click', filterEvents);
-                
-                if (clearSearch) {
-                    clearSearch.addEventListener('click', () => {
-                        if (searchTitle) searchTitle.value = '';
-                        if (searchType) searchType.value = '';
-                        if (searchLocation) searchLocation.value = '';
-                        if (searchStatus) searchStatus.value = '';
-                        filterEvents();
-                    });
-                }
-            });
-        </script>
+
     }
 </div>
 

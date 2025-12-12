@@ -33,17 +33,25 @@ namespace MarutiTrainingPortal.Controllers
             return View(profile);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult SendMessage()
+        {
+            // Redirect GET requests to Index page
+            return RedirectToAction(nameof(Index));
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendMessage(ContactMessage message)
         {
-            // Rate limiting: 3 requests per 10 minutes per IP
+            // Rate limiting: 10 requests per hour per IP
             var identifier = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-            if (!_rateLimiter.IsAllowed(identifier, maxRequests: 3, window: TimeSpan.FromMinutes(10)))
+            if (!_rateLimiter.IsAllowed(identifier, maxRequests: 10, window: TimeSpan.FromHours(1)))
             {
-                TempData["ErrorMessage"] = "Too many requests. Please try again in a few minutes.";
-                return View("Index", message);
+                TempData["ErrorMessage"] = "Too many requests. Please try again later.";
+                return RedirectToAction(nameof(Index));
             }
 
             if (ModelState.IsValid)
@@ -52,6 +60,11 @@ namespace MarutiTrainingPortal.Controllers
                 message.Name = _htmlSanitizer.Sanitize(message.Name);
                 message.Subject = _htmlSanitizer.Sanitize(message.Subject);
                 message.Message = _htmlSanitizer.Sanitize(message.Message);
+                
+                // Set the creation date
+                message.CreatedDate = DateTime.UtcNow;
+                message.IsRead = false;
+                message.IsDeleted = false;
 
                 _context.ContactMessages.Add(message);
                 await _context.SaveChangesAsync();
@@ -80,7 +93,9 @@ namespace MarutiTrainingPortal.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View("Index", message);
+            // If ModelState is invalid, redirect to Index with error message
+            TempData["ErrorMessage"] = "Please check the form and try again. All required fields must be filled.";
+            return RedirectToAction(nameof(Index));
         }
     }
 }
