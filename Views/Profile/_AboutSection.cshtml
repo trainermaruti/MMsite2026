@@ -1,0 +1,407 @@
+@inject IImageService ImageService
+@* ABOUT SECTION - Maruti Makwana Professional Profile *@
+
+<section class="about-section-modern" style="padding: 120px 0; background: #000000; position: relative; overflow: visible;">
+    
+    @* Subtle Background Pattern *@
+    <div style="position: absolute; inset: 0; opacity: 0.03; background-image: 
+        radial-gradient(circle at 1px 1px, rgba(0, 51, 102, $1) 1px, transparent 0);
+        background-size: 40px 40px;"></div>
+    
+    <div class="container" style="position: relative; z-index: 10; overflow: visible;">
+        
+        <div class="row align-items-center" style="gap: 60px 0; overflow: visible;">
+            
+            @* LEFT COLUMN - PROFILE IMAGE *@
+            <div class="col-lg-5 col-md-12" style="display: flex; justify-content: center; overflow: visible;">
+                
+                <div class="about-image-wrapper" style="position: relative; max-width: 420px; width: 100%; padding: 50px 0 0 50px;">
+                    
+                    @* Decorative Frame *@
+                    <div style="position: absolute; inset: -12px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border-radius: 24px; z-index: 1;"></div>
+                    
+                    @* Profile Image *@
+                    <div style="position: relative; z-index: 2;">
+                        <img src="@await ImageService.GetImageUrlAsync("profile_hero")" alt="Maruti Makwana - About" 
+                             style="width: 100%; height: auto; border-radius: 20px; border: 3px solid rgba(255, 255, 255, 0.1); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); display: block;" />
+                    </div>
+                    
+                    @* Experience Badge *@
+                    <div class="experience-badge-responsive" style="position: absolute; top: 0; left: 0; z-index: 3;">
+                        <img src="@await ImageService.GetImageUrlAsync("experience_badge")" 
+                             alt="15+ years professional experience" 
+                             style="width: 180px; height: auto; display: block;" />
+                    </div>
+                    
+                    @* Certifications Badge *@
+                    <div style="position: absolute; bottom: 20px; right: -20px; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(12px); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6); z-index: 3;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-award" style="color: #a855f7; font-size: 20px;"></i>
+                            <div>
+                                <div style="font-size: 14px; font-weight: 700; color: #ffffff;">Microsoft Certified</div>
+                                <div style="font-size: 11px; color: #a3a3a3;">Azure & AI Expert</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            @* RIGHT COLUMN - CONTENT *@
+            <div class="col-lg-7 col-md-12">
+                
+                @* Section Label *@
+                <div style="display: inline-block; padding: 8px 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 50px; margin-bottom: 24px;">
+                    <span style="color: #003366; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">About Me</span>
+                </div>
+                
+                @* Headline *@
+                <h2 style="font-size: clamp(36px, 5vw, 48px); font-weight: 800; color: #ffffff; line-height: 1.2; margin-bottom: 24px;">
+                    Empowering Teams with <span style="color: #4a90e2 !important;">Azure & AI Expertise</span>
+                </h2>
+                
+                @* Body Copy *@
+                <p style="font-size: 18px; color: #a3a3a3; line-height: 1.8; margin-bottom: 24px;">
+                    With over a decade of experience in enterprise cloud solutions, I specialize in helping organizations unlock the full potential of <strong style="color: #4a90e2 !important;">Microsoft Azure</strong> and <strong style="color: #4a90e2 !important;">Artificial Intelligence</strong> technologies.
+                </p>
+                
+                <p style="font-size: 18px; color: #a3a3a3; line-height: 1.8; margin-bottom: 32px;">
+                    My training programs are designed for real-world application—combining hands-on labs, industry best practices, and strategic insights that drive measurable business outcomes. I've trained over <strong style="color: #ffffff;">2000+ professionals</strong> across diverse industries, from startups to Fortune 500 companies.
+                </p>
+                
+                @* Key Highlights *@
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                    
+                    <div style="display: flex; align-items: start; gap: 12px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(59, 130, 246, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-cloud" style="color: #003366; font-size: 18px;"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Azure Certified Expert</div>
+                            <div style="font-size: 14px; color: #a3a3a3;">Multiple Microsoft Azure certifications</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start; gap: 12px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(168, 85, 247, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-brain" style="color: #a855f7; font-size: 18px;"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">AI Specialist</div>
+                            <div style="font-size: 14px; color: #a3a3a3;">Machine Learning & Cognitive Services</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start; gap: 12px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(0, 31, 63, $1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-chalkboard-teacher" style="color: #001f3f; font-size: 18px;"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Corporate Trainer</div>
+                            <div style="font-size: 14px; color: #a3a3a3;">30+ enterprise clients worldwide</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start; gap: 12px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(245, 158, 11, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-trophy" style="color: #001f3f; font-size: 18px;"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 4px;">Industry Recognition</div>
+                            <div style="font-size: 14px; color: #a3a3a3;">Speaker at tech conferences</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                @* CTA Button *@
+                <a href="/Contact" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 32px; background: linear-gradient(135deg, #001f3f 0%, #003366 100%); color: #ffffff !important; font-size: 16px; font-weight: 600; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4); transition: all 0.3s ease;">
+                    <i class="fas fa-envelope" style="color: #ffffff !important;"></i>
+                    <span style="color: #ffffff !important;">Let's Connect</span>
+                    <i class="fas fa-arrow-right" style="margin-left: 4px; color: #ffffff !important;"></i>
+                </a>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    
+</section>
+
+<style>
+/* Prevent internal scrollbars */
+.about-section-modern,
+.about-section-modern .container,
+.about-section-modern .row,
+.about-section-modern .col-lg-5,
+.about-section-modern .col-lg-7,
+.about-section-modern .col-md-12 {
+    overflow: visible !important;
+}
+
+/* Screen Reader Only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Experience Badge Responsive Styles */
+.experience-badge-responsive {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.experience-badge-responsive img {
+    width: 180px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+/* Mobile: Centered at top with smaller size */
+@@media (max-width: 767px) {
+    .about-image-wrapper {
+        padding: 30px 0 0 30px !important;
+    }
+    
+    .experience-badge-responsive img {
+        width: 80px;
+    }
+}
+
+.about-section-modern a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(59, 130, 246, 0.6);
+}
+
+/* Tablet and below */
+@@media (max-width: 991px) {
+    .about-section-modern {
+        padding: 60px 0 !important;
+    }
+    
+    .about-image-wrapper {
+        margin-bottom: 40px;
+        max-width: 350px !important;
+        padding: 40px 0 0 40px !important;
+    }
+    
+    .about-image-wrapper > div[style*="position: absolute"] {
+        left: 10px !important;
+        right: 10px !important;
+    }
+}
+/* Mobile styles */
+@@media (max-width: 768px) {
+    .about-section-modern {
+        padding: 40px 0 !important;
+    }
+    
+    .about-section-modern .container {
+        padding: 0 16px !important;
+    }
+    
+    .about-image-wrapper {
+        max-width: 300px !important;
+        margin-bottom: 32px;
+        padding: 30px 0 0 30px !important;
+    }   margin-bottom: 32px;
+    }
+    
+    /* Adjust experience badge for mobile */
+    .exp-badge-wrapper {
+        top: -5px !important;
+        left: -5px !important;
+    }
+    
+    .exp-card {
+        padding: 14px 20px !important;
+    }
+    
+    .exp-icon-wrapper {
+        padding: 6px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .exp-icon {
+        font-size: 18px !important;
+    }
+    
+    .exp-number {
+        font-size: 38px !important;
+    }
+    
+    .exp-plus {
+        font-size: 24px !important;
+    }
+    
+    .exp-text-primary {
+        font-size: 11px !important;
+    }
+    
+    .exp-text-secondary {
+        font-size: 9px !important;
+    }
+    
+    .exp-sparkle {
+        font-size: 16px !important;
+        top: 12px !important;
+        right: 12px !important;
+    }
+    
+    .exp-ping {
+        width: 6px !important;
+        height: 6px !important;
+        bottom: 12px !important;
+        left: 12px !important;
+    }
+    
+    .about-image-wrapper > div[style*="bottom: 20px"] {
+        bottom: 10px !important;
+        right: -10px !important;
+        padding: 10px 16px !important;
+    }
+    
+    .about-image-wrapper > div[style*="bottom: 20px"] i {
+        font-size: 16px !important;
+    }
+    
+    .about-image-wrapper > div[style*="bottom: 20px"] div div:first-child {
+        font-size: 12px !important;
+    }
+    
+    .about-image-wrapper > div[style*="bottom: 20px"] div div:last-child {
+        font-size: 10px !important;
+    }
+    
+    /* Section label */
+    .about-section-modern .col-lg-7 > div:first-child {
+        padding: 6px 16px !important;
+        margin-bottom: 16px !important;
+    }
+    
+    .about-section-modern .col-lg-7 > div:first-child span {
+        font-size: 12px !important;
+    }
+    
+    /* Headline responsive */
+    .about-section-modern h2 {
+        font-size: 28px !important;
+        margin-bottom: 16px !important;
+    }
+    
+    /* Body text */
+    .about-section-modern p {
+        font-size: 16px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    /* Key highlights grid */
+    .about-section-modern > div > div > div.col-lg-7 > div:nth-of-type(5) {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+        margin-bottom: 32px !important;
+    }
+    
+    .about-section-modern > div > div > div.col-lg-7 > div:nth-of-type(5) > div {
+        gap: 10px !important;
+    }
+    
+    .about-section-modern > div > div > div.col-lg-7 > div:nth-of-type(5) > div > div:first-child {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    
+    .about-section-modern > div > div > div.col-lg-7 > div:nth-of-type(5) > div > div:first-child i {
+        font-size: 16px !important;
+    }
+    
+    .about-section-modern > div > div > div.col-lg-7 > div:nth-of-type(5) > div > div:last-child > div:first-child {
+        font-size: 15px !important;
+    }
+    
+    .about-section-modern > div > div > div.col-lg-7 > div:nth-of-type(5) > div > div:last-child > div:last-child {
+        font-size: 13px !important;
+    }
+    
+    /* CTA Button */
+    .about-section-modern a[href="/Contact"] {
+        width: 100%;
+        justify-content: center !important;
+        padding: 14px 24px !important;
+        font-size: 15px !important;
+    }
+}
+/* Small mobile */
+@@media (max-width: 480px) {
+    .about-section-modern {
+        padding: 32px 0 !important;
+    }
+    
+    .about-image-wrapper {
+        max-width: 280px !important;
+        padding: 25px 0 0 25px !important;
+    }
+    
+    .experience-badge-responsive img {
+        width: 70px;
+    }   max-width: 280px !important;
+    }
+    
+    .about-section-modern h2 {
+        font-size: 24px !important;
+    }
+    
+    .about-section-modern p {
+        font-size: 15px !important;
+    }
+    
+    .exp-card {
+        padding: 12px 18px !important;
+    }
+    
+    .exp-icon-wrapper {
+        padding: 5px !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .exp-icon {
+        font-size: 16px !important;
+    }
+    
+    .exp-number {
+        font-size: 32px !important;
+    }
+    
+    .exp-plus {
+        font-size: 20px !important;
+    }
+    
+    .exp-text-primary {
+        font-size: 10px !important;
+    }
+    
+    .exp-text-secondary {
+        font-size: 8px !important;
+        letter-spacing: 0.15em !important;
+    }
+    
+    .about-image-wrapper > div[style*="bottom: 20px"] {
+        padding: 8px 12px !important;
+    }
+}
+</style>

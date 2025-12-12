@@ -1,0 +1,363 @@
+@model List<TrainingEvent>
+
+@{
+    ViewData["Title"] = "Manage Events";
+    Layout = "_ModernAdminLayout";
+    var currentPage = ViewBag.CurrentPage as int? ?? 1;
+    var totalPages = ViewBag.TotalPages as int? ?? 1;
+    var searchQuery = ViewBag.SearchQuery as string ?? "";
+    var filter = ViewBag.Filter as string ?? "All";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success); border-radius: 8px; margin-bottom: 24px;">
+        <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+        <div>
+            <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                <i class="fas fa-calendar-alt" style="color: var(--primary); margin-right: 12px;"></i>Manage Events
+            </h1>
+            <p style="color: var(--text-muted); margin: 0;">Create, edit, and manage all training events</p>
+        </div>
+        <div>
+            <a asp-area="Admin" asp-controller="Events" asp-action="Create" class="modern-btn modern-btn-primary">
+                <i class="fas fa-plus me-2"></i>Add New Event
+            </a>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="modern-card" style="margin-bottom: 24px; padding: 20px;">
+        <form method="get" asp-area="Admin" asp-controller="Events" asp-action="Index">
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <div style="flex: 1;">
+                    <input type="text" name="q" value="@searchQuery" class="form-control" placeholder="Search by title, location, or summary..." style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px; padding: 10px 16px;" />
+                </div>
+                <input type="hidden" name="filter" value="@filter" />
+                <button type="submit" class="modern-btn modern-btn-primary">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Filter Pills -->
+    <div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a asp-area="Admin" asp-controller="Events" asp-action="Index" asp-route-filter="All" asp-route-q="@searchQuery" 
+           class="modern-pill @(filter == "All" ? "active" : "")" style="text-decoration: none;">
+            All Events
+        </a>
+        <a asp-area="Admin" asp-controller="Events" asp-action="Index" asp-route-filter="Upcoming" asp-route-q="@searchQuery" 
+           class="modern-pill @(filter == "Upcoming" ? "active" : "")" style="text-decoration: none;">
+            Upcoming
+        </a>
+        <a asp-area="Admin" asp-controller="Events" asp-action="Index" asp-route-filter="Open" asp-route-q="@searchQuery" 
+           class="modern-pill @(filter == "Open" ? "active" : "")" style="text-decoration: none;">
+            Open
+        </a>
+        <a asp-area="Admin" asp-controller="Events" asp-action="Index" asp-route-filter="Draft" asp-route-q="@searchQuery" 
+           class="modern-pill @(filter == "Draft" ? "active" : "")" style="text-decoration: none;">
+            Draft
+        </a>
+        <a asp-area="Admin" asp-controller="Events" asp-action="Index" asp-route-filter="Closed" asp-route-q="@searchQuery" 
+           class="modern-pill @(filter == "Closed" ? "active" : "")" style="text-decoration: none;">
+            Closed
+        </a>
+        <a asp-area="Admin" asp-controller="Events" asp-action="Index" asp-route-filter="Past" asp-route-q="@searchQuery" 
+           class="modern-pill @(filter == "Past" ? "active" : "")" style="text-decoration: none;">
+            Past
+        </a>
+    </div>
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="modern-card" style="text-align: center; padding: 48px;">
+            <i class="fas fa-calendar-times" style="font-size: 64px; color: var(--text-muted); margin-bottom: 16px;"></i>
+            <h3 style="color: var(--text-secondary); margin-bottom: 8px;">No events found</h3>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">
+                @if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    <text>No events match your search criteria.</text>
+                }
+                else
+                {
+                    <text>Get started by creating your first event.</text>
+                }
+            </p>
+            @if (string.IsNullOrEmpty(searchQuery))
+            {
+                <a asp-area="Admin" asp-controller="Events" asp-action="Create" class="modern-btn modern-btn-primary">
+                    <i class="fas fa-plus me-2"></i>Add First Event
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <!-- Events Grid -->
+        <div style="display: grid; gap: 20px;">
+            @foreach (var evt in Model)
+            {
+                var statusColor = evt.Status switch {
+                    "Draft" => "#f59e0b",
+                    "Open" => "#10b981",
+                    "Closed" => "#ef4444",
+                    "Upcoming" => "#3b82f6",
+                    _ => "#6b7280"
+                };
+                
+                <div class="modern-card" style="padding: 24px;">
+                    <div style="display: flex; gap: 24px; align-items: start;">
+                        @if (!string.IsNullOrEmpty(evt.BannerUrl ?? evt.ImageUrl))
+                        {
+                            <div style="flex-shrink: 0;">
+                                <img src="@(evt.BannerUrl ?? evt.ImageUrl)" alt="@evt.Title" 
+                                     style="width: 200px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color);" />
+                            </div>
+                        }
+                        
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                                <div style="flex: 1;">
+                                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">
+                                        @evt.Title
+                                    </h3>
+                                    @if (!string.IsNullOrEmpty(evt.Summary))
+                                    {
+                                        <p style="color: var(--text-muted); margin-bottom: 8px; font-size: 14px;">@evt.Summary</p>
+                                    }
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <span style="background: @statusColor; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                            @evt.Status
+                                        </span>
+                                        <span style="background: var(--bg-tertiary); color: var(--text-secondary); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                            @evt.EventType
+                                        </span>
+                                        @if (evt.IsOnline)
+                                        {
+                                            <span style="background: var(--primary-dark); color: var(--primary); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                                <i class="fas fa-laptop"></i> Online
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span style="background: var(--bg-tertiary); color: var(--text-secondary); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                                <i class="fas fa-map-marker-alt"></i> @evt.Location
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                                    <button type="button" class="modern-btn modern-btn-secondary" 
+                                            onclick="viewRegistrants(@evt.Id)" title="View Registrants">
+                                        <i class="fas fa-users"></i>
+                                    </button>
+                                    <div class="dropdown">
+                                        <button class="modern-btn modern-btn-secondary dropdown-toggle" type="button" 
+                                                data-bs-toggle="dropdown" title="Change Status">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" style="background: var(--bg-secondary); border: 1px solid var(--border-color);">
+                                            <li><a class="dropdown-item" href="#" onclick="toggleStatus(@evt.Id, 'Draft')" style="color: var(--text-primary);">Draft</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="toggleStatus(@evt.Id, 'Upcoming')" style="color: var(--text-primary);">Upcoming</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="toggleStatus(@evt.Id, 'Open')" style="color: var(--text-primary);">Open</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="toggleStatus(@evt.Id, 'Closed')" style="color: var(--text-primary);">Closed</a></li>
+                                        </ul>
+                                    </div>
+                                    <a asp-area="Admin" asp-controller="Events" asp-action="Edit" asp-route-id="@evt.Id" 
+                                       class="modern-btn modern-btn-secondary" title="Edit Event">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form asp-area="Admin" asp-controller="Events" asp-action="Delete" asp-route-id="@evt.Id" 
+                                          method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this event?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="modern-btn modern-btn-danger" title="Delete Event">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                                <div>
+                                    <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 4px;">
+                                        <i class="fas fa-calendar"></i> Start
+                                    </div>
+                                    <div style="color: var(--text-secondary); font-weight: 500;">
+                                        @evt.StartDate.ToString("dd MMM yyyy HH:mm")
+                                    </div>
+                                </div>
+                                @if (evt.EndDate.HasValue)
+                                {
+                                    <div>
+                                        <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 4px;">
+                                            <i class="fas fa-calendar-check"></i> End
+                                        </div>
+                                        <div style="color: var(--text-secondary); font-weight: 500;">
+                                            @evt.EndDate.Value.ToString("dd MMM yyyy HH:mm")
+                                        </div>
+                                    </div>
+                                }
+                                <div>
+                                    <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 4px;">
+                                        <i class="fas fa-users"></i> Registrations
+                                    </div>
+                                    <div style="color: var(--text-secondary); font-weight: 500;">
+                                        @evt.RegisteredParticipants / @evt.MaxParticipants
+                                        <span style="color: var(--text-muted); font-size: 12px;">(@evt.CapacityPercentage%)</span>
+                                    </div>
+                                    <div style="background: var(--bg-tertiary); height: 6px; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+                                        <div style="background: @(evt.IsFull ? "#ef4444" : "#3b82f6"); height: 100%; width: @(evt.CapacityPercentage)%;"></div>
+                                    </div>
+                                </div>
+                                @if (!string.IsNullOrEmpty(evt.TimeZone))
+                                {
+                                    <div>
+                                        <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 4px;">
+                                            <i class="fas fa-clock"></i> Timezone
+                                        </div>
+                                        <div style="color: var(--text-secondary); font-weight: 500; font-size: 13px;">
+                                            @evt.TimeZone.Split(' ')[0]
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages > 1)
+        {
+            <div class="modern-card" style="margin-top: 24px; padding: 20px;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+                    @if (currentPage > 1)
+                    {
+                        <a asp-area="Admin" asp-controller="Events" asp-action="Index" 
+                           asp-route-page="@(currentPage - 1)" asp-route-q="@searchQuery" asp-route-filter="@filter"
+                           class="modern-btn modern-btn-secondary">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </a>
+                    }
+                    
+                    <div style="color: var(--text-secondary); margin: 0 16px;">
+                        Page @currentPage of @totalPages
+                    </div>
+                    
+                    @if (currentPage < totalPages)
+                    {
+                        <a asp-area="Admin" asp-controller="Events" asp-action="Index" 
+                           asp-route-page="@(currentPage + 1)" asp-route-q="@searchQuery" asp-route-filter="@filter"
+                           class="modern-btn modern-btn-secondary">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    }
+}
+
+<!-- Registrants Modal -->
+<div class="modal fade" id="registrantsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background: var(--bg-secondary); border: 1px solid var(--border-color);">
+            <div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
+                <h5 class="modal-title" style="color: var(--text-primary);">Event Registrants</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="registrantsContent">
+                <div style="text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function viewRegistrants(eventId) {
+            $('#registrantsModal').modal('show');
+            $('#registrantsContent').html('<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size: 32px; color: var(--primary);"></i></div>');
+            
+            fetch(`/Admin/Events/ViewRegistrants/${eventId}`)
+                .then(response => response.text())
+                .then(html => {
+                    $('#registrantsContent').html(html);
+                })
+                .catch(error => {
+                    $('#registrantsContent').html('<div class="alert alert-danger">Error loading registrants</div>');
+                });
+        }
+
+        function toggleStatus(eventId, newStatus) {
+            if (!confirm(`Change status to ${newStatus}?`)) return;
+            
+            fetch(`/Admin/Events/ToggleStatus/${eventId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                body: JSON.stringify({ status: newStatus })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert(data.message || 'Failed to update status');
+                }
+            })
+            .catch(error => {
+                alert('Error updating status');
+            });
+        }
+    </script>
+
+    <style>
+        .modern-pill {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .modern-pill:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--primary);
+        }
+        
+        .modern-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .dropdown-menu {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+    </style>
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Enterprise Training Portal",
+    "description": "Full-stack ASP.NET Core MVC application with modern UI, admin panel, and real-time analytics",
+    "imageUrl": "/images/projects/training-portal.webp",
+    "altText": "Training portal dashboard screenshot",
+    "url": "/",
+    "tags": ["ASP.NET Core", "Tailwind CSS", "GSAP", "Azure"],
+    "isFeatured": true
+  },
+  {
+    "id": 2,
+    "title": "AI-Powered Assessment System",
+    "description": "Intelligent assessment platform using Azure OpenAI for automated grading and feedback",
+    "imageUrl": "/images/projects/ai-assessment.webp",
+    "altText": "AI assessment interface",
+    "url": null,
+    "tags": ["Azure OpenAI", "React", "Python", "FastAPI"],
+    "isFeatured": true
+  },
+  {
+    "id": 3,
+    "title": "Cloud Migration Framework",
+    "description": "Automated cloud migration toolkit for legacy enterprise applications to Azure",
+    "imageUrl": "/images/projects/cloud-migration.webp",
+    "altText": "Cloud migration dashboard",
+    "url": null,
+    "tags": ["Azure", "PowerShell", "Terraform", ".NET"],
+    "isFeatured": false
+  }
+]

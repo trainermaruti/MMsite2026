@@ -1,0 +1,458 @@
+@{
+    ViewData["Title"] = "Verify Certificate";
+}
+
+<div class="enterprise-container">
+    <div class="verify-section">
+        <div class="verify-header">
+            <div class="icon-badge">
+                <i class="fas fa-certificate"></i>
+            </div>
+            <h1 class="gradient-text">Certificate Verification</h1>
+            <p class="subtitle">Verify the authenticity of training certificates issued by Maruti Training Portal</p>
+        </div>
+
+        <div class="verify-card">
+            <div class="card-body">
+                <div class="input-group-modern">
+                    <label for="certificateId" class="form-label">Certificate ID</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-search input-icon"></i>
+                        <input type="text" 
+                               id="certificateId" 
+                               class="form-control-modern" 
+                               placeholder="Enter Certificate ID (e.g., CERT-2024-001234)"
+                               autocomplete="off">
+                    </div>
+                    <small class="form-hint">Certificate IDs can be found on your certificate document</small>
+                </div>
+
+                <button type="button" id="verifyBtn" class="btn-enterprise btn-primary" onclick="verifyCertificate()">
+                    <i class="fas fa-check-circle"></i>
+                    Verify Certificate
+                </button>
+            </div>
+        </div>
+
+        <!-- Skeleton Loader (hidden by default) -->
+        <div id="skeletonLoader" class="skeleton-card" style="display: none;">
+            <div class="skeleton-header"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line" style="width: 80%;"></div>
+            <div class="skeleton-line" style="width: 60%;"></div>
+        </div>
+
+        <!-- Results Area -->
+        <div id="resultArea" style="display: none;"></div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+async function verifyCertificate() {
+    const certificateId = document.getElementById('certificateId').value.trim();
+    const verifyBtn = document.getElementById('verifyBtn');
+    const skeletonLoader = document.getElementById('skeletonLoader');
+    const resultArea = document.getElementById('resultArea');
+
+    if (!certificateId) {
+        showError('Please enter a Certificate ID');
+        return;
+    }
+
+    // Show skeleton loader
+    resultArea.style.display = 'none';
+    skeletonLoader.style.display = 'block';
+    verifyBtn.disabled = true;
+    verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+    try {
+        const response = await fetch('/Verify/Check', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ certificateId: certificateId })
+        });
+
+        const data = await response.json();
+
+        // Hide skeleton
+        skeletonLoader.style.display = 'none';
+
+        if (data.success) {
+            showValidCertificate(data.certificateData);
+        } else {
+            showError(data.message);
+        }
+    } catch (error) {
+        skeletonLoader.style.display = 'none';
+        showError('Network error. Please check your connection and try again.');
+    } finally {
+        verifyBtn.disabled = false;
+        verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Certificate';
+    }
+}
+
+function showValidCertificate(cert) {
+    const resultArea = document.getElementById('resultArea');
+    
+    if (cert.status === 'Revoked') {
+        resultArea.innerHTML = `
+            <div class="result-card error">
+                <div class="result-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <h3>Certificate Revoked</h3>
+                <p>This certificate has been revoked and is no longer valid.</p>
+                ${cert.revokedDate ? `<p class="meta">Revoked on: ${new Date(cert.revokedDate).toLocaleDateString()}</p>` : ''}
+                ${cert.revocationReason ? `<p class="meta">Reason: ${cert.revocationReason}</p>` : ''}
+            </div>
+        `;
+    } else {
+        resultArea.innerHTML = `
+            <div class="result-card success">
+                <div class="result-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Valid Certificate</h3>
+                <p class="success-message">This certificate is authentic and verified!</p>
+                
+                <div class="certificate-details">
+                    <div class="detail-row">
+                        <span class="label">Certificate ID:</span>
+                        <span class="value">${cert.certificateId}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Student Name:</span>
+                        <span class="value">${cert.studentName}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Course:</span>
+                        <span class="value">${cert.courseTitle}</span>
+                    </div>
+                    ${cert.courseCategory ? `
+                    <div class="detail-row">
+                        <span class="label">Category:</span>
+                        <span class="value"><span class="badge">${cert.courseCategory}</span></span>
+                    </div>
+                    ` : ''}
+                    <div class="detail-row">
+                        <span class="label">Completion Date:</span>
+                        <span class="value">${new Date(cert.completionDate).toLocaleDateString()}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Issue Date:</span>
+                        <span class="value">${new Date(cert.issueDate).toLocaleDateString()}</span>
+                    </div>
+                    ${cert.instructor ? `
+                    <div class="detail-row">
+                        <span class="label">Instructor:</span>
+                        <span class="value">${cert.instructor}</span>
+                    </div>
+                    ` : ''}
+                    ${cert.durationHours ? `
+                    <div class="detail-row">
+                        <span class="label">Duration:</span>
+                        <span class="value">${cert.durationHours} hours</span>
+                    </div>
+                    ` : ''}
+                    ${cert.score ? `
+                    <div class="detail-row">
+                        <span class="label">Score:</span>
+                        <span class="value">${cert.score}%</span>
+                    </div>
+                    ` : ''}
+                    ${cert.grade ? `
+                    <div class="detail-row">
+                        <span class="label">Grade:</span>
+                        <span class="value"><span class="badge badge-success">${cert.grade}</span></span>
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }
+    
+    resultArea.style.display = 'block';
+}
+
+function showError(message) {
+    const resultArea = document.getElementById('resultArea');
+    resultArea.innerHTML = `
+        <div class="result-card error">
+            <div class="result-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Verification Failed</h3>
+            <p>${message}</p>
+        </div>
+    `;
+    resultArea.style.display = 'block';
+}
+
+// Allow Enter key to submit
+document.getElementById('certificateId').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        verifyCertificate();
+    }
+});
+</script>
+}
+
+<style>
+.enterprise-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.verify-section {
+    margin-bottom: 40px;
+}
+
+.verify-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.icon-badge {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0, 31, 63, $1);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #ffffff;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.verify-card {
+    background: #000000;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, $1);
+}
+
+.input-group-modern {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.form-control-modern {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    background: #000000;
+    border: 1px solid rgba(255, 255, 255, $1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control-modern:focus {
+    outline: none;
+    border-color: #001f3f;
+    box-shadow: 0 0 0 3px rgba(0, 31, 63, $1);
+}
+
+.form-hint {
+    display: block;
+    color: #ffffff;
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
+.btn-enterprise {
+    width: 100%;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-enterprise.btn-primary {
+    background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 31, 63, $1);
+}
+
+.btn-enterprise.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 31, 63, $1);
+}
+
+.btn-enterprise:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.skeleton-card {
+    background: #000000;
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 24px;
+    border: 1px solid rgba(255, 255, 255, $1);
+}
+
+.skeleton-header {
+    height: 24px;
+    background: linear-gradient(90deg, #001f3f 0%, #003366 50%, #001f3f 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.skeleton-line {
+    height: 16px;
+    background: linear-gradient(90deg, #001f3f 0%, #003366 50%, #001f3f 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+@@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.result-card {
+    background: #000000;
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 24px;
+    border: 1px solid rgba(255, 255, 255, $1);
+}
+
+.result-card.success {
+    border-left: 4px solid #001f3f;
+}
+
+.result-card.error {
+    border-left: 4px solid #001f3f;
+}
+
+.result-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.result-card.success .result-icon {
+    color: #001f3f;
+}
+
+.result-card.error .result-icon {
+    color: #001f3f;
+}
+
+.result-card h3 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+}
+
+.success-message {
+    text-align: center;
+    color: #001f3f;
+    margin-bottom: 24px;
+}
+
+.certificate-details {
+    margin-top: 24px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, $1);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row .label {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.detail-row .value {
+    color: #ffffff;
+    text-align: right;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: rgba(0, 31, 63, $1);
+    color: #003366;
+}
+
+.badge-success {
+    background: rgba(0, 31, 63, $1);
+    color: #ffffff;
+}
+
+.meta {
+    color: #ffffff;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    text-align: center;
+}
+</style>

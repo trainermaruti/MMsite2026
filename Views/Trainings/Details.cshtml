@@ -1,0 +1,79 @@
+@model Training
+
+@{
+    ViewData["Title"] = "Training Details";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="img-fluid rounded mb-4" alt="@Model.Title" style="max-height: 400px; object-fit: cover;">
+            }
+            else
+            {
+                <div class="bg-light rounded mb-4 d-flex align-items-center justify-content-center" style="height: 300px;">
+                    <i class="fas fa-image fa-5x text-muted"></i>
+                </div>
+            }
+
+            <h1>@Model.Title</h1>
+            <p class="lead text-muted">@Model.Company</p>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <p><strong><i class="fas fa-calendar"></i> Delivery Date:</strong> @(Model.DeliveryDate?.ToString("dd MMMM yyyy") ?? "Not set")</p>
+                    <p><strong><i class="fas fa-clock"></i> Duration:</strong> @Model.Duration</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong><i class="fas fa-book"></i> Topics:</strong> @Model.Topics</p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Training Description</h5>
+                </div>
+                <div class="card-body">
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Training Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Company</h6>
+                        <p class="h5">@Model.Company</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Date & Time</h6>
+                        <p class="h6">@(Model.DeliveryDate?.ToString("dd MMMM yyyy HH:mm") ?? "Not set")</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Duration</h6>
+                        <p class="h5">@Model.Duration</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Topics</h6>
+                        <p>@Model.Topics</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a href="/Trainings" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+</div>

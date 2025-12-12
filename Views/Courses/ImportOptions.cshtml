@@ -1,0 +1,100 @@
+@{
+    ViewData["Title"] = "Import Courses";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #001f3f 0%, #003366 100%);">
+                    <h4 class="mb-0 text-white">
+                        <i class="fas fa-download me-2"></i>Import Courses
+                    </h4>
+                </div>
+                <div class="card-body p-5">
+                    <p class="lead text-muted mb-4">Choose an option to import courses to your training portal:</p>
+
+                    <div class="row g-4">
+                        <!-- Import from SkillTech Club -->
+                        <div class="col-md-6">
+                            <div class="card h-100 border-2 hover-shadow" style="border-color: #667eea;">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-cloud-download-alt" style="font-size: 3rem; color: #667eea;"></i>
+                                    <h5 class="card-title mt-3">Import from SkillTech Club</h5>
+                                    <p class="card-text text-muted small">
+                                        Import all premium Azure and AI certification courses from SkillTech Club with exact titles, descriptions, pricing, and video URLs.
+                                    </p>
+                                    <ul class="list-unstyled text-start small mt-3">
+                                        <li><i class="fas fa-check text-success me-2"></i>10+ Professional Courses</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>With Video URLs</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Pricing Included</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Azure & AI Focused</li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer bg-light border-top-0">
+                                    <form method="post" action="@Url.Action("ImportSkillTechCourses")" class="d-grid">
+                                        <button type="submit" class="btn btn-gradient" style="background: linear-gradient(135deg, #001f3f 0%, #003366 100%); color: white; border: none;">
+                                            <i class="fas fa-download me-2"></i>Import Now
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Manually -->
+                        <div class="col-md-6">
+                            <div class="card h-100 border-2 hover-shadow" style="border-color: #764ba2;">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-plus-circle" style="font-size: 3rem; color: #764ba2;"></i>
+                                    <h5 class="card-title mt-3">Add Manually</h5>
+                                    <p class="card-text text-muted small">
+                                        Create and add your own custom courses with full control over all details, pricing, and content.
+                                    </p>
+                                    <ul class="list-unstyled text-start small mt-3">
+                                        <li><i class="fas fa-check text-success me-2"></i>Full Control</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Custom Content</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Your Own Pricing</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Any Category</li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer bg-light border-top-0">
+                                    <a href="@Url.Action("Create")" class="btn btn-gradient d-grid" style="background: linear-gradient(135deg, #001f3f 0%, #003366 100%); color: white; text-decoration: none;">
+                                        <i class="fas fa-plus me-2"></i>Add Course
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Box -->
+                    <div class="alert alert-info mt-5" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Note:</strong> Importing courses will add them to your database if they don't already exist. Duplicate courses (with same title) will not be imported again.
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Courses
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-shadow {
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .hover-shadow:hover {
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2) !important;
+        transform: translateY(-5px);
+    }
+
+    .btn-gradient:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+</style>

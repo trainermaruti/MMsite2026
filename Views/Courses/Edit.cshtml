@@ -1,0 +1,128 @@
+@model Course
+
+@{
+    ViewData["Title"] = "Edit Course";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>Edit Course</h1>
+            <hr />
+
+            <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Course Title <span class="text-danger">*</span></label>
+                    <input asp-for="Title" class="form-control" required />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Course Description <span class="text-danger">*</span></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Category" class="form-label">Category <span class="text-danger">*</span></label>
+                            <input asp-for="Category" class="form-control" required />
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Level" class="form-label">Difficulty Level <span class="text-danger">*</span></label>
+                            <select asp-for="Level" class="form-control" required>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                            <span asp-validation-for="Level" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DurationMinutes" class="form-label">Duration (HH:MM:SS) <span class="text-danger">*</span></label>
+                    <input type="text" id="durationInput" class="form-control" placeholder="e.g., 08:08:08" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" required />
+                    <input asp-for="DurationMinutes" type="hidden" id="durationMinutes" />
+                    <small class="form-text text-muted">Enter duration in hours:minutes:seconds format</small>
+                    <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ThumbnailUrl" class="form-label">Course Thumbnail URL <span class="badge bg-secondary">Optional</span></label>
+                    <input asp-for="ThumbnailUrl" class="form-control" />
+                    <span asp-validation-for="ThumbnailUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="VideoUrl" class="form-label">Video URL <span class="badge bg-secondary">Optional</span></label>
+                    <input asp-for="VideoUrl" class="form-control" />
+                    <span asp-validation-for="VideoUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SkillTechUrl" class="form-label">SkillTech.club Course URL <span class="badge bg-info">Optional</span></label>
+                    <input asp-for="SkillTechUrl" class="form-control" placeholder="https://skilltech.club/courses/..." />
+                    <small class="form-text text-muted">If provided, clicking the course card will redirect to SkillTech.club instead of showing local details</small>
+                    <span asp-validation-for="SkillTechUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TotalEnrollments" class="form-label">Total Enrollments</label>
+                    <input asp-for="TotalEnrollments" type="number" class="form-control" value="0" />
+                    <span asp-validation-for="TotalEnrollments" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-save"></i> Update Course
+                    </button>
+                    <a href="/Courses" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        // Convert HH:MM:SS to minutes
+        document.getElementById('durationInput').addEventListener('input', function(e) {
+            const value = e.target.value;
+            const parts = value.split(':');
+            
+            if (parts.length === 3) {
+                const hours = parseInt(parts[0]) || 0;
+                const minutes = parseInt(parts[1]) || 0;
+                const seconds = parseInt(parts[2]) || 0;
+                
+                const totalMinutes = (hours * 60) + minutes + Math.round(seconds / 60);
+                document.getElementById('durationMinutes').value = totalMinutes;
+            }
+        });
+        
+        // Convert minutes back to HH:MM:SS on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const durationMinutes = document.getElementById('durationMinutes').value;
+            if (durationMinutes) {
+                const hours = Math.floor(durationMinutes / 60);
+                const minutes = durationMinutes % 60;
+                const formatted = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':00';
+                document.getElementById('durationInput').value = formatted;
+            }
+        });
+    </script>
+}

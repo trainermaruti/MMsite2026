@@ -1,0 +1,15 @@
+{
+  "name": "maruti-makwana-training-portal",
+  "version": "1.7.0",
+  "description": "Maruti Makwana Corporate Training Portal",
+  "scripts": {
+    "build:css": "echo 'Run: npx tailwindcss -c tailwind.config.js -i ./wwwroot/css/site.css -o ./wwwroot/css/site.css --minify'",
+    "dev": "echo 'Run: dotnet watch run'",
+    "test:e2e": "echo 'Install Playwright first: npm install --save-dev @playwright/test'"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.2",
+    "typescript": "^5.9.3"
+  }
+}

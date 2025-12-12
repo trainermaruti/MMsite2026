@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" type="image/jpeg" />
+    <link rel="shortcut icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-dark border-end" id="sidebar-wrapper">
+            <div class="sidebar-heading bg-primary text-white p-3">
+                <i class="fas fa-user-shield"></i> Admin Panel
+            </div>
+            <div class="list-group list-group-flush">
+                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a asp-area="" asp-controller="Trainings" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-chalkboard-teacher"></i> Manage Trainings
+                </a>
+                <a asp-area="" asp-controller="Courses" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-book"></i> Manage Courses
+                </a>
+                <a asp-area="" asp-controller="Events" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-calendar-alt"></i> Manage Events
+                </a>
+                <a asp-area="" asp-controller="Contact" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-envelope"></i> Contact Messages
+                </a>
+                <a asp-area="" asp-controller="Profile" asp-action="About" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-user-circle"></i> Edit Profile
+                </a>
+                <div class="dropdown-divider bg-secondary"></div>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> View Public Site
+                </a>
+                <form asp-area="Admin" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button type="submit" class="list-group-item list-group-item-action bg-dark text-white border-0 w-100 text-start">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <span class="navbar-brand mb-0 h1">@ViewData["Title"]</span>
+                    <div class="ms-auto">
+                        <span class="navbar-text">
+                            <i class="fas fa-user"></i> @User.Identity?.Name
+                        </span>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid p-4">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar
+        document.getElementById("sidebarToggle").addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("wrapper").classList.toggle("toggled");
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

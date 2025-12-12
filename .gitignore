@@ -1,0 +1,72 @@
+## ASP.NET Core
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+bld/
+[Bb]in/
+[Oo]bj/
+
+## Database files
+*.db
+*.db-shm
+*.db-wal
+MarutiTrainingPortal.db
+
+## User Secrets (development credentials)
+## Note: User secrets are stored outside the project directory, but adding this for safety
+secrets.json
+appsettings.Development.json
+appsettings.Production.json
+
+## Environment files (Docker, production credentials)
+.env
+.env.local
+.env.production
+
+## Logs
+logs/
+*.log
+
+## Rider
+.idea/
+
+## macOS
+.DS_Store
+
+## Windows
+Thumbs.db
+ehthumbs.db
+
+## Node modules (if using frontend build tools)
+node_modules/
+package-lock.json
+
+## Test results
+TestResults/
+*.trx
+
+## Publishing profiles
+*.pubxml
+*.pubxml.user
+
+## NuGet Packages
+*.nupkg
+*.snupkg
+.nuget/
+
+## Important: Keep example files
+!appsettings.Development.json.example
+!appsettings.Production.json.example
+!.env.example

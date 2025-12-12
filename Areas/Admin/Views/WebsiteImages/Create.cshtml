@@ -1,0 +1,121 @@
+@model MarutiTrainingPortal.Models.WebsiteImage
+
+@{
+    ViewData["Title"] = "Add Website Image";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Add Website Image</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="DisplayName" class="form-label"></label>
+                            <input asp-for="DisplayName" class="form-control" placeholder="e.g., Profile Picture" />
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageKey" class="form-label"></label>
+                            <input asp-for="ImageKey" class="form-control" placeholder="e.g., profile_main" />
+                            <small class="form-text text-muted">
+                                Unique identifier for this image (lowercase, use underscores)
+                            </small>
+                            <span asp-validation-for="ImageKey" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Category" class="form-label"></label>
+                            <select asp-for="Category" class="form-control">
+                                <option value="">-- Select Category --</option>
+                                <option value="Profile">Profile</option>
+                                <option value="About">About</option>
+                                <option value="Header">Header</option>
+                                <option value="Hero">Hero</option>
+                                <option value="Background">Background</option>
+                                <option value="Badge">Badge</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Brief description of this image"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="AltText" class="form-label"></label>
+                            <input asp-for="AltText" class="form-control" placeholder="Alternative text for accessibility" />
+                            <span asp-validation-for="AltText" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Upload Image File</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                            <small class="form-text text-muted">
+                                Or provide a URL below if you already have an image hosted
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label"></label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg or /images/photo.jpg" />
+                            <small class="form-text text-muted">
+                                If uploading a file, this will be set automatically
+                            </small>
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Add Image
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i> Guidelines
+                </div>
+                <div class="card-body">
+                    <h6>Image Keys:</h6>
+                    <ul class="small">
+                        <li><code>profile_main</code> - Main profile photo</li>
+                        <li><code>about_photo</code> - About section image</li>
+                        <li><code>experience_badge</code> - Experience badge</li>
+                        <li><code>hero_bg</code> - Hero background</li>
+                    </ul>
+                    <hr />
+                    <h6>Tips:</h6>
+                    <ul class="small">
+                        <li>Use descriptive image keys</li>
+                        <li>Optimize images before uploading</li>
+                        <li>Recommended formats: JPG, PNG, WebP</li>
+                        <li>Max file size: 5MB</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

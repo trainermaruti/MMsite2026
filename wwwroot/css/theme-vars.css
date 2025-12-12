@@ -1,0 +1,339 @@
+/* =========================================
+   THEME VARIABLES (CSS Custom Properties)
+   Maruti Makwana Training Portal
+   Production-Ready Dual Theme System
+   ========================================= */
+
+/* --- PHASE 1: DEFAULT THEME - EXECUTIVE DARK --- */
+:root {
+    /* Core Backgrounds */
+    --bg-body-main: #0f172a;
+    --bg-surface-glass: rgba(30, 41, 59, 0.7);
+    --bg-surface-solid: #1e293b;
+    --bg-input: rgba(255, 255, 255, 0.05);
+    --bg-hover: rgba(255, 255, 255, 0.1);
+
+    /* Typography Colors */
+    --text-primary: #ffffff;
+    --text-body: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-inverse: #0f172a;
+
+    /* Borders & Dividers */
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.2);
+
+    /* Brand Accents */
+    --accent-purple: #a78bfa;
+    --accent-cyan: #22d3ee;
+
+    /* Shadows & Effects */
+    --shadow-elevation: 0 10px 30px -10px rgba(167, 139, 250, 0.3);
+    --backdrop-blur: blur(12px);
+    
+    /* Extended Palette (PHASE 2 additions) */
+    --bg-card: #1e293b;
+    --bg-navbar: rgba(15, 23, 42, 0.95);
+    --bg-footer: #0a0f1a;
+    --bg-modal-overlay: rgba(0, 0, 0, 0.8);
+    
+    /* Status Colors */
+    --status-success: #10b981;
+    --status-warning: #f59e0b;
+    --status-error: #ef4444;
+    --status-info: #3b82f6;
+    
+    /* Interactive States */
+    --state-focus-ring: rgba(167, 139, 250, 0.5);
+    --state-active: rgba(167, 139, 250, 0.2);
+    
+    /* Spacing & Layout */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    
+    /* Transitions */
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- PHASE 2: OVERRIDE THEME - EXECUTIVE LIGHT --- */
+html.light-mode {
+    --bg-body-main: #f8fafc;
+    --bg-surface-glass: #ffffff;
+    --bg-surface-solid: #ffffff;
+    --bg-input: #f1f5f9;
+    --bg-hover: #e2e8f0;
+
+    --text-primary: #0f172a;
+    --text-body: #475569;
+    --text-muted: #64748b;
+    --text-inverse: #ffffff;
+
+    --border-subtle: #e2e8f0;
+    --border-strong: #cbd5e1;
+
+    --accent-purple: #7c3aed;
+    --accent-cyan: #06b6d4;
+
+    --shadow-elevation: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --backdrop-blur: none;
+    
+    /* Extended Palette Overrides */
+    --bg-card: #ffffff;
+    --bg-navbar: rgba(255, 255, 255, 0.95);
+    --bg-footer: #f1f5f9;
+    --bg-modal-overlay: rgba(15, 23, 42, 0.7);
+    
+    /* Status Colors (slightly adjusted) */
+    --status-success: #059669;
+    --status-warning: #d97706;
+    --status-error: #dc2626;
+    --status-info: #2563eb;
+    
+    /* Interactive States */
+    --state-focus-ring: rgba(124, 58, 237, 0.5);
+    --state-active: rgba(124, 58, 237, 0.1);
+}
+
+/* =========================================
+   PHASE 3: BASE ELEMENT STYLES
+   ========================================= */
+
+body {
+    background-color: var(--bg-body-main);
+    color: var(--text-body);
+    transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* =========================================
+   COMPONENT EXAMPLES
+   ========================================= */
+
+/* --- Card Component --- */
+.card,
+.modern-card {
+    background: var(--bg-surface-solid);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-elevation);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card:hover,
+.modern-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -15px rgba(167, 139, 250, 0.4);
+}
+
+html.light-mode .card:hover,
+html.light-mode .modern-card:hover {
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Glass Surface --- */
+.surface-glass {
+    background: var(--bg-surface-glass);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--border-subtle);
+}
+
+/* --- Header/Navbar --- */
+.site-header,
+.navbar {
+    background: var(--bg-navbar);
+    border-bottom: 1px solid var(--border-subtle);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* --- Navigation Links --- */
+.nav-link {
+    color: var(--text-body);
+    transition: color var(--transition-base), background-color var(--transition-base);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-primary);
+    background-color: var(--bg-hover);
+}
+
+/* --- Buttons --- */
+.btn-primary,
+.modern-btn-primary {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.btn-primary:hover,
+.modern-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-elevation);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+    transition: all var(--transition-base);
+}
+
+.btn-outline:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-purple);
+    color: var(--accent-purple);
+}
+
+/* --- Icon Button (Theme Toggle) --- */
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-body);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-icon:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+}
+
+.btn-icon:focus-visible {
+    outline: 2px solid var(--state-focus-ring);
+    outline-offset: 2px;
+}
+
+/* --- Form Inputs --- */
+.input,
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    padding: 0.625rem 1rem;
+    transition: all var(--transition-base);
+}
+
+.input:focus,
+.form-control:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px var(--state-focus-ring);
+    background-color: var(--bg-surface-solid);
+}
+
+.input::placeholder,
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* --- Skeleton Loader --- */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--bg-surface-solid) 25%,
+        var(--bg-hover) 50%,
+        var(--bg-surface-solid) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* --- Status Badges --- */
+.badge-success { background: var(--status-success); }
+.badge-warning { background: var(--status-warning); }
+.badge-error { background: var(--status-error); }
+.badge-info { background: var(--status-info); }
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .skeleton {
+        animation: none;
+        background: var(--bg-surface-solid);
+    }
+}
+
+/* Focus Visible (Keyboard Navigation) */
+*:focus-visible {
+    outline: 2px solid var(--state-focus-ring);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Detection */
+@media (prefers-contrast: high) {
+    :root {
+        --border-subtle: rgba(255, 255, 255, 0.3);
+        --border-strong: rgba(255, 255, 255, 0.5);
+    }
+    
+    html.light-mode {
+        --border-subtle: rgba(0, 0, 0, 0.3);
+        --border-strong: rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* =========================================
+   UTILITY CLASSES
+   ========================================= */
+
+.text-primary { color: var(--text-primary); }
+.text-body { color: var(--text-body); }
+.text-muted { color: var(--text-muted); }
+
+.bg-surface { background: var(--bg-surface-solid); }
+.bg-glass { background: var(--bg-surface-glass); }
+
+.border-subtle { border-color: var(--border-subtle); }
+.border-strong { border-color: var(--border-strong); }
+
+/* Shadow Utilities */
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+.shadow-md { box-shadow: var(--shadow-elevation); }
+.shadow-lg { box-shadow: 0 20px 40px -15px rgba(167, 139, 250, 0.4); }
+
+html.light-mode .shadow-lg {
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <title>@ViewData["Title"] - Maruti Makwana Training Portal</title>
+    <link rel="icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" type="image/jpeg" />
+    <link rel="shortcut icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Rajdhani:wght@600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- DESIGN SYSTEM - Enterprise Elite -->
+    <link rel="stylesheet" href="~/css/design-system.css" asp-append-version="true" />
+    
+    <!-- THEME SYSTEM - Must load FIRST to provide CSS variables -->
+    <link rel="stylesheet" href="~/css/theme-vars.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme-variables.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/modern-design-system.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animations.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/hero-about-utilities.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/brand.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mobile-menu.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/components/snake-timeline.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MarutiTrainingPortal.styles.css" asp-append-version="true" />
+    <style>
+        /* Prevent horizontal scrolling */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw;
+            position: relative;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .container, .container-fluid {
+            max-width: 100%;
+            overflow-x: hidden;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        
+        [class*="col-"] {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        @@media (max-width: 768px) {
+            .container, .container-fluid {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            [class*="col-"] {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+    </style>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden;">
+    @await Html.PartialAsync("_Header")
+    <div>
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer style="background: var(--bg-secondary); color: var(--text-secondary); margin-top: 80px; padding: 48px 0 24px 0; border-top: 1px solid var(--border-color);">
+        <div class="container" style="max-width: 100%; padding-left: 20px; padding-right: 20px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <img src="~/images/logo.jpg?v=@DateTime.Now.Ticks" alt="Maruti Makwana Logo" style="width: 48px; height: 48px; object-fit: contain; border-radius: 8px;" />
+                        <h5 style="font-size: 18px; font-weight: 700; margin: 0; color: var(--text-primary);">Maruti Makwana</h5>
+                    </div>
+                        <i class="fas fa-graduation-cap" style="color: var(--primary); margin-right: 8px;"></i>Maruti Makwana
+                    </h6>
+                    <p style="color: var(--text-tertiary); font-size: 14px; line-height: 1.6;">
+                        Corporate Trainer specializing in Azure Cloud Services and AI Technologies. Empowering IT professionals through hands-on training programs.
+                    </p>
+                </div>
+                <div>
+                    <h6 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #ffffff;">Quick Links</h6>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 10px;">
+                            <a href="/Trainings" class="footer-link" style="color: #ffffff; text-decoration: none; font-size: 14px; transition: all 0.2s ease; display: inline-block;">
+                                <i class="fas fa-chalkboard-teacher" style="width: 16px; margin-right: 8px;"></i>Past Trainings
+                            </a>
+                        </li>
+                        <li style="margin-bottom: 10px;">
+                            <a href="/Courses" class="footer-link" style="color: #ffffff; text-decoration: none; font-size: 14px; transition: all 0.2s ease; display: inline-block;">
+                                <i class="fas fa-video" style="width: 16px; margin-right: 8px;"></i>Video Courses
+                            </a>
+                        </li>
+                        <li style="margin-bottom: 10px;">
+                            <a href="/Events" class="footer-link" style="color: #ffffff; text-decoration: none; font-size: 14px; transition: all 0.2s ease; display: inline-block;">
+                                <i class="fas fa-calendar-alt" style="width: 16px; margin-right: 8px;"></i>Events
+                            </a>
+                        </li>
+                        <li style="margin-bottom: 10px;">
+                            <a href="/Profile/About" class="footer-link" style="color: #ffffff; text-decoration: none; font-size: 14px; transition: all 0.2s ease; display: inline-block;">
+                                <i class="fas fa-user-circle" style="width: 16px; margin-right: 8px;"></i>About Me
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary);">Connect With Me</h6>
+                    <div style="display: flex; gap: 12px;">
+                        <a href="mailto:maruti_makwana@hotmail.com" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); text-decoration: none; transition: all 0.2s ease;">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://wa.me/919998114148" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); text-decoration: none; transition: all 0.2s ease;">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/marutimakwana/" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); text-decoration: none; transition: all 0.2s ease;">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/marutimakwana?igsh=MWttazg1dGRkbTU3cg==" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); text-decoration: none; transition: all 0.2s ease;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 24px; text-align: center;">
+                <p style="margin: 0; color: var(--text-muted); font-size: 14px;">&copy; 2025 Maruti Makwana Training Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Dark Mode Footer Links - White text, Dark Blue on hover */
+        .footer-link {
+            cursor: pointer;
+            color: #ffffff !important;
+        }
+        .footer-link:hover {
+            color: #001f3f !important;
+            text-decoration: underline !important;
+            transform: translateX(5px);
+        }
+        .footer-link i {
+            color: #ffffff !important;
+        }
+        .footer-link:hover i {
+            color: #001f3f !important;
+        }
+
+        /* Light Mode Footer Links - Black text, Dark Blue on hover */
+        html.light-mode .footer-link,
+        html.light-theme .footer-link,
+        body.light-mode .footer-link,
+        body.light-theme .footer-link {
+            color: #000000 !important;
+        }
+        html.light-mode .footer-link i,
+        html.light-theme .footer-link i,
+        body.light-mode .footer-link i,
+        body.light-theme .footer-link i {
+            color: #000000 !important;
+        }
+        html.light-mode .footer-link:hover,
+        html.light-theme .footer-link:hover,
+        body.light-mode .footer-link:hover,
+        body.light-theme .footer-link:hover {
+            color: #001f3f !important;
+        }
+        html.light-mode .footer-link:hover i,
+        html.light-theme .footer-link:hover i,
+        body.light-mode .footer-link:hover i,
+        body.light-theme .footer-link:hover i {
+            color: #001f3f !important;
+        }
+    </style>
+
+    <script src="~/js/theme-toggle.js" asp-append-version="true"></script>
+    <script src="~/js/modern-effects.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/snake-timeline.js" asp-append-version="true"></script>
+    <script src="~/js/kinetic-animations.js" asp-append-version="true"></script>
+    
+    <script>
+        // TARGETED BUTTON ICON COLOR ENFORCEMENT
+        function enforceButtonIconColors() {
+            // Hero section buttons - white icons
+            document.querySelectorAll('.hero-section .btn i').forEach(icon => {
+                icon.style.cssText = 'color: #ffffff !important; fill: #ffffff !important;';
+            });
+            
+            // Training Journey buttons - white icons
+            document.querySelectorAll('.training-journey-btn i').forEach(icon => {
+                icon.style.cssText = 'color: #ffffff !important; fill: #ffffff !important;';
+            });
+            
+            // About Trainer button - white icon
+            document.querySelectorAll('.about-trainer-btn i').forEach(icon => {
+                icon.style.cssText = 'color: #ffffff !important; fill: #ffffff !important;';
+            });
+            
+            // Search and Reset buttons - white icons
+            document.querySelectorAll('.search-filter-btn i, .reset-filter-btn i, #searchButton i, #clearSearch i').forEach(icon => {
+                icon.style.cssText = 'color: #ffffff !important; fill: #ffffff !important; -webkit-text-fill-color: #ffffff !important;';
+            });
+            
+            // SkillTech Visit button - BLACK icon
+            document.querySelectorAll('.skilltech-visit-btn i').forEach(icon => {
+                icon.style.cssText = 'color: #001f3f !important; fill: #001f3f !important;';
+            });
+            
+            // SkillTech Browse button - white icon
+            document.querySelectorAll('.skilltech-browse-btn i').forEach(icon => {
+                icon.style.cssText = 'color: #ffffff !important; fill: #ffffff !important;';
+            });
+        }
+        
+        // Run immediately
+        enforceButtonIconColors();
+        
+        // Run on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', enforceButtonIconColors);
+        }
+        
+        // Run multiple times to override any lazy-loaded styles
+        setTimeout(enforceButtonIconColors, 50);
+        setTimeout(enforceButtonIconColors, 100);
+        setTimeout(enforceButtonIconColors, 500);
+        
+        // Watch for theme changes
+        const observer = new MutationObserver(() => {
+            enforceButtonIconColors();
+            setTimeout(enforceButtonIconColors, 50);
+        });
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    </script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

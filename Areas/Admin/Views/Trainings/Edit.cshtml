@@ -1,0 +1,175 @@
+@model Training
+
+@{
+    ViewData["Title"] = "Edit Training";
+    Layout = "_ModernAdminLayout";
+}
+
+<style>
+    .modern-form-container {
+        background: var(--bg-secondary);
+        border-radius: 16px;
+        padding: 32px;
+        border: 1px solid var(--border-color);
+    }
+
+    .modern-form-group {
+        margin-bottom: 24px;
+    }
+
+    .modern-form-label {
+        display: block;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .modern-form-input {
+        width: 100%;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 12px 16px;
+        color: var(--text-primary);
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .modern-form-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .modern-form-input::placeholder {
+        color: var(--text-tertiary);
+    }
+
+    textarea.modern-form-input {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    @@media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .required-mark {
+        color: var(--error);
+        margin-left: 4px;
+    }
+
+    .form-hint {
+        font-size: 13px;
+        color: var(--text-tertiary);
+        margin-top: 4px;
+    }
+</style>
+
+<div style="padding: 0 32px 32px 32px;">
+    <!-- Modern Page Header -->
+    <div style="margin-bottom: 32px;">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
+            <a asp-area="Admin" asp-controller="Trainings" asp-action="Index" class="modern-btn modern-btn-ghost" style="padding: 8px 12px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin: 0;">
+                <i class="fas fa-edit" style="color: var(--primary); margin-right: 12px;"></i>Edit Training
+            </h1>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 15px; margin: 0 0 0 64px;">Update training information and details</p>
+    </div>
+
+    <div class="modern-form-container">
+        <form asp-area="Admin" asp-controller="Trainings" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="modern-form-group">
+                <label class="modern-form-label">
+                    Training Title<span class="required-mark">*</span>
+                </label>
+                <input asp-for="Title" class="modern-form-input" placeholder="e.g., Azure Fundamentals for Developers" required />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="modern-form-group">
+                <label class="modern-form-label">
+                    Description<span class="required-mark">*</span>
+                </label>
+                <textarea asp-for="Description" class="modern-form-input" placeholder="Detailed description of the training" required></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="modern-form-group">
+                    <label class="modern-form-label">
+                        Company/Client Name<span class="required-mark">*</span>
+                    </label>
+                    <input asp-for="Company" class="modern-form-input" placeholder="e.g., ABC Corp" required />
+                    <span asp-validation-for="Company" class="text-danger"></span>
+                </div>
+
+                <div class="modern-form-group">
+                    <label class="modern-form-label">
+                        Delivery Date
+                    </label>
+                    <input asp-for="DeliveryDate" type="datetime-local" class="modern-form-input" />
+                    <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="modern-form-group">
+                    <label class="modern-form-label">
+                        Duration
+                    </label>
+                    <input asp-for="Duration" class="modern-form-input" placeholder="e.g., 2 days, 8 hours, 1 week" />
+                    <span asp-validation-for="Duration" class="text-danger"></span>
+                </div>
+
+                <div class="modern-form-group">
+                    <label class="modern-form-label">
+                        Topics Covered<span class="required-mark">*</span>
+                    </label>
+                    <input asp-for="Topics" class="modern-form-input" placeholder="e.g., Cloud Computing, DevOps, Security" required />
+                    <span asp-validation-for="Topics" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="modern-form-group">
+                <label class="modern-form-label">
+                    Training Image URL
+                </label>
+                <input asp-for="ImageUrl" class="modern-form-input" placeholder="https://example.com/image.jpg" />
+                <div class="form-hint">Optional: Provide a full URL to the training image</div>
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 32px;">
+                <button type="submit" class="modern-btn modern-btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span>Update Training</span>
+                </button>
+                <a asp-area="Admin" asp-controller="Trainings" asp-action="Index" class="modern-btn modern-btn-ghost">
+                    <i class="fas fa-times"></i>
+                    <span>Cancel</span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

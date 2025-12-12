@@ -1,0 +1,423 @@
+/* Admin Inbox Styles - Dark Theme */
+
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #161616;
+    --text-primary: #ffffff;
+    --text-secondary: #e5e5e5;
+    --text-muted: #737373;
+    --border-color: rgba(156, 163, 175, 0.2);
+    --primary: #3b82f6;
+    --success: #10b981;
+    --danger: #ef4444;
+    --unread-dot: #60a5fa;
+    --row-hover: rgba(59, 130, 246, 0.06);
+}
+
+/* Stats Bar */
+.inbox-stats-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.inbox-stat-card {
+    flex: 1;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.inbox-stat-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.inbox-stat-card.active {
+    border-color: var(--primary);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.stat-icon.new {
+    background: rgba(96, 165, 250, 0.15);
+    color: var(--unread-dot);
+}
+
+.stat-icon.total {
+    background: rgba(156, 163, 175, 0.15);
+    color: var(--text-muted);
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Inbox Table */
+.inbox-table-wrapper {
+    overflow-x: auto;
+}
+
+.inbox-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.inbox-table thead {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.inbox-table thead th {
+    padding: 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.inbox-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.15s ease;
+}
+
+.inbox-table tbody tr:hover {
+    background: var(--row-hover);
+}
+
+.inbox-table tbody tr.unread {
+    background: rgba(96, 165, 250, 0.04);
+}
+
+.inbox-table tbody tr.unread:hover {
+    background: rgba(96, 165, 250, 0.08);
+}
+
+.inbox-table tbody td {
+    padding: 16px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Unread Dot */
+.unread-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--unread-dot);
+    box-shadow: 0 0 6px rgba(96, 165, 250, 0.35);
+    margin: 0 auto;
+}
+
+/* Sender Cell */
+.sender-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sender-name {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.sender-email {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+/* Subject Cell */
+.subject-cell {
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.unread .subject-cell {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Date Cell */
+.date-cell {
+    color: var(--text-secondary);
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.time-text {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* Action Buttons */
+.inbox-action-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 6px;
+}
+
+.inbox-action-btn:hover {
+    background: var(--bg-primary);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.inbox-action-btn.delete-btn:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+/* Pagination */
+.pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-primary);
+}
+
+.pagination {
+    display: flex;
+    gap: 6px;
+}
+
+.pagination-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.pagination-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-primary);
+}
+
+.pagination-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    font-weight: 600;
+}
+
+.pagination-ellipsis {
+    color: var(--text-muted);
+    padding: 0 8px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.pagination-info {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* Message Modal */
+.message-meta-item {
+    margin-bottom: 16px;
+}
+
+.message-content-wrapper {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.message-content {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Modern Buttons */
+.modern-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.modern-btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.modern-btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.modern-btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.modern-btn-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.modern-btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.modern-btn-success:hover {
+    background: #059669;
+}
+
+.modern-btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.modern-btn-danger:hover {
+    background: #dc2626;
+}
+
+/* Modern Card */
+.modern-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Modern Input */
+.modern-input {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.modern-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Skeleton Loader */
+.skeleton-row {
+    height: 60px;
+    background: linear-gradient(90deg, 
+        var(--bg-secondary) 0%, 
+        rgba(255, 255, 255, 0.05) 50%, 
+        var(--bg-secondary) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .inbox-stats-bar {
+        flex-direction: column;
+    }
+    
+    .inbox-table thead th,
+    .inbox-table tbody td {
+        padding: 12px 8px;
+        font-size: 12px;
+    }
+    
+    .sender-email {
+        display: none;
+    }
+    
+    .time-text {
+        display: none;
+    }
+    
+    .subject-cell {
+        max-width: 150px;
+    }
+}

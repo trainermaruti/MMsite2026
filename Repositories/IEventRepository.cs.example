@@ -1,0 +1,17 @@
+using MarutiTrainingPortal.Models;
+
+namespace MarutiTrainingPortal.Repositories
+{
+    public interface IEventRepository
+    {
+        Task<(List<Event> Events, int TotalCount)> GetPagedAsync(int page, int pageSize, string? searchQuery, string filter);
+        Task<Event?> GetByIdAsync(int id, bool includeDeleted = false);
+        Task<Event> AddAsync(Event eventItem);
+        Task<Event> UpdateAsync(Event eventItem);
+        Task<bool> SoftDeleteAsync(int id);
+        Task<List<EventRegistration>> GetRegistrationsAsync(int eventId);
+        Task<EventRegistration> AddRegistrationAsync(EventRegistration registration);
+        Task<int> GetRegistrationCountAsync(int eventId);
+        Task<bool> IncrementRegistrationCountAsync(int eventId);
+    }
+}

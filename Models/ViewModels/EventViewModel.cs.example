@@ -1,0 +1,41 @@
+namespace MarutiTrainingPortal.Models.ViewModels
+{
+    public class EventViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string? Summary { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string EventType { get; set; } = "Webinar";
+        public bool IsOnline { get; set; }
+        public string? Location { get; set; }
+        
+        // Local datetime inputs (will be converted to UTC)
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        
+        public string TimeZone { get; set; } = "UTC";
+        public int? MaxCapacity { get; set; }
+        public string Status { get; set; } = "Draft";
+        public string? BannerUrl { get; set; }
+        public IFormFile? BannerFile { get; set; }
+    }
+
+    public class EventListViewModel
+    {
+        public List<Event> Events { get; set; } = new();
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
+        public int TotalCount { get; set; }
+        public string? SearchQuery { get; set; }
+        public string Filter { get; set; } = "All";
+    }
+
+    public class RegistrantViewModel
+    {
+        public int EventId { get; set; }
+        public string EventTitle { get; set; } = string.Empty;
+        public List<EventRegistration> Registrations { get; set; } = new();
+        public int TotalCount { get; set; }
+    }
+}

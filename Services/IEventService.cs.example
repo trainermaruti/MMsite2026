@@ -1,0 +1,21 @@
+using MarutiTrainingPortal.Models;
+using MarutiTrainingPortal.Models.ViewModels;
+
+namespace MarutiTrainingPortal.Services
+{
+    public interface IEventService
+    {
+        Task<(List<Event> Events, int TotalCount)> GetPagedEventsAsync(int page, int pageSize, string? searchQuery, string filter);
+        Task<Event?> GetEventByIdAsync(int id);
+        Task<Event> CreateEventAsync(EventViewModel model);
+        Task<Event> UpdateEventAsync(EventViewModel model);
+        Task<bool> DeleteEventAsync(int id);
+        Task<bool> ToggleStatusAsync(int id, string status);
+        Task<List<EventRegistration>> GetRegistrationsAsync(int eventId);
+        Task<byte[]> ExportRegistrationsToCsvAsync(int eventId);
+        Task<bool> CanRegisterAsync(int eventId);
+        Task<EventRegistration> RegisterUserAsync(int eventId, string name, string email, string? phone, string? notes);
+        DateTime ConvertToUtc(DateTime localDateTime, string timeZoneId);
+        DateTime ConvertFromUtc(DateTime utcDateTime, string timeZoneId);
+    }
+}

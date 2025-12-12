@@ -1,0 +1,1260 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Prevent internal scrollbars globally - only use main page scrollbar */
+section,
+.container,
+.row,
+.col,
+[class*="col-"],
+div[class*="section"],
+div[class*="card"],
+.card,
+.card-body,
+main {
+  overflow: visible !important;
+}
+
+/* Hero Section Theme-Aware Styles */
+.hero-heading {
+  color: #ffffff !important;
+}
+
+.hero-accent {
+  color: #4a90e2 !important;
+}
+
+.hero-description {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* All Button Icons - White for Both Modes - MAXIMUM SPECIFICITY */
+html .btn i,
+html .modern-btn i,
+html a.btn i,
+html a.modern-btn i,
+html button i,
+html .btn .fas,
+html .btn .far,
+html .btn .fab,
+html a .fas,
+html a .far,
+html a .fab,
+body .btn i,
+body .modern-btn i,
+body a.btn i,
+body a.modern-btn i,
+body button i,
+body .btn .fas,
+body .btn .far,
+body .btn .fab,
+body a .fas,
+body a .far,
+body a .fab {
+  color: #ffffff !important;
+}
+
+/* Force white icons in light mode too - OVERRIDE EVERYTHING */
+html.light-mode .btn i,
+html.light-theme .btn i,
+body.light-mode .btn i,
+body.light-theme .btn i,
+html.light-mode .modern-btn i,
+html.light-theme .modern-btn i,
+body.light-mode .modern-btn i,
+body.light-theme .modern-btn i,
+html.light-mode a.btn i,
+html.light-theme a.btn i,
+body.light-mode a.btn i,
+body.light-theme a.btn i,
+html.light-mode a i,
+html.light-theme a i,
+body.light-mode a i,
+body.light-theme a i,
+html.light-mode .btn .fas,
+html.light-theme .btn .fas,
+body.light-mode .btn .fas,
+body.light-theme .btn .fas,
+html.light-mode a .fas,
+html.light-theme a .fas,
+body.light-mode a .fas,
+body.light-theme a .fas,
+html.light-mode .btn .far,
+html.light-theme .btn .far,
+body.light-mode .btn .far,
+body.light-theme .btn .far,
+html.light-mode .btn .fab,
+html.light-theme .btn .fab,
+body.light-mode .btn .fab,
+body.light-theme .btn .fab {
+  color: #ffffff !important;
+}
+
+/* Hero Badge - Visible Border in Light Mode */
+.hero-copy .badge {
+  border: 2px solid #000000 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.light-mode .hero-copy .badge,
+html.light-theme .hero-copy .badge,
+body.light-mode .hero-copy .badge,
+body.light-theme .hero-copy .badge {
+  border: 2px solid #000000 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.light-mode .hero-heading,
+html.light-theme .hero-heading,
+body.light-mode .hero-heading,
+body.light-theme .hero-heading {
+  color: #000000 !important;
+}
+
+html.light-mode .hero-accent,
+html.light-theme .hero-accent,
+body.light-mode .hero-accent,
+body.light-theme .hero-accent {
+  color: #003366 !important;
+}
+
+html.light-mode .hero-description,
+html.light-theme .hero-description,
+body.light-mode .hero-description,
+body.light-theme .hero-description {
+  color: #000000 !important;
+}
+
+/* Global Text Classes - Theme Aware */
+.text-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.light-mode .text-muted,
+html.light-theme .text-muted,
+body.light-mode .text-muted,
+body.light-theme .text-muted {
+  color: #6c757d !important;
+}
+
+/* Card text elements */
+.card-text {
+  color: var(--text-secondary, rgba(255, 255, 255, 0.8)) !important;
+}
+
+html.light-mode .card-text,
+html.light-theme .card-text,
+body.light-mode .card-text,
+body.light-theme .card-text {
+  color: #495057 !important;
+}
+
+/* Lead text */
+.lead {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html.light-mode .lead,
+html.light-theme .lead,
+body.light-mode .lead,
+body.light-theme .lead {
+  color: #212529 !important;
+}
+
+/* Form labels and small text */
+.form-text, small.text-muted {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+html.light-mode .form-text,
+html.light-theme .form-text,
+body.light-mode .form-text,
+body.light-theme .form-text,
+html.light-mode small.text-muted,
+html.light-theme small.text-muted,
+body.light-mode small.text-muted,
+body.light-theme small.text-muted {
+  color: #6c757d !important;
+}
+
+/* Headings in cards */
+.card h5, .card h6 {
+  color: #ffffff !important;
+}
+
+html.light-mode .card h5,
+html.light-theme .card h5,
+body.light-mode .card h5,
+body.light-theme .card h5,
+html.light-mode .card h6,
+html.light-theme .card h6,
+body.light-mode .card h6,
+body.light-theme .card h6 {
+  color: #000000 !important;
+}
+
+/* Page headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff !important;
+}
+
+html.light-mode h1,
+html.light-theme h1,
+body.light-mode h1,
+body.light-theme h1,
+html.light-mode h2,
+html.light-theme h2,
+body.light-mode h2,
+body.light-theme h2,
+html.light-mode h3,
+html.light-theme h3,
+body.light-mode h3,
+body.light-theme h3,
+html.light-mode h4,
+html.light-theme h4,
+body.light-mode h4,
+body.light-theme h4,
+html.light-mode h5,
+html.light-theme h5,
+body.light-mode h5,
+body.light-theme h5,
+html.light-mode h6,
+html.light-theme h6,
+body.light-mode h6,
+body.light-theme h6 {
+  color: #000000 !important;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+/* Override alert-info from admin.css for public pages */
+.alert-info {
+  background: transparent !important;
+  border: none !important;
+  color: inherit !important;
+}
+
+/* Default white text for dark backgrounds */
+*, *::before, *::after {
+  color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff !important;
+}
+
+p, span, div, li, td, th, label, small {
+  color: #ffffff !important;
+}
+
+/* BLACK TEXT FOR WHITE/LIGHT BACKGROUNDS */
+.card {
+  background: #001f3f !important;
+  color: #ffffff !important;
+}
+
+.card.bg-white, .card[style*="background: white"], .card[style*="background: #fff"], 
+.bg-white, [style*="background: white"], [style*="background: #fff"],
+[style*="background-color: white"], [style*="background-color: #fff"],
+.bg-light, [style*="background: rgb(209, 250, 229)"],
+[style*="background: linear-gradient"],
+section[style*="background: linear-gradient"],
+div[style*="background: linear-gradient"] {
+  color: #000000 !important;
+}
+
+.bg-white *, [style*="background: white"] *, [style*="background: #fff"] *,
+[style*="background-color: white"] *, [style*="background-color: #fff"] *,
+.bg-light *, [style*="background: rgb(209, 250, 229)"] *,
+[style*="background: linear-gradient"] *,
+section[style*="background: linear-gradient"] *,
+div[style*="background: linear-gradient"] * {
+  color: #000000 !important;
+}
+
+/* Force black text on ALL gradient backgrounds */
+[style*="background: linear-gradient"] h1,
+[style*="background: linear-gradient"] h2,
+[style*="background: linear-gradient"] h3,
+[style*="background: linear-gradient"] h4,
+[style*="background: linear-gradient"] h5,
+[style*="background: linear-gradient"] p,
+[style*="background: linear-gradient"] span,
+[style*="background: linear-gradient"] div,
+section[style*="background: linear-gradient"] h1,
+section[style*="background: linear-gradient"] h2,
+section[style*="background: linear-gradient"] h3,
+section[style*="background: linear-gradient"] h4,
+section[style*="background: linear-gradient"] h5,
+section[style*="background: linear-gradient"] p,
+section[style*="background: linear-gradient"] span,
+div[style*="background: linear-gradient"] h1,
+div[style*="background: linear-gradient"] h2,
+div[style*="background: linear-gradient"] h3,
+div[style*="background: linear-gradient"] h4,
+div[style*="background: linear-gradient"] h5,
+div[style*="background: linear-gradient"] p,
+div[style*="background: linear-gradient"] span {
+  color: #000000 !important;
+}
+
+.card-body, .card-title, .card-text {
+  color: inherit !important;
+}
+
+a {
+  color: #003366 !important;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #004080 !important;
+}
+
+.text-muted {
+  color: #a3a3a3 !important;
+}
+
+/* Bootstrap overrides */
+.btn {
+  color: #ffffff !important;
+  background-color: #001f3f !important;
+  border-color: #001f3f !important;
+}
+
+.btn-primary {
+  color: #ffffff !important;
+  background-color: #001f3f !important;
+  border-color: #001f3f !important;
+}
+
+.btn-primary:hover {
+  color: #ffffff !important;
+  background-color: #003366 !important;
+  border-color: #003366 !important;
+}
+
+.modern-btn, .modern-btn-primary {
+  color: #ffffff !important;
+}
+
+.form-control, .form-select, input, textarea {
+  background-color: #001f3f !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.form-control::placeholder {
+  color: #737373 !important;
+}
+
+.table {
+  color: #ffffff !important;
+}
+
+.table td, .table th {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ============================================================================
+   LIGHT MODE OVERRIDES
+   ============================================================================ */
+
+/* Light Mode - Override all dark mode styles */
+html.light-mode,
+html.light-theme {
+  color-scheme: light;
+}
+
+html.light-mode body,
+html.light-theme body {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+/* Light Mode - Default text colors */
+html.light-mode *,
+html.light-mode *::before,
+html.light-mode *::after,
+html.light-theme *,
+html.light-theme *::before,
+html.light-theme *::after {
+  color: #000000;
+}
+
+html.light-mode h1,
+html.light-mode h2,
+html.light-mode h3,
+html.light-mode h4,
+html.light-mode h5,
+html.light-mode h6,
+html.light-theme h1,
+html.light-theme h2,
+html.light-theme h3,
+html.light-theme h4,
+html.light-theme h5,
+html.light-theme h6 {
+  color: #000000 !important;
+}
+
+html.light-mode p,
+html.light-mode span,
+html.light-mode div,
+html.light-mode li,
+html.light-mode td,
+html.light-mode th,
+html.light-mode label,
+html.light-mode small,
+html.light-theme p,
+html.light-theme span,
+html.light-theme div,
+html.light-theme li,
+html.light-theme td,
+html.light-theme th,
+html.light-theme label,
+html.light-theme small {
+  color: #000000 !important;
+}
+
+/* Light Mode - Cards */
+html.light-mode .card,
+html.light-theme .card {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Light Mode - Links */
+html.light-mode a,
+html.light-theme a {
+  color: #001f3f !important;
+}
+
+html.light-mode a:hover,
+html.light-theme a:hover {
+  color: #003366 !important;
+}
+
+/* Light Mode - Muted text */
+html.light-mode .text-muted,
+html.light-theme .text-muted {
+  color: #000000 !important;
+}
+
+/* Light Mode - Buttons */
+html.light-mode .btn,
+html.light-mode .btn-primary,
+html.light-theme .btn,
+html.light-theme .btn-primary {
+  color: #ffffff !important;
+  background-color: #001f3f !important;
+  border-color: #001f3f !important;
+}
+
+html.light-mode .btn-primary:hover,
+html.light-theme .btn-primary:hover {
+  color: #ffffff !important;
+  background-color: #003366 !important;
+  border-color: #003366 !important;
+}
+
+/* Light Mode - Modern Buttons (High Visibility) */
+html.light-mode .modern-btn,
+html.light-mode .modern-btn-primary,
+html.light-theme .modern-btn,
+html.light-theme .modern-btn-primary {
+  background: #001f3f !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 31, 63, 0.3) !important;
+  border: none !important;
+}
+
+html.light-mode .modern-btn:hover,
+html.light-mode .modern-btn-primary:hover,
+html.light-theme .modern-btn:hover,
+html.light-theme .modern-btn-primary:hover {
+  background: #003366 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(0, 31, 63, 0.4) !important;
+}
+
+/* Light Mode - Forms */
+html.light-mode .form-control,
+html.light-mode .form-select,
+html.light-mode input,
+html.light-mode textarea,
+html.light-theme .form-control,
+html.light-theme .form-select,
+html.light-theme input,
+html.light-theme textarea {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  color: #000000 !important;
+}
+
+html.light-mode .form-control::placeholder,
+html.light-theme .form-control::placeholder {
+  color: #000000 !important;
+}
+
+/* Light Mode - Tables */
+html.light-mode .table,
+html.light-theme .table {
+  color: #000000 !important;
+}
+
+html.light-mode .table td,
+html.light-mode .table th,
+html.light-theme .table td,
+html.light-theme .table th {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Light Mode - Footer */
+html.light-mode footer,
+html.light-theme footer {
+  background: #ffffff !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+html.light-mode footer *,
+html.light-theme footer * {
+  color: #000000 !important;
+}
+
+html.light-mode footer h5,
+html.light-theme footer h5 {
+  color: #000000 !important;
+}
+
+html.light-mode footer a,
+html.light-theme footer a {
+  color: #001f3f !important;
+}
+
+html.light-mode footer a:hover,
+html.light-theme footer a:hover {
+  color: #003366 !important;
+}
+
+/* ============================================================================
+   FEATURED TRAINING JOURNEY - LIGHT/DARK MODE
+   ============================================================================ */
+
+/* Dark Mode - Default */
+.snake-timeline-wrapper {
+  background: #000000 !important;
+}
+
+.timeline-bg-dark {
+  display: block !important;
+  background: #000000 !important;
+}
+
+.timeline-bg-light {
+  display: none !important;
+}
+
+.timeline-card {
+  background: #000814 !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.7) !important;
+}
+
+.timeline-card-header {
+  background: #000814 !important;
+}
+
+.timeline-card-body {
+  background: #000814 !important;
+}
+
+/* Dark mode text - white */
+.timeline-heading,
+.timeline-subheading,
+.timeline-stat-label,
+.timeline-stat,
+.timeline-card-title,
+.timeline-card-text,
+.timeline-category-text,
+.timeline-year-badge,
+.timeline-status,
+.timeline-program-badge,
+.timeline-testimonial-text,
+.timeline-testimonial-author,
+.timeline-stat-label-small,
+.timeline-stat-value {
+  color: #ffffff !important;
+}
+
+.timeline-badge {
+  background: rgba(0, 51, 102, 0.25) !important;
+  border: 1px solid rgba(0, 51, 102, 0.5) !important;
+}
+
+.timeline-badge-text {
+  color: #ffffff !important;
+}
+
+/* Light Mode Overrides */
+html.light-mode .snake-timeline-wrapper,
+html.light-theme .snake-timeline-wrapper {
+  background: #ffffff !important;
+}
+
+html.light-mode .timeline-bg-dark,
+html.light-theme .timeline-bg-dark {
+  display: none !important;
+}
+
+html.light-mode .timeline-bg-light,
+html.light-theme .timeline-bg-light {
+  display: block !important;
+  background: #ffffff !important;
+}
+
+html.light-mode .timeline-card,
+html.light-theme .timeline-card {
+  background: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+html.light-mode .timeline-card-header,
+html.light-theme .timeline-card-header {
+  background: #001f3f !important;
+}
+
+html.light-mode .timeline-card-header *,
+html.light-theme .timeline-card-header * {
+  color: #ffffff !important;
+}
+
+html.light-mode .timeline-card-body,
+html.light-theme .timeline-card-body {
+  background: #ffffff !important;
+}
+
+html.light-mode .timeline-year-badge,
+html.light-theme .timeline-year-badge {
+  background: rgba(255,255,255,0.2) !important;
+  color: #ffffff !important;
+}
+
+html.light-mode .timeline-heading,
+html.light-theme .timeline-heading,
+html.light-mode .timeline-subheading,
+html.light-theme .timeline-subheading,
+html.light-mode .timeline-stat-label,
+html.light-theme .timeline-stat-label,
+html.light-mode .timeline-stat,
+html.light-theme .timeline-stat {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
+html.light-mode .timeline-badge-text,
+html.light-theme .timeline-badge-text {
+  color: #001f3f !important;
+}
+
+/* Light mode - all text in card body should be black */
+html.light-mode .timeline-card-body,
+html.light-theme .timeline-card-body,
+html.light-mode .timeline-card-body *,
+html.light-theme .timeline-card-body * {
+  color: #000000 !important;
+}
+
+html.light-mode .timeline-program-badge,
+html.light-theme .timeline-program-badge {
+  background: rgba(0, 31, 63, 0.1) !important;
+  border-color: rgba(0, 31, 63, 0.2) !important;
+  color: #000000 !important;
+}
+
+html.light-mode .timeline-stat-value,
+html.light-theme .timeline-stat-value {
+  color: #001f3f !important;
+}
+
+html.light-mode .timeline-badge,
+html.light-theme .timeline-badge {
+  background: rgba(0, 31, 63, 0.1) !important;
+  border: 1px solid rgba(0, 31, 63, 0.2) !important;
+}
+
+html.light-mode .timeline-badge-text,
+html.light-theme .timeline-badge-text,
+html.light-mode .timeline-stat,
+html.light-theme .timeline-stat,
+html.light-mode .timeline-stat-value,
+html.light-theme .timeline-stat-value {
+  color: #001f3f !important;
+}
+
+html.light-mode .timeline-testimonial,
+html.light-theme .timeline-testimonial {
+  background: rgba(0, 31, 63, 0.05) !important;
+  border: 1px solid rgba(0, 31, 63, 0.1) !important;
+}
+
+html.light-mode .timeline-stats,
+html.light-theme .timeline-stats {
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Testimonial Avatar Letters - Always White in Both Modes */
+.testimonial-avatar,
+.testimonial-avatar *,
+div.testimonial-avatar {
+  color: #ffffff !important;
+}
+
+html.light-mode .testimonial-avatar,
+html.light-theme .testimonial-avatar,
+body.light-mode .testimonial-avatar,
+body.light-theme .testimonial-avatar,
+html.light-mode div.testimonial-avatar,
+html.light-theme div.testimonial-avatar {
+  color: #ffffff !important;
+}
+
+/* FINAL OVERRIDE - ALL BUTTON ICONS WHITE IN BOTH MODES */
+* .btn i,
+* .modern-btn i,
+* a i.fas,
+* a i.far,
+* a i.fab,
+* button i {
+  color: #ffffff !important;
+}
+
+html.light-mode * .btn i,
+html.light-mode * .modern-btn i,
+html.light-mode * a i.fas,
+html.light-mode * a i.far,
+html.light-mode * a i.fab,
+html.light-mode * button i,
+html.light-theme * .btn i,
+html.light-theme * .modern-btn i,
+html.light-theme * a i.fas,
+html.light-theme * a i.far,
+html.light-theme * a i.fab,
+html.light-theme * button i,
+body.light-mode * .btn i,
+body.light-mode * .modern-btn i,
+body.light-mode * a i.fas,
+body.light-mode * a i.far,
+body.light-mode * a i.fab,
+body.light-mode * button i,
+body.light-theme * .btn i,
+body.light-theme * .modern-btn i,
+body.light-theme * a i.fas,
+body.light-theme * a i.far,
+body.light-theme * a i.fab,
+body.light-theme * button i {
+  color: #ffffff !important;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Mobile First - Base styles for all devices */
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Small devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+  /* Typography */
+  h1, .display-4 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+  h4 { font-size: 1.1rem !important; }
+  p, .lead { font-size: 0.9rem !important; }
+  
+  /* Hero Section */
+  .hero-section { padding: 40px 15px !important; }
+  .hero-section .display-4 { font-size: 1.75rem !important; line-height: 1.3 !important; }
+  .hero-section .lead { font-size: 0.95rem !important; }
+  .hero-section .btn { padding: 10px 20px !important; font-size: 0.9rem !important; }
+  .hero-section .d-flex { flex-direction: column !important; gap: 10px !important; }
+  .hero-section .btn { width: 100% !important; }
+  
+  /* Cards */
+  .card { margin-bottom: 15px !important; }
+  .card-body { padding: 15px !important; }
+  
+  /* Search Bars */
+  .row.g-3 { row-gap: 10px !important; }
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6 { 
+    width: 100% !important; 
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Buttons */
+  .btn { white-space: normal !important; min-height: 44px !important; }
+  
+  /* Grid */
+  .row { margin-left: -10px !important; margin-right: -10px !important; }
+  [class*="col-"] { padding-left: 10px !important; padding-right: 10px !important; }
+  
+  /* Stats Section */
+  .stat-card { padding: 15px !important; }
+  
+  /* Navigation */
+  .navbar { padding: 10px 15px !important; }
+  
+  /* Featured Training Cards */
+  .timeline-card { margin-bottom: 20px !important; }
+  .timeline-card-body { padding: 15px !important; }
+  .timeline-stats { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; }
+  
+  /* About Section */
+  .modern-card-glass { padding: 20px !important; }
+  
+  /* Footer */
+  footer { padding: 30px 15px !important; }
+}
+
+/* Medium devices (tablets, 576px to 767.98px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  h1, .display-4 { font-size: 2rem !important; }
+  h2 { font-size: 1.75rem !important; }
+  
+  .hero-section { padding: 50px 20px !important; }
+  .hero-section .display-4 { font-size: 2rem !important; }
+  
+  /* Search Bars - 2 columns */
+  .col-md-4, .col-md-5 { 
+    width: 100% !important; 
+    flex: 0 0 100% !important;
+  }
+  .col-md-3, .col-md-2 { 
+    width: 50% !important; 
+    flex: 0 0 50% !important;
+  }
+  .col-md-1 { 
+    width: 50% !important; 
+    flex: 0 0 50% !important;
+  }
+}
+
+/* Large devices (desktops, 768px to 991.98px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .hero-section { padding: 60px 30px !important; }
+  .container { max-width: 720px !important; }
+}
+
+/* Extra large devices (large desktops, 992px to 1199.98px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .container { max-width: 960px !important; }
+}
+
+/* XXL devices (larger desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .container { max-width: 1140px !important; }
+}
+
+/* Landscape phones */
+@media (max-width: 767.98px) and (orientation: landscape) {
+  .hero-section { padding: 30px 15px !important; }
+  .hero-section .row { align-items: flex-start !important; }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn, a, button { 
+    min-height: 44px !important; 
+    min-width: 44px !important;
+  }
+  
+  .hover-lift-card:active { 
+    transform: scale(0.98) !important; 
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar, footer, .btn, button { display: none !important; }
+  body { background: white !important; color: black !important; }
+}
+
+/* ==================== HEADER RESPONSIVE STYLES ==================== */
+
+/* Desktop/Tablet - Ensure horizontal navigation */
+@media (min-width: 768px) {
+  .header-container {
+    flex-wrap: nowrap !important;
+  }
+  
+  .nav-list {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+  
+  .nav-link {
+    flex-direction: row !important;
+  }
+}
+
+/* Header - Fixed/Sticky on Mobile */
+@media (max-width: 767.98px) {
+  .site-header { 
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    padding: 8px 0 !important;
+    background: var(--bg-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  /* Add padding to body to prevent content hiding under fixed header */
+  body { 
+    padding-top: 140px !important;
+  }
+  
+  .header-nav { padding: 0 10px !important; }
+  
+  .header-container { 
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  
+  /* Logo/Brand - Compact on mobile */
+  .header-brand { 
+    order: 1;
+    flex: 1 1 auto !important;
+    justify-content: flex-start !important;
+  }
+  
+  .brand-logo { 
+    width: 32px !important; 
+    height: 32px !important; 
+  }
+  
+  .brand-title { 
+    font-size: 0.75rem !important;
+    letter-spacing: 0.08em !important;
+  }
+  
+  /* Actions - Top right on mobile */
+  .header-actions { 
+    order: 2;
+    flex: 0 0 auto !important;
+    gap: 6px !important;
+  }
+  
+  .btn-cta { 
+    padding: 6px 10px !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .btn-cta span { display: none !important; }
+  .btn-cta i { margin-right: 0 !important; }
+  
+  .btn-icon { 
+    width: 34px !important; 
+    height: 34px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* Navigation - Full width with LABELS visible */
+  .nav-list { 
+    order: 3;
+    flex: 1 1 100% !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    gap: 2px !important;
+    padding: 8px 0 4px 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .nav-list::-webkit-scrollbar { display: none; }
+  
+  .nav-item { 
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  
+  .nav-link { 
+    padding: 6px 4px !important;
+    font-size: 0.7rem !important;
+    gap: 3px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  .nav-link i { 
+    font-size: 1.1rem !important;
+    margin: 0 !important;
+  }
+  
+  .nav-link span {
+    display: block !important;
+    font-size: 0.65rem !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* Tablet Header */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .header-container { gap: 15px !important; }
+  
+  .brand-title { font-size: 1rem !important; }
+  
+  .nav-list { gap: 10px !important; }
+  
+  .nav-link { 
+    padding: 10px 15px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .btn-cta { 
+    padding: 10px 16px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Small tablets - adjust nav spacing */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .header-brand { 
+    flex: 0 0 auto !important;
+    justify-content: flex-start !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .nav-list { 
+    order: 2;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+  }
+  
+  .header-actions { 
+    order: 3;
+    flex: 0 0 auto !important;
+  }
+  
+  .btn-cta span { display: inline !important; }
+}
+
+/* ==================== MOBILE CARD OPTIMIZATIONS ==================== */
+
+/* Universal card centering for all devices */
+.row.justify-content-center {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 100% !important;
+}
+
+.row.g-4 {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}
+
+/* Card wrapper centering */
+.d-flex.justify-content-center {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+/* Training cards - single centered column */
+.row.justify-content-center > div[class*="col-"] {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.row.justify-content-center .card {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Mobile - Better card layout */
+@media (max-width: 767.98px) {
+  /* Training cards full width on mobile */
+  .row.justify-content-center > div[class*="col-"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Container padding adjustment and centering */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* Responsive course cards - 1 per row on mobile, 3 per row on desktop */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Course cards full width on mobile */
+  .col-12.col-md-6.col-lg-4 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Search form mobile optimization */
+  #courseSearchForm {
+    padding: 0.75rem !important;
+  }
+  
+  #courseSearchForm .col-12,
+  #courseSearchForm .col-sm-6,
+  #courseSearchForm .col-9,
+  #courseSearchForm .col-3 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  #courseSearchForm .col-9 {
+    flex: 0 0 70% !important;
+    max-width: 70% !important;
+  }
+  
+  #courseSearchForm .col-3 {
+    flex: 0 0 30% !important;
+    max-width: 30% !important;
+  }
+  
+  #courseSearchForm button {
+    font-size: 0.875rem !important;
+    padding: 0.625rem !important;
+  }
+  
+  /* Course cards normal size on mobile */
+  .modern-course-card {
+    margin-bottom: 1rem !important;
+  }
+}
+  
+
+  
+  /* Search form mobile layout */
+  #trainingSearchForm .col-md-4,
+  #trainingSearchForm .col-md-3,
+  #trainingSearchForm .col-md-2,
+  #trainingSearchForm .col-md-1 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  #trainingSearchForm .col-md-1 {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+  
+  #trainingSearchForm .col-md-2:last-of-type {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+  
+  /* Card spacing */
+  .card.shadow-lg {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Card content optimization */
+  .card-body p {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .card-body strong {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Button full width on mobile */
+  .card-footer .btn {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  /* Improve text readability */
+  .card .text-muted {
+    font-size: 0.813rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
+/* Extra small mobile - Further optimizations */
+@media (max-width: 480px) {
+  .container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  .col-md-6 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  /* Compact card design */
+  .card-body {
+    padding: 0.75rem !important;
+  }
+  
+  .card-title {
+    font-size: 0.95rem !important;
+  }
+  
+  .card-text {
+    font-size: 0.75rem !important;
+  }
+  
+  /* Smaller badges */
+  .badge {
+    font-size: 0.6rem !important;
+    padding: 0.15rem 0.35rem !important;
+  }
+  
+  /* Compact search form */
+  .card.shadow-sm .card-body {
+    padding: 0.75rem !important;
+  }
+  
+  #trainingSearchForm input,
+  #trainingSearchForm button {
+    font-size: 0.813rem !important;
+    padding: 0.5rem !important;
+  }
+}

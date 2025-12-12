@@ -1,0 +1,92 @@
+@model MarutiTrainingPortal.Models.Profile
+@{
+    ViewData["Title"] = "Contact Me";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4">Get in Touch</h1>
+            <p class="lead mb-4">Have questions about my trainings, courses, or events? Feel free to reach out. I'll get back to you as soon as possible!</p>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="row mb-5">
+                <div class="col-md-6 mb-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fas fa-envelope fa-2x text-danger mb-3"></i>
+                            <h5 class="card-title">Email</h5>
+                            <p class="card-text">@Model?.Email</p>
+                            <a href="mailto:@Model?.Email" class="btn btn-sm btn-danger">Send Email</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fab fa-whatsapp fa-2x text-success mb-3"></i>
+                            <h5 class="card-title">WhatsApp</h5>
+                            <p class="card-text">@Model?.WhatsAppNumber</p>
+                            <a href="https://wa.me/@(Model?.WhatsAppNumber?.Replace("+", "").Replace(" ", ""))" class="btn btn-sm btn-success" target="_blank">Chat on WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Send Me a Message</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/Contact/SendMessage" method="POST">
+                        @Html.AntiForgeryToken()
+                        
+                        <div class="mb-3">
+                            <label for="Name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="Name" name="Name" autocomplete="name" required aria-describedby="Name-error">
+                            <span id="Name-error" class="text-danger" role="alert"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="Email" name="Email" autocomplete="email" required aria-describedby="Email-error">
+                            <span id="Email-error" class="text-danger" role="alert"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="PhoneNumber" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" autocomplete="tel" aria-describedby="PhoneNumber-error">
+                            <span id="PhoneNumber-error" class="text-danger" role="alert"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="Subject" name="Subject" autocomplete="off" required aria-describedby="Subject-error">
+                            <span id="Subject-error" class="text-danger" role="alert"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Message" class="form-label">Message <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="Message" name="Message" rows="5" autocomplete="off" required aria-describedby="Message-error"></textarea>
+                            <span id="Message-error" class="text-danger" role="alert"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+                        <a href="/" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="mt-5 text-center">
+                <p class="text-muted">For immediate assistance, prefer using WhatsApp or Email. Response time: 24-48 hours.</p>
+            </div>
+        </div>
+    </div>
+</div>

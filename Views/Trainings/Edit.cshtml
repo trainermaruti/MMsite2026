@@ -1,0 +1,86 @@
+@model Training
+
+@{
+    ViewData["Title"] = "Edit Training";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>Edit Training</h1>
+            <hr />
+
+            <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Training Title <span class="text-danger">*</span></label>
+                    <input asp-for="Title" class="form-control" required />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description <span class="text-danger">*</span></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Company" class="form-label">Company/Client Name <span class="text-danger">*</span></label>
+                            <input asp-for="Company" class="form-control" required />
+                            <span asp-validation-for="Company" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="DeliveryDate" class="form-label">Delivery Date</label>
+                            <input asp-for="DeliveryDate" type="datetime-local" class="form-control" />
+                            <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Duration" class="form-label">Duration</label>
+                            <input asp-for="Duration" class="form-control" placeholder="e.g., 2 days, 8 hours, 1 week" />
+                            <span asp-validation-for="Duration" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Topics" class="form-label">Topics Covered <span class="text-danger">*</span></label>
+                            <input asp-for="Topics" class="form-control" required />
+                            <span asp-validation-for="Topics" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Training Image URL (Optional)</label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <small class="form-text text-muted">Provide a full URL to the image</small>
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save"></i> Update Training
+                    </button>
+                    <a href="/Trainings" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

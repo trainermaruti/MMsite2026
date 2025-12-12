@@ -1,0 +1,206 @@
+@model TrainingEvent
+
+@{
+    ViewData["Title"] = "Add New Event";
+    Layout = "_ModernAdminLayout";
+}
+
+<div style="padding: 0 32px 32px 32px;">
+    <div style="margin-bottom: 32px;">
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+            <i class="fas fa-plus-circle" style="color: var(--primary); margin-right: 12px;"></i>Add New Event
+        </h1>
+    </div>
+
+    <div class="modern-card">
+        <form asp-area="Admin" asp-controller="Events" asp-action="Create" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label">Event Title <span style="color: var(--error);">*</span></label>
+                        <input asp-for="Title" class="form-control" placeholder="e.g., Azure Cloud Bootcamp" required />
+                        <span asp-validation-for="Title" style="color: var(--error);"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label asp-for="Status" class="form-label">Status <span style="color: var(--error);">*</span></label>
+                        <select asp-for="Status" class="form-control" required>
+                            <option value="Draft">Draft</option>
+                            <option value="Upcoming">Upcoming</option>
+                            <option value="Open">Open for Registration</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                        <span asp-validation-for="Status" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label asp-for="Summary" class="form-label">Short Summary</label>
+                        <input asp-for="Summary" class="form-control" placeholder="Brief one-line summary (max 500 chars)" maxlength="500" />
+                        <small class="form-text" style="color: var(--text-muted);">Optional short description for listings</small>
+                        <span asp-validation-for="Summary" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Event Description <span style="color: var(--error);">*</span></label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Detailed event description" required></textarea>
+                        <span asp-validation-for="Description" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="StartDate" class="form-label">Start Date & Time <span style="color: var(--error);">*</span></label>
+                        <input asp-for="StartDate" type="datetime-local" class="form-control" required />
+                        <span asp-validation-for="StartDate" style="color: var(--error);"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="EndDate" class="form-label">End Date & Time</label>
+                        <input asp-for="EndDate" type="datetime-local" class="form-control" required />
+                        <span asp-validation-for="EndDate" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label asp-for="IsOnline" class="form-label">Event Format</label>
+                        <select asp-for="IsOnline" class="form-control" id="isOnlineSelect">
+                            <option value="False">In-Person</option>
+                            <option value="True">Online</option>
+                        </select>
+                        <span asp-validation-for="IsOnline" style="color: var(--error);"></span>
+                    </div>
+                </div>
+                <div class="col-md-4" id="locationField">
+                    <div class="mb-3">
+                        <label asp-for="Location" class="form-label">Location</label>
+                        <input asp-for="Location" class="form-control" placeholder="e.g., Bangalore / Mumbai" />
+                        <span asp-validation-for="Location" style="color: var(--error);"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label asp-for="TimeZone" class="form-label">Time Zone</label>
+                        <select asp-for="TimeZone" class="form-control">
+                            <option value="">-- Select Time Zone --</option>
+                            @if (ViewBag.TimeZones != null)
+                            {
+                                @foreach(var tz in (List<(string Id, string DisplayName)>)ViewBag.TimeZones)
+                                {
+                                    <option value="@tz.Id">@tz.DisplayName</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="TimeZone" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="EventType" class="form-label">Event Type <span style="color: var(--error);">*</span></label>
+                        <select asp-for="EventType" class="form-control" required>
+                            <option value="">-- Select Type --</option>
+                            <option value="Webinar">Webinar</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Bootcamp">Bootcamp</option>
+                            <option value="Conference">Conference</option>
+                            <option value="Training">Training</option>
+                            <option value="Certification">Certification Exam</option>
+                        </select>
+                        <span asp-validation-for="EventType" style="color: var(--error);"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="MaxParticipants" class="form-label">Max Participants</label>
+                        <input asp-for="MaxParticipants" type="number" class="form-control" placeholder="e.g., 50" />
+                        <span asp-validation-for="MaxParticipants" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="RegistrationLink" class="form-label">Registration Link <span style="color: var(--error);">*</span></label>
+                <input asp-for="RegistrationLink" class="form-control" placeholder="https://eventbrite.com/e/..." required />
+                <small class="form-text" style="color: var(--text-muted);">Link to event registration page</small>
+                <span asp-validation-for="RegistrationLink" style="color: var(--error);"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Event Banner Image</label>
+                <input type="file" name="bannerFile" class="form-control" accept=".jpg,.jpeg,.png,.webp" id="bannerFile" />
+                <small class="form-text" style="color: var(--text-muted);">Upload banner image. Recommended: 1200x600px. Max 5MB. Formats: JPG, PNG, WEBP</small>
+                <img id="bannerPreview" src="" alt="Preview" style="display: none; max-width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 12px;" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ImageUrl" class="form-label">Or Event Image URL</label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/banner.jpg" />
+                <small class="form-text" style="color: var(--text-muted);">Alternative: Use URL instead of uploading</small>
+                <span asp-validation-for="ImageUrl" style="color: var(--error);"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <button type="submit" class="modern-btn modern-btn-primary">
+                    <i class="fas fa-save"></i> Add Event
+                </button>
+                <a asp-area="Admin" asp-controller="Events" asp-action="Index" class="modern-btn modern-btn-secondary">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        // Banner preview
+        document.getElementById('bannerFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('bannerPreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Location field toggle based on IsOnline
+        document.getElementById('isOnlineSelect').addEventListener('change', function() {
+            const locationField = document.getElementById('locationField');
+            const locationInput = locationField.querySelector('input');
+            if (this.value === 'True') {
+                locationInput.value = 'Online';
+                locationInput.required = false;
+                locationField.style.display = 'none';
+            } else {
+                locationInput.value = '';
+                locationInput.required = true;
+                locationField.style.display = 'block';
+            }
+        });
+    </script>
+}

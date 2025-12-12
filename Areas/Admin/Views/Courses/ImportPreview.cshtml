@@ -1,0 +1,301 @@
+@model List<Dictionary<string, string>>
+
+@{
+    ViewData["Title"] = "Import Courses from SkillTech Club";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">
+                    <i class="fas fa-download me-2"></i>Import from SkillTech Club
+                </h1>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Courses
+                </a>
+            </div>
+            <p class="text-muted mt-2">Select a course to preview and import into your catalog</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var course in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="modern-card h-100 course-import-card">
+                        @if (!string.IsNullOrEmpty(course.GetValueOrDefault("ThumbnailUrl")))
+                        {
+                            <div class="course-thumbnail mb-3">
+                                <img src="@course["ThumbnailUrl"]" alt="@course["Title"]" class="img-fluid rounded" style="width: 100%; height: 200px; object-fit: cover;">
+                            </div>
+                        }
+                        
+                        <h4 class="mb-3">@course["Title"]</h4>
+                        
+                        <div class="course-meta mb-3">
+                            <span class="badge bg-primary me-2">
+                                <i class="fas fa-folder me-1"></i>@course.GetValueOrDefault("Category", "Uncategorized")
+                            </span>
+                            <span class="badge bg-info">
+                                <i class="fas fa-signal me-1"></i>@course.GetValueOrDefault("Level", "All Levels")
+                            </span>
+                        </div>
+
+                        <div class="course-stats mb-3">
+                            @{
+                                var durationMins = int.Parse(course.GetValueOrDefault("DurationMinutes", "0"));
+                                var hrs = durationMins / 60;
+                                var mins = durationMins % 60;
+                                var durFormat = $"{hrs:D2}:{mins:D2}:00";
+                            }
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span><i class="fas fa-clock me-1"></i>@durFormat</span>
+                                <span><i class="fas fa-users me-1"></i>@course.GetValueOrDefault("Enrollments", "0") enrolled</span>
+                                <span><i class="fas fa-star me-1"></i>@course.GetValueOrDefault("Rating", "0")</span>
+                            </div>
+                        </div>
+
+                        <p class="text-muted small mb-3" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                            @course.GetValueOrDefault("Description", "No description available")
+                        </p>
+
+                        <button type="button" 
+                                class="btn btn-primary w-100 import-course-btn"
+                                data-course-title="@course["Title"]">
+                            <i class="fas fa-download me-2"></i>Import This Course
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>No courses available for import at this time.
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Import Confirmation Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title" id="importModalLabel">
+                    <i class="fas fa-eye me-2"></i>Preview & Confirm Import
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="coursePreviewContent">
+                <!-- Course preview will be loaded here -->
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="confirmImportBtn">
+                    <i class="fas fa-check me-2"></i>Confirm Import
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let currentCourseData = null;
+
+        // Import course button click handler
+        document.querySelectorAll('.import-course-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const courseTitle = this.dataset.courseTitle;
+                loadCoursePreview(courseTitle);
+            });
+        });
+
+        // Load course preview data
+        function loadCoursePreview(courseTitle) {
+            fetch(`/Admin/Courses/GetCourseData?title=${encodeURIComponent(courseTitle)}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentCourseData = data;
+                    displayCoursePreview(data);
+                    
+                    // Show modal
+                    const modal = new bootstrap.Modal(document.getElementById('importModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error('Error loading course:', error);
+                    alert('Error loading course data. Please try again.');
+                });
+        }
+
+        // Display course preview in modal
+        function displayCoursePreview(course) {
+            const durationHours = Math.floor(course.DurationMinutes / 60);
+            const durationMins = course.DurationMinutes % 60;
+            const durationFormatted = `${String(durationHours).padStart(2, '0')}:${String(durationMins).padStart(2, '0')}:00`;
+
+            const previewHtml = `
+                <div class="course-preview">
+                    ${course.ThumbnailUrl ? `
+                        <div class="mb-3">
+                            <img src="${course.ThumbnailUrl}" alt="${course.Title}" class="img-fluid rounded" style="width: 100%; max-height: 300px; object-fit: cover;">
+                        </div>
+                    ` : ''}
+                    
+                    <h3 class="mb-3">${course.Title}</h3>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p class="mb-2"><strong>Category:</strong> <span class="text-primary">${course.Category || 'Uncategorized'}</span></p>
+                            <p class="mb-2"><strong>Level:</strong> <span class="text-info">${course.Level || 'All Levels'}</span></p>
+                            <p class="mb-2"><strong>Duration:</strong> ${durationFormatted} (${course.DurationMinutes} minutes)</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2"><strong>Rating:</strong> ${course.Rating || '0'} ⭐</p>
+                            <p class="mb-2"><strong>Enrollments:</strong> ${course.Enrollments || '0'} students</p>
+                            <p class="mb-2"><strong>Price:</strong> ₹${course.Price || '0'}</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Description:</strong>
+                        <p class="text-muted mt-2">${course.Description || 'No description available'}</p>
+                    </div>
+
+                    ${course.VideoUrl ? `
+                        <div class="mb-3">
+                            <strong>Video URL:</strong>
+                            <p class="text-muted"><a href="${course.VideoUrl}" target="_blank" class="text-primary">${course.VideoUrl}</a></p>
+                        </div>
+                    ` : ''}
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Click "Confirm Import" to add this course to your catalog. You can edit it later if needed.
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('coursePreviewContent').innerHTML = previewHtml;
+        }
+
+        // Confirm import button
+        document.getElementById('confirmImportBtn').addEventListener('click', function() {
+            if (!currentCourseData) {
+                alert('No course data available');
+                return;
+            }
+
+            // Prepare course object for import
+            const courseToImport = {
+                title: currentCourseData.Title,
+                description: currentCourseData.Description,
+                category: currentCourseData.Category || null,
+                level: currentCourseData.Level || 'All Levels',
+                durationMinutes: parseInt(currentCourseData.DurationMinutes) || 0,
+                durationSeconds: parseInt(currentCourseData.DurationMinutes) * 60 || 0,
+                thumbnailUrl: currentCourseData.ThumbnailUrl || null,
+                videoUrl: currentCourseData.VideoUrl || null,
+                skillTechUrl: currentCourseData.SkillTechUrl || null,
+                price: parseFloat(currentCourseData.Price) || 0,
+                rating: parseFloat(currentCourseData.Rating) || 0
+            };
+
+            // Disable button and show loading
+            const confirmBtn = this;
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Importing...';
+
+            // Send import request
+            fetch('/Admin/Courses/ImportConfirm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value
+                },
+                body: JSON.stringify(courseToImport)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Close modal
+                    bootstrap.Modal.getInstance(document.getElementById('importModal')).hide();
+                    
+                    // Show success message
+                    alert('Course imported successfully!');
+                    
+                    // Redirect to courses list
+                    window.location.href = '/Admin/Courses';
+                } else {
+                    alert(data.message || 'Error importing course');
+                    confirmBtn.disabled = false;
+                    confirmBtn.innerHTML = '<i class="fas fa-check me-2"></i>Confirm Import';
+                }
+            })
+            .catch(error => {
+                console.error('Error importing course:', error);
+                alert('Error importing course. Please try again.');
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = '<i class="fas fa-check me-2"></i>Confirm Import';
+            });
+        });
+    </script>
+
+    <style>
+        .course-import-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .course-import-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+        }
+
+        .course-thumbnail {
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .course-thumbnail img {
+            transition: transform 0.3s;
+        }
+
+        .course-import-card:hover .course-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .course-stats {
+            padding: 0.75rem;
+            background: var(--glass-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-content {
+            background: var(--bg-secondary) !important;
+        }
+
+        .course-preview {
+            color: var(--text-primary);
+        }
+
+        .course-preview strong {
+            color: var(--text-primary);
+        }
+    </style>
+}

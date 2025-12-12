@@ -1,0 +1,204 @@
+@* ============================================================================
+   Header/Navbar - Maruti Makwana Training Portal
+   Plus Jakarta Sans Branding | Responsive & Accessible
+   ============================================================================ *@
+
+<header class="site-header" id="siteHeader">
+    <nav class="header-nav" role="navigation" aria-label="Main navigation">
+        <div class="header-container">
+            
+            @* Left: Logo + Brand *@
+            <div class="header-brand">
+                <a class="brand-link" asp-controller="Home" asp-action="Index" title="Maruti Makwana Training Portal - Home">
+                    <img src="~/images/logo.jpg?v=@DateTime.Now.Ticks" alt="Maruti Makwana logo" class="brand-logo" width="40" height="40" />
+                    <div class="brand-text">
+                        <span class="brand-title" style="font-family: 'Orbitron', 'Rajdhani', 'Montserrat', sans-serif !important; font-weight: 700 !important; letter-spacing: 0.15em !important;">MARUTI MAKWANA</span>
+                    </div>
+                </a>
+            </div>
+
+            @* Center/Right: Desktop Navigation *@
+            <ul class="nav-list" id="navList">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index" data-nav-link>
+                        <i class="fas fa-home" aria-hidden="true"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Trainings" asp-action="Index" data-nav-link>
+                        <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                        <span>Trainings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Courses" asp-action="Index" data-nav-link>
+                        <i class="fas fa-video" aria-hidden="true"></i>
+                        <span>Courses</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Events" asp-action="Index" data-nav-link>
+                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                        <span>Events</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Profile" asp-action="About" data-nav-link>
+                        <i class="fas fa-user-circle" aria-hidden="true"></i>
+                        <span>About</span>
+                    </a>
+                </li>
+            </ul>
+
+            @* Right: Actions *@
+            <div class="header-actions">
+                @* Contact Me CTA *@
+                <a asp-controller="Contact" asp-action="Index" class="btn-cta">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <span>Contact Me</span>
+                </a>
+
+                @* Theme Toggle *@
+                <button type="button" 
+                        class="btn-icon" 
+                        data-theme-toggle 
+                        aria-label="Toggle theme" 
+                        title="Toggle light/dark mode">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+
+                @* Mobile Menu Toggle *@
+                <button type="button" 
+                        class="btn-icon mobile-menu-toggle" 
+                        id="mobileMenuToggle"
+                        aria-label="Toggle mobile menu" 
+                        aria-expanded="false"
+                        title="Open menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    @* Mobile Menu Overlay *@
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    @* Mobile Menu Drawer *@
+    <div class="mobile-menu-drawer" id="mobileMenuDrawer">
+        <div class="mobile-menu-header">
+            <div class="mobile-brand">
+                <img src="~/images/logo.jpg?v=@DateTime.Now.Ticks" alt="Logo" class="mobile-logo" />
+                <span class="mobile-brand-name">MARUTI MAKWANA</span>
+            </div>
+            <button type="button" class="btn-icon mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <a class="mobile-nav-link" asp-controller="Home" asp-action="Index">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a class="mobile-nav-link" asp-controller="Trainings" asp-action="Index">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Trainings</span>
+            </a>
+            <a class="mobile-nav-link" asp-controller="Courses" asp-action="Index">
+                <i class="fas fa-video"></i>
+                <span>Courses</span>
+            </a>
+            <a class="mobile-nav-link" asp-controller="Events" asp-action="Index">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Events</span>
+            </a>
+            <a class="mobile-nav-link" asp-controller="Profile" asp-action="About">
+                <i class="fas fa-user-circle"></i>
+                <span>About</span>
+            </a>
+            <a class="mobile-nav-link" asp-controller="Contact" asp-action="Index">
+                <i class="fas fa-envelope"></i>
+                <span>Contact Me</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+@* Inline JavaScript - Navigation Behavior (Vanilla, Unobtrusive) *@
+<script>
+(function() {
+    'use strict';
+    
+    // Active Link Highlighting
+    function highlightActiveLink() {
+        const currentPath = window.location.pathname.toLowerCase();
+        const navLinks = document.querySelectorAll('[data-nav-link], .mobile-nav-link');
+        
+        navLinks.forEach(function(link) {
+            const linkPath = link.getAttribute('href')?.toLowerCase() || '';
+            const isActive = currentPath === linkPath || 
+                           (linkPath !== '/' && currentPath.startsWith(linkPath));
+            
+            if (isActive) {
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.classList.remove('active');
+                link.removeAttribute('aria-current');
+            }
+        });
+    }
+    
+    // Mobile Menu Toggle
+    function setupMobileMenu() {
+        const menuToggle = document.getElementById('mobileMenuToggle');
+        const menuClose = document.getElementById('mobileMenuClose');
+        const menuDrawer = document.getElementById('mobileMenuDrawer');
+        const menuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        
+        function openMenu() {
+            menuDrawer.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            menuToggle.setAttribute('aria-expanded', 'true');
+        }
+        
+        function closeMenu() {
+            menuDrawer.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', openMenu);
+        }
+        
+        if (menuClose) {
+            menuClose.addEventListener('click', closeMenu);
+        }
+        
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        // Close menu when clicking on a link
+        mobileNavLinks.forEach(function(link) {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && menuDrawer.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+    }
+    
+    // Run on load and on navigation
+    highlightActiveLink();
+    setupMobileMenu();
+    window.addEventListener('popstate', highlightActiveLink);
+})();
+</script>

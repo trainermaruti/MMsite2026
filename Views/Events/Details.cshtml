@@ -1,0 +1,81 @@
+@model TrainingEvent
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8">
+            @{
+                var bannerImage = !string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : Model.BannerUrl;
+            }
+            @if (!string.IsNullOrEmpty(bannerImage))
+            {
+                <img src="@bannerImage" class="img-fluid rounded mb-4" alt="@Model.Title" style="max-height: 400px; width: 100%; object-fit: cover;">
+            }
+            else
+            {
+                <div class="bg-light rounded mb-4 d-flex align-items-center justify-content-center" style="height: 300px;">
+                    <i class="fas fa-calendar fa-5x text-muted"></i>
+                </div>
+            }
+
+            <h1>@Model.Title</h1>
+            <p class="lead">
+                <span class="badge bg-info">@Model.EventType</span>
+            </p>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Event Description</h5>
+                </div>
+                <div class="card-body">
+                    <p style="white-space: pre-line; line-height: 1.8;">@Model.Description</p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Event Schedule</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong><i class="fas fa-calendar-check text-primary"></i> Start:</strong> @Model.StartDate.ToString("dd MMMM yyyy HH:mm")</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Registration Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Event Type</h6>
+                        <p class="h6">@Model.EventType</p>
+                    </div>
+                </div>
+            </div>
+
+            @if (!Model.MaxParticipants.HasValue || Model.RegisteredParticipants < Model.MaxParticipants.Value)
+            {
+                <a href="@Model.RegistrationLink" class="btn btn-primary btn-lg w-100 mb-2" target="_blank">
+                    <i class="fas fa-clipboard-list"></i> Join Now
+                </a>
+            }
+            else
+            {
+                <button class="btn btn-secondary btn-lg w-100 mb-2" disabled>
+                    <i class="fas fa-exclamation-circle"></i> Event Full
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a href="/Events" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+</div>

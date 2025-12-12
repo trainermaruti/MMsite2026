@@ -1,0 +1,65 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace MarutiTrainingPortal.Models
+{
+    public class Event
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string Title { get; set; } = string.Empty;
+
+        [StringLength(500)]
+        public string? Summary { get; set; }
+
+        [Required]
+        public string Description { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(50)]
+        public string EventType { get; set; } = "Webinar"; // Webinar, Workshop, Seminar, Conference
+
+        public bool IsOnline { get; set; }
+
+        [StringLength(500)]
+        public string? Location { get; set; }
+
+        [Required]
+        public DateTime StartDateUtc { get; set; }
+
+        [Required]
+        public DateTime EndDateUtc { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string TimeZone { get; set; } = "UTC";
+
+        public int? MaxCapacity { get; set; }
+
+        public int CurrentRegistrations { get; set; } = 0;
+
+        [Required]
+        [StringLength(50)]
+        public string Status { get; set; } = "Draft"; // Draft, Upcoming, Open, Closed
+
+        [StringLength(1000)]
+        public string? BannerUrl { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
+        public bool IsDeleted { get; set; } = false;
+
+        // Navigation property
+        public virtual ICollection<EventRegistration> Registrations { get; set; } = new List<EventRegistration>();
+
+        // Computed properties
+        public bool IsFull => MaxCapacity.HasValue && CurrentRegistrations >= MaxCapacity.Value;
+        public int AvailableSlots => MaxCapacity.HasValue ? Math.Max(0, MaxCapacity.Value - CurrentRegistrations) : int.MaxValue;
+        public decimal CapacityPercentage => MaxCapacity.HasValue && MaxCapacity.Value > 0 
+            ? (decimal)CurrentRegistrations / MaxCapacity.Value * 100 
+            : 0;
+    }
+}

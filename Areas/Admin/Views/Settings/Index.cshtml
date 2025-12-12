@@ -1,0 +1,450 @@
+@model MarutiTrainingPortal.Models.ViewModels.SystemSettingsViewModel
+@{
+    ViewData["Title"] = "System Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_ModernAdminLayout.cshtml";
+}
+
+<div style="padding: 24px 48px 48px 48px;">
+    <!-- Page Header -->
+    <div style="margin-bottom: 32px;">
+        <h1 style="font-size: 36px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+            <i class="fas fa-cog" style="color: #a855f7; margin-right: 12px;"></i>System Settings
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">Configure global website settings and integrations</p>
+    </div>
+
+    <!-- Alert Messages -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(5, 150, 105, 0.1); border: 1px solid #059669; color: #059669; border-radius: 12px; margin-bottom: 24px;">
+            <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; border-radius: 12px; margin-bottom: 24px;">
+            <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["InfoMessage"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert" style="background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; color: #3b82f6; border-radius: 12px; margin-bottom: 24px;">
+            <i class="fas fa-info-circle me-2"></i>@TempData["InfoMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Settings Tabs -->
+    <div class="profile-tabs-container">
+        <!-- Tab Navigation -->
+        <div class="profile-tabs-nav">
+            <button class="profile-tab-btn active" data-tab="seo">
+                <i class="fas fa-search"></i>
+                <span>SEO Settings</span>
+            </button>
+            <button class="profile-tab-btn" data-tab="email">
+                <i class="fas fa-envelope"></i>
+                <span>Email Notifications</span>
+            </button>
+            <button class="profile-tab-btn" data-tab="features">
+                <i class="fas fa-toggle-on"></i>
+                <span>Feature Toggles</span>
+            </button>
+            <button class="profile-tab-btn" data-tab="integrations">
+                <i class="fas fa-plug"></i>
+                <span>Integrations</span>
+            </button>
+            <button class="profile-tab-btn" data-tab="system">
+                <i class="fas fa-server"></i>
+                <span>System Info</span>
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="profile-tabs-content">
+            <!-- SEO Settings Tab -->
+            <div class="profile-tab-pane active" id="tab-seo">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        SEO & Meta Settings
+                    </h3>
+
+                    <form asp-action="UpdateSeo" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Id)
+
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <label asp-for="SiteTitle" class="form-label">Site Title</label>
+                                <input asp-for="SiteTitle" class="modern-input" />
+                                <span asp-validation-for="SiteTitle" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="MetaDescription" class="form-label">Meta Description</label>
+                                <textarea asp-for="MetaDescription" class="modern-input" rows="3" maxlength="500"></textarea>
+                                <span asp-validation-for="MetaDescription" class="text-danger small"></span>
+                                <small class="text-muted d-block mt-1">Max 500 characters. Appears in search results.</small>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="MetaKeywords" class="form-label">Meta Keywords</label>
+                                <input asp-for="MetaKeywords" class="modern-input" placeholder="keyword1, keyword2, keyword3" />
+                                <span asp-validation-for="MetaKeywords" class="text-danger small"></span>
+                                <small class="text-muted d-block mt-1">Comma-separated list</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">OG Image</label>
+                                @if (!string.IsNullOrEmpty(Model.OgImageUrl))
+                                {
+                                    <div class="mb-2">
+                                        <img src="@Model.OgImageUrl" alt="OG Image" style="max-width: 200px; height: auto; border-radius: 8px;" />
+                                    </div>
+                                }
+                                <form asp-action="UploadOgImage" method="post" enctype="multipart/form-data" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="file" name="ogImage" accept="image/*" class="form-control modern-input mb-2" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-upload"></i> Upload OG Image
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Favicon</label>
+                                @if (!string.IsNullOrEmpty(Model.FaviconUrl))
+                                {
+                                    <div class="mb-2">
+                                        <img src="@Model.FaviconUrl" alt="Favicon" style="width: 32px; height: 32px;" />
+                                    </div>
+                                }
+                                <form asp-action="UploadFavicon" method="post" enctype="multipart/form-data" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="file" name="favicon" accept="image/*" class="form-control modern-input mb-2" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-upload"></i> Upload Favicon
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="modern-btn modern-btn-primary">
+                                    <i class="fas fa-save"></i> Save SEO Settings
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Email Notifications Tab -->
+            <div class="profile-tab-pane" id="tab-email">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        Email Notification Settings
+                    </h3>
+
+                    <form asp-action="UpdateEmail" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Id)
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label asp-for="ContactFormReceiverEmail" class="form-label">Contact Form Receiver Email</label>
+                                <input asp-for="ContactFormReceiverEmail" type="email" class="modern-input" />
+                                <span asp-validation-for="ContactFormReceiverEmail" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="SecondaryNotificationEmail" class="form-label">Secondary Notification Email</label>
+                                <input asp-for="SecondaryNotificationEmail" type="email" class="modern-input" />
+                                <span asp-validation-for="SecondaryNotificationEmail" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check form-switch" style="padding-left: 3em;">
+                                    <input asp-for="EmailNotificationsEnabled" class="form-check-input" type="checkbox" style="width: 3em; height: 1.5em; cursor: pointer;" />
+                                    <label asp-for="EmailNotificationsEnabled" class="form-check-label" style="padding-left: 0.5em; color: var(--text-primary);">
+                                        Enable Email Notifications
+                                    </label>
+                                </div>
+                                <small class="text-muted d-block mt-1">When enabled, you'll receive email notifications for new contact messages</small>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="modern-btn modern-btn-primary">
+                                    <i class="fas fa-save"></i> Save Email Settings
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Feature Toggles Tab -->
+            <div class="profile-tab-pane" id="tab-features">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        Feature Toggles
+                    </h3>
+
+                    <form asp-action="UpdateFeatures" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Id)
+
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="alert alert-warning" style="background: rgba(251, 191, 36, 0.1); border: 1px solid #fbbf24; color: #fbbf24; border-radius: 8px;">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Warning:</strong> Maintenance mode will display a maintenance page to all visitors except admins.
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="feature-toggle-card">
+                                    <div class="form-check form-switch" style="padding-left: 3em;">
+                                        <input asp-for="MaintenanceMode" class="form-check-input" type="checkbox" style="width: 3em; height: 1.5em; cursor: pointer;" />
+                                        <label asp-for="MaintenanceMode" class="form-check-label" style="padding-left: 0.5em; color: var(--text-primary); font-weight: 600;">
+                                            Maintenance Mode
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">Put site in maintenance mode</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="feature-toggle-card">
+                                    <div class="form-check form-switch" style="padding-left: 3em;">
+                                        <input asp-for="ShowUpcomingEvents" class="form-check-input" type="checkbox" style="width: 3em; height: 1.5em; cursor: pointer;" />
+                                        <label asp-for="ShowUpcomingEvents" class="form-check-label" style="padding-left: 0.5em; color: var(--text-primary); font-weight: 600;">
+                                            Show Upcoming Events
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">Display events section on homepage</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="feature-toggle-card">
+                                    <div class="form-check form-switch" style="padding-left: 3em;">
+                                        <input asp-for="ShowCoursesSection" class="form-check-input" type="checkbox" style="width: 3em; height: 1.5em; cursor: pointer;" />
+                                        <label asp-for="ShowCoursesSection" class="form-check-label" style="padding-left: 0.5em; color: var(--text-primary); font-weight: 600;">
+                                            Show Courses Section
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">Display courses section on homepage</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="feature-toggle-card">
+                                    <div class="form-check form-switch" style="padding-left: 3em;">
+                                        <input asp-for="ShowProfileSection" class="form-check-input" type="checkbox" style="width: 3em; height: 1.5em; cursor: pointer;" />
+                                        <label asp-for="ShowProfileSection" class="form-check-label" style="padding-left: 0.5em; color: var(--text-primary); font-weight: 600;">
+                                            Show Profile Section
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">Display trainer profile section</small>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="modern-btn modern-btn-primary">
+                                    <i class="fas fa-save"></i> Save Feature Toggles
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Integrations Tab -->
+            <div class="profile-tab-pane" id="tab-integrations">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        Third-Party Integrations
+                    </h3>
+
+                    <div class="alert alert-info" style="background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; color: #3b82f6; border-radius: 8px; margin-bottom: 24px;">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        <strong>Security Notice:</strong> API keys should be stored using <code>dotnet user-secrets</code> in development or environment variables in production. Never commit secrets to source control.
+                    </div>
+
+                    <!-- SMTP Configuration -->
+                    <div class="mb-5">
+                        <h4 style="color: var(--text-primary); margin-bottom: 16px;">
+                            SMTP Configuration
+                            @if (Model.SmtpConfigured)
+                            {
+                                <span class="badge bg-success ms-2">Configured</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary ms-2">Not Configured</span>
+                            }
+                        </h4>
+
+                        <form asp-action="TestSmtp" method="post">
+                            @Html.AntiForgeryToken()
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">SMTP Host</label>
+                                    <input type="text" name="SmtpHost" class="modern-input" placeholder="smtp.gmail.com" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">SMTP Port</label>
+                                    <input type="number" name="SmtpPort" class="modern-input" value="587" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">SMTP Username</label>
+                                    <input type="text" name="SmtpUsername" class="modern-input" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">SMTP Password</label>
+                                    <input type="password" name="SmtpPassword" class="modern-input" />
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="EnableSsl" class="form-check-input" checked />
+                                        <label class="form-check-label" style="color: var(--text-primary);">Enable SSL</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-outline-primary">
+                                        <i class="fas fa-check"></i> Mark as Configured
+                                    </button>
+                                    <small class="text-muted d-block mt-2">
+                                        Save these values using: <code>dotnet user-secrets set "Smtp:Host" "your-host"</code>
+                                    </small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- API Keys -->
+                    <div>
+                        <h4 style="color: var(--text-primary); margin-bottom: 16px;">API Keys</h4>
+
+                        <form asp-action="SaveApiKeys" method="post">
+                            @Html.AntiForgeryToken()
+
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label">
+                                        SendGrid API Key
+                                        @if (Model.SendGridConfigured)
+                                        {
+                                            <span class="badge bg-success ms-2">Configured</span>
+                                        }
+                                    </label>
+                                    <input type="password" name="SendGridApiKey" class="modern-input" placeholder="SG.xxxxxxxxxxxxx" />
+                                    <small class="text-muted d-block mt-1">
+                                        Save using: <code>dotnet user-secrets set "SendGrid:ApiKey" "your-key"</code>
+                                    </small>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">
+                                        Azure OpenAI API Key
+                                        @if (Model.AzureOpenAIConfigured)
+                                        {
+                                            <span class="badge bg-success ms-2">Configured</span>
+                                        }
+                                    </label>
+                                    <input type="password" name="AzureOpenAIApiKey" class="modern-input" placeholder="your-azure-openai-key" />
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Azure OpenAI Endpoint</label>
+                                    <input type="url" name="AzureOpenAIEndpoint" class="modern-input" placeholder="https://your-resource.openai.azure.com/" />
+                                    <small class="text-muted d-block mt-1">
+                                        Save using: <code>dotnet user-secrets set "AzureOpenAI:ApiKey" "your-key"</code>
+                                    </small>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="modern-btn modern-btn-primary">
+                                        <i class="fas fa-check"></i> Mark as Configured
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Info Tab -->
+            <div class="profile-tab-pane" id="tab-system">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        System Information
+                    </h3>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <label style="color: var(--text-secondary); font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Application Version</label>
+                                <div style="font-size: 24px; font-weight: 700; color: var(--text-primary);">@Model.AppVersion</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <label style="color: var(--text-secondary); font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Database Size</label>
+                                <div style="font-size: 24px; font-weight: 700; color: var(--text-primary);">@(Model.DatabaseSize ?? "N/A")</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <label style="color: var(--text-secondary); font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Last Backup</label>
+                                <div style="font-size: 18px; font-weight: 600; color: var(--text-primary);">
+                                    @(Model.LastBackupDate?.ToString("MMM dd, yyyy") ?? "Never")
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <label style="color: var(--text-secondary); font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Last Updated</label>
+                                <div style="font-size: 18px; font-weight: 600; color: var(--text-primary);">
+                                    @Model.UpdatedDate.ToString("MMM dd, yyyy hh:mm tt")
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <h4 style="color: var(--text-primary); margin-bottom: 16px;">System Actions</h4>
+
+                            <form asp-action="ClearCache" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-warning">
+                                    <i class="fas fa-trash-alt"></i> Clear Cache
+                                </button>
+                            </form>
+
+                            <small class="text-muted d-block mt-3">
+                                <i class="fas fa-info-circle"></i> Clearing cache will refresh all cached settings and data.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/profile-tabs.js"></script>
+}

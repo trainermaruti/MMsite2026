@@ -1,0 +1,48 @@
+@model MarutiTrainingPortal.Models.AboutViewModel
+
+<section class="bento-grid-section py-12 bg-gray-50" aria-label="About Maruti Makwana">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center">About Me</h2>
+        <div class="grid grid-cols-12 gap-4 auto-rows-auto">
+            @foreach (var tile in Model.Tiles)
+            {
+                <article 
+                    role="region" 
+                    aria-labelledby="tile-@tile.Id"
+                    tabindex="0"
+                    data-bento-tile
+                    class="@tile.CssClasses bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-4 focus:ring-[var(--accent)] focus:ring-offset-2"
+                >
+                    @if (!string.IsNullOrEmpty(tile.IconClass))
+                    {
+                        <i class="@tile.IconClass text-4xl text-accent mb-4"></i>
+                    }
+
+                    <h3 id="tile-@tile.Id" class="text-xl font-bold mb-3">@tile.Title</h3>
+                    
+                    @if (!string.IsNullOrEmpty(tile.Subtitle))
+                    {
+                        <p class="text-accent text-sm mb-3">@tile.Subtitle</p>
+                    }
+                    
+                    @if (!string.IsNullOrEmpty(tile.ImageUrl))
+                    {
+                        <img 
+                            src="@tile.ImageUrl" 
+                            alt="@(tile.AltText ?? tile.Title)" 
+                            class="w-full h-48 object-cover rounded-lg mb-4"
+                            loading="lazy"
+                        />
+                    }
+                    
+                    <div class="prose prose-sm max-w-none">
+                        @* SECURITY: ContentHtml must be sanitized server-side before rendering (use Ganss.XSS.HtmlSanitizer) *@
+                        @Html.Raw(tile.ContentHtml)
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</section>
+
+<script type="module" src="/js/bento.js" defer></script>

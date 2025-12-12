@@ -1,0 +1,114 @@
+@model MarutiTrainingPortal.Models.WebsiteImage
+
+@{
+    ViewData["Title"] = "Edit Website Image";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Edit Website Image</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CreatedDate" />
+                        <input type="hidden" asp-for="IsDeleted" />
+                        
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="DisplayName" class="form-label"></label>
+                            <input asp-for="DisplayName" class="form-control" />
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageKey" class="form-label"></label>
+                            <input asp-for="ImageKey" class="form-control" />
+                            <span asp-validation-for="ImageKey" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Category" class="form-label"></label>
+                            <select asp-for="Category" class="form-control">
+                                <option value="">-- Select Category --</option>
+                                <option value="Profile">Profile</option>
+                                <option value="About">About</option>
+                                <option value="Header">Header</option>
+                                <option value="Hero">Hero</option>
+                                <option value="Background">Background</option>
+                                <option value="Badge">Badge</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="AltText" class="form-label"></label>
+                            <input asp-for="AltText" class="form-control" />
+                            <span asp-validation-for="AltText" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Current Image</label>
+                            <div>
+                                <img src="@Model.ImageUrl" alt="@Model.AltText" style="max-width: 100%; max-height: 300px; border: 1px solid #ddd; padding: 10px; border-radius: 8px;" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Upload New Image (Optional)</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                            <small class="form-text text-muted">
+                                Leave empty to keep current image: @Model.ImageUrl
+                            </small>
+                        </div>
+                        
+                        <input type="hidden" asp-for="ImageUrl" />
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Image
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i> Image Details
+                </div>
+                <div class="card-body">
+                    <p><strong>Image Key:</strong> <code>@Model.ImageKey</code></p>
+                    <p><strong>Category:</strong> @Model.Category</p>
+                    <p><strong>Created:</strong> @Model.CreatedDate.ToString("MMM dd, yyyy")</p>
+                    @if (Model.UpdatedDate.HasValue)
+                    {
+                        <p><strong>Last Updated:</strong> @Model.UpdatedDate.Value.ToString("MMM dd, yyyy")</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

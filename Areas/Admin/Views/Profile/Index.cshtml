@@ -1,0 +1,263 @@
+@model MarutiTrainingPortal.Models.ViewModels.AdminProfileViewModel
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_ModernAdminLayout.cshtml";
+}
+
+<div style="padding: 24px 48px 48px 48px;">
+    <!-- Page Header -->
+    <div style="margin-bottom: 32px;">
+        <h1 style="font-size: 36px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+            <i class="fas fa-user-circle" style="color: #3b82f6; margin-right: 12px;"></i>My Profile
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 16px; margin: 0;">Manage your personal information and account settings</p>
+    </div>
+
+    <!-- Alert Messages -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(5, 150, 105, 0.1); border: 1px solid #059669; color: #059669; border-radius: 12px; margin-bottom: 24px;">
+            <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; border-radius: 12px; margin-bottom: 24px;">
+            <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Profile Tabs -->
+    <div class="profile-tabs-container">
+        <!-- Tab Navigation -->
+        <div class="profile-tabs-nav">
+            <button class="profile-tab-btn active" data-tab="personal">
+                <i class="fas fa-user"></i>
+                <span>Personal Info</span>
+            </button>
+            <button class="profile-tab-btn" data-tab="contact">
+                <i class="fas fa-address-book"></i>
+                <span>Contact & Social</span>
+            </button>
+            <button class="profile-tab-btn" data-tab="photo">
+                <i class="fas fa-camera"></i>
+                <span>Profile Photo</span>
+            </button>
+            <button class="profile-tab-btn" data-tab="security">
+                <i class="fas fa-lock"></i>
+                <span>Security</span>
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="profile-tabs-content">
+            <!-- Personal Info Tab -->
+            <div class="profile-tab-pane active" id="tab-personal">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        Personal Information
+                    </h3>
+
+                    <form asp-area="Admin" asp-controller="Profile" asp-action="UpdatePersonalInfo" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label asp-for="FullName" class="form-label">Full Name</label>
+                                <input asp-for="FullName" id="FullName" class="modern-input" autocomplete="name" />
+                                <span asp-validation-for="FullName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Title" class="form-label">Professional Title</label>
+                                <input asp-for="Title" id="Title" class="modern-input" placeholder="e.g., Corporate Azure & AI Trainer" autocomplete="organization-title" />
+                                <span asp-validation-for="Title" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Bio" class="form-label">Short Bio</label>
+                                <div id="bio-editor"></div>
+                                <textarea asp-for="Bio" id="bio-hidden" style="display: none;"></textarea>
+                                <span asp-validation-for="Bio" class="text-danger small"></span>
+                                <small class="text-muted d-block mt-1">
+                                    <i class="fas fa-info-circle"></i> You can use rich formatting. Max 2000 characters.
+                                </small>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Expertise" class="form-label">Expertise/Skills</label>
+                                <input asp-for="Expertise" id="Expertise" class="modern-input" placeholder="e.g., Azure Cloud, AI, Machine Learning, DevOps" autocomplete="off" />
+                                <span asp-validation-for="Expertise" class="text-danger small"></span>
+                                <small class="text-muted d-block mt-1">Comma-separated list</small>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="CertificationsAndAchievements" class="form-label">Certifications & Achievements</label>
+                                <textarea asp-for="CertificationsAndAchievements" id="CertificationsAndAchievements" class="modern-input" rows="4" 
+                                          placeholder="e.g., Azure Certified Trainer, AI Specialist, AWS Solutions Architect" autocomplete="off"></textarea>
+                                <span asp-validation-for="CertificationsAndAchievements" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="modern-btn modern-btn-primary">
+                                    <i class="fas fa-save"></i> Save Personal Info
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact & Social Tab -->
+            <div class="profile-tab-pane" id="tab-contact">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        Contact & Social Links
+                    </h3>
+
+                    <form asp-area="Admin" asp-controller="Profile" asp-action="UpdateContactInfo" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label">Public Email</label>
+                                <input asp-for="Email" id="Email" type="email" class="modern-input" autocomplete="email" />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                                <input asp-for="PhoneNumber" id="PhoneNumber" type="tel" class="modern-input" placeholder="+91-XXXXXXXXXX" autocomplete="tel" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="WhatsAppNumber" class="form-label">WhatsApp Number</label>
+                                <input asp-for="WhatsAppNumber" id="WhatsAppNumber" type="tel" class="modern-input" placeholder="+91-XXXXXXXXXX" autocomplete="tel" />
+                                <span asp-validation-for="WhatsAppNumber" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="LinkedInUrl" class="form-label">LinkedIn Profile URL</label>
+                                <input asp-for="LinkedInUrl" id="LinkedInUrl" type="url" class="modern-input" placeholder="https://linkedin.com/in/your-profile" autocomplete="url" />
+                                <span asp-validation-for="LinkedInUrl" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="InstagramUrl" class="form-label">Instagram Profile URL</label>
+                                <input asp-for="InstagramUrl" id="InstagramUrl" type="url" class="modern-input" placeholder="https://instagram.com/your-profile" autocomplete="url" />
+                                <span asp-validation-for="InstagramUrl" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="YouTubeUrl" class="form-label">YouTube Channel URL</label>
+                                <input asp-for="YouTubeUrl" id="YouTubeUrl" type="url" class="modern-input" placeholder="https://youtube.com/@@your-channel" autocomplete="url" />
+                                <span asp-validation-for="YouTubeUrl" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="SkillTechUrl" class="form-label">SkillTech Website URL</label>
+                                <input asp-for="SkillTechUrl" id="SkillTechUrl" type="url" class="modern-input" placeholder="https://skilltech.com/your-profile" autocomplete="url" />
+                                <span asp-validation-for="SkillTechUrl" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="modern-btn modern-btn-primary">
+                                    <i class="fas fa-save"></i> Save Contact Info
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Profile Photo Tab -->
+            <div class="profile-tab-pane" id="tab-photo">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        Profile Photo
+                    </h3>
+
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div style="margin-bottom: 20px;">
+                                <img id="profile-preview" src="@(Model.ProfileImageUrl ?? "/images/44.png")" 
+                                     alt="Profile Photo" 
+                                     style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--border-color);" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <form asp-area="Admin" asp-controller="Profile" asp-action="UploadPhoto" method="post" enctype="multipart/form-data">
+                                @Html.AntiForgeryToken()
+
+                                <div class="mb-3">
+                                    <label class="form-label">Upload New Photo</label>
+                                    <input type="file" name="profileImage" id="profileImage" accept="image/*" class="form-control modern-input" />
+                                    <small class="text-muted d-block mt-1">
+                                        <i class="fas fa-info-circle"></i> Max file size: 5MB. Supported formats: JPG, PNG, GIF, WebP
+                                    </small>
+                                </div>
+
+                                <button type="submit" class="modern-btn modern-btn-primary">
+                                    <i class="fas fa-upload"></i> Upload Photo
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Tab -->
+            <div class="profile-tab-pane" id="tab-security">
+                <div class="modern-card" style="padding: 32px;">
+                    <h3 style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px;">
+                        Change Password
+                    </h3>
+
+                    <form asp-area="Admin" asp-controller="Profile" asp-action="ChangePassword" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label for="CurrentPassword" class="form-label">Current Password</label>
+                                <input type="password" id="CurrentPassword" name="CurrentPassword" class="modern-input" autocomplete="current-password" required />
+                            </div>
+
+                            <div class="col-md-6"></div>
+
+                            <div class="col-md-6">
+                                <label for="NewPassword" class="form-label">New Password</label>
+                                <input type="password" id="NewPassword" name="NewPassword" class="modern-input" autocomplete="new-password" required />
+                                <small class="text-muted d-block mt-1">
+                                    Min 8 characters, include uppercase, lowercase, number and special character
+                                </small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="ConfirmPassword" class="form-label">Confirm New Password</label>
+                                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="modern-input" autocomplete="new-password" required />
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="modern-btn modern-btn-primary">
+                                    <i class="fas fa-key"></i> Change Password
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="~/js/profile-tabs.js"></script>
+}

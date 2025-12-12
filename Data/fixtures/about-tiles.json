@@ -1,0 +1,57 @@
+[
+  {
+    "id": "bio",
+    "title": "Professional Bio",
+    "bodyHtml": "<p>Azure & AI Corporate Trainer with 10+ years of experience delivering training to Fortune 500 companies. Passionate about empowering teams with practical cloud and AI skills.</p>",
+    "imageSrc": "/images/profile.webp",
+    "altText": "Maruti Makwana Profile Photo",
+    "linkUrl": null,
+    "linkText": null,
+    "cssClasses": "col-span-12 lg:col-span-7 lg:row-span-2",
+    "backgroundColor": "bg-blue-50"
+  },
+  {
+    "id": "map",
+    "title": "Training Locations",
+    "bodyHtml": "<p>I deliver training across India and globally via online platforms. Based in Mumbai, available for on-site and remote sessions.</p>",
+    "imageSrc": "/images/map.webp",
+    "altText": "Training locations map",
+    "linkUrl": "/contact",
+    "linkText": "Book a Session",
+    "cssClasses": "col-span-12 lg:col-span-5",
+    "backgroundColor": "bg-green-50"
+  },
+  {
+    "id": "tech",
+    "title": "Technologies",
+    "bodyHtml": "<ul class='list-disc ml-6'><li>Azure Cloud</li><li>AI & Machine Learning</li><li>DevOps & CI/CD</li><li>Microsoft 365</li></ul>",
+    "imageSrc": null,
+    "altText": null,
+    "linkUrl": "/projects",
+    "linkText": "View Trainings",
+    "cssClasses": "col-span-12 lg:col-span-5",
+    "backgroundColor": "bg-purple-50"
+  },
+  {
+    "id": "clients",
+    "title": "Trusted by Leading Companies",
+    "bodyHtml": "<p>TCS, IBM, Infosys, Wipro, Accenture, and 50+ other organizations trust me to upskill their teams.</p>",
+    "imageSrc": "/images/clients.webp",
+    "altText": "Client company logos",
+    "linkUrl": null,
+    "linkText": null,
+    "cssClasses": "col-span-12 lg:col-span-7",
+    "backgroundColor": "bg-yellow-50"
+  },
+  {
+    "id": "cta",
+    "title": "Ready to Upskill Your Team?",
+    "bodyHtml": "<p>Let's discuss your training needs and create a customized program for your organization.</p>",
+    "imageSrc": null,
+    "altText": null,
+    "linkUrl": "/contact",
+    "linkText": "Contact Me",
+    "cssClasses": "col-span-12 lg:col-span-5",
+    "backgroundColor": "bg-indigo-100"
+  }
+]

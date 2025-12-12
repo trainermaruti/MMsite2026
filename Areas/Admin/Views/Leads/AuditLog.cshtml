@@ -1,0 +1,135 @@
+@model List<LeadAuditLog>
+
+@{
+    ViewData["Title"] = "Audit Log";
+    var lead = ViewBag.Lead as ContactMessage;
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <a href="@Url.Action("Index")" class="btn btn-secondary mb-3">
+                <i class="fas fa-arrow-left"></i> Back to Leads
+            </a>
+            
+            <h1 class="gradient-text">Audit Log - Lead #@lead.Id</h1>
+            
+            <!-- Lead Summary -->
+            <div class="card-enterprise mt-3">
+                <h5 style="color: var(--color-primary); margin-bottom: 16px;">Lead Information</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Name:</strong> @lead.Name</p>
+                        <p><strong>Email:</strong> <a href="mailto:@lead.Email">@lead.Email</a></p>
+                        <p><strong>Phone:</strong> @(lead.Phone ?? "N/A")</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Status:</strong> <span class="badge bg-primary">@lead.Status</span></p>
+                        <p><strong>Created:</strong> @lead.CreatedDate.ToString("MMMM dd, yyyy HH:mm")</p>
+                        <p><strong>Event:</strong> @(lead.Event?.Title ?? "General Inquiry")</p>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(lead.Message))
+                {
+                    <div class="mt-3">
+                        <strong>Message:</strong>
+                        <p style="color: var(--color-text-secondary);">@lead.Message</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Audit Trail -->
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="color: var(--color-text-primary); margin-bottom: 20px;">Activity History</h3>
+            
+            @if (Model == null || Model.Count == 0)
+            {
+                <div class="alert alert-enterprise-info">
+                    <i class="fas fa-info-circle"></i> No audit logs found for this lead.
+                </div>
+            }
+            else
+            {
+                <div class="timeline">
+                    @foreach (var log in Model)
+                    {
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content card-enterprise">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 style="color: var(--color-primary); margin-bottom: 4px;">
+                                            @log.Action
+                                        </h6>
+                                        <small style="color: var(--color-text-secondary);">
+                                            by @log.ChangedBy
+                                        </small>
+                                    </div>
+                                    <small style="color: var(--color-text-secondary);">
+                                        @log.CreatedDate.ToString("MMM dd, yyyy HH:mm")
+                                    </small>
+                                </div>
+                                
+                                @if (!string.IsNullOrEmpty(log.OldValue) || !string.IsNullOrEmpty(log.NewValue))
+                                {
+                                    <div class="mb-2">
+                                        <span class="badge bg-danger" style="opacity: 0.8;">@log.OldValue</span>
+                                        <i class="fas fa-arrow-right mx-2" style="color: var(--color-text-secondary);"></i>
+                                        <span class="badge bg-success">@log.NewValue</span>
+                                    </div>
+                                }
+                                
+                                @if (!string.IsNullOrEmpty(log.Notes))
+                                {
+                                    <p style="color: var(--color-text-secondary); margin-top: 12px; margin-bottom: 0;">
+                                        <strong>Notes:</strong> @log.Notes
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+.timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(99, 102, 241, 0.3);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -28px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: 2px solid var(--color-bg-dark);
+}
+
+.timeline-content {
+    padding: 16px;
+}
+</style>

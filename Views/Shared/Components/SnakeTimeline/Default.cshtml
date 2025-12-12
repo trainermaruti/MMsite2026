@@ -1,0 +1,184 @@
+@model List<MarutiTrainingPortal.Models.TrainingItem>
+
+<style>
+    @@keyframes pulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+        50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+    }
+    
+    @@keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Theme-aware colors for timeline */
+    .timeline-heading,
+    .timeline-stat {
+        color: var(--text-primary) !important;
+    }
+    
+    .timeline-subheading,
+    .timeline-stat-label,
+    .timeline-badge-text {
+        color: var(--text-secondary) !important;
+    }
+    
+    .timeline-badge {
+        background: var(--card-bg) !important;
+        border: 1px solid var(--border-color) !important;
+    }
+    
+    .snake-timeline-nodes > div {
+        animation: fadeInUp 0.6s ease-out backwards;
+    }
+    
+    .snake-timeline-nodes > div:nth-child(2) { animation-delay: 0.1s; }
+    .snake-timeline-nodes > div:nth-child(3) { animation-delay: 0.2s; }
+    .snake-timeline-nodes > div:nth-child(4) { animation-delay: 0.3s; }
+    .snake-timeline-nodes > div:nth-child(5) { animation-delay: 0.4s; }
+    .snake-timeline-nodes > div:nth-child(6) { animation-delay: 0.5s; }
+    
+    /* Mobile Responsive Styles */
+    @@media (max-width: 768px) {
+        .snake-timeline-wrapper {
+            padding: 60px 10px !important;
+            margin: 30px 0 40px 0 !important;
+        }
+        
+        .snake-timeline-wrapper h2 {
+            font-size: 2rem !important;
+        }
+        
+        .snake-timeline-wrapper p {
+            font-size: 1rem !important;
+        }
+        
+        .timeline-node-wrapper {
+            padding-left: 0 !important;
+            margin-bottom: 50px !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
+        
+        .timeline-node-wrapper > div:first-child {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 10px !important;
+        }
+        
+        .timeline-node-wrapper > div:first-child > div:first-child,
+        .timeline-node-wrapper > div:first-child > div:last-child {
+            min-width: 20px !important;
+        }
+        
+        .timeline-node-wrapper > div:first-child > div:nth-child(2) {
+            width: 48px !important;
+            height: 48px !important;
+        }
+        
+        .timeline-node-wrapper > div:first-child > div:nth-child(2) span {
+            font-size: 1.4rem !important;
+        }
+        
+        .timeline-card {
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+    }
+</style>
+
+@{
+    // Fallback data with logos and testimonials
+    var displayItems = Model != null && Model.Any() ? Model : new List<MarutiTrainingPortal.Models.TrainingItem>
+    {
+        new() { 
+            Id = 1, 
+            Client = "Tata Consultancy Services", 
+            Topic = "Azure Cloud Architecture & Migration Strategy", 
+            Year = "2023",
+            ExcerptHtml = "Led comprehensive Azure cloud migration training for 150+ engineers, covering infrastructure design, hybrid solutions, and cost optimization strategies.",
+            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/TCS_Logo.svg/2560px-TCS_Logo.svg.png",
+            AltText = "TCS Logo"
+        },
+        new() { 
+            Id = 2, 
+            Client = "IBM India Private Limited", 
+            Topic = "AI & Machine Learning with Azure Cognitive Services", 
+            Year = "2023",
+            ExcerptHtml = "Delivered advanced AI training focusing on Azure ML Studio, Computer Vision, NLP, and responsible AI implementation for enterprise solutions.",
+            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/2560px-IBM_logo.svg.png",
+            AltText = "IBM Logo"
+        },
+        new() { 
+            Id = 3, 
+            Client = "Infosys Technologies", 
+            Topic = "DevOps Excellence & Azure DevOps Pipelines", 
+            Year = "2024",
+            ExcerptHtml = "Comprehensive DevOps training covering CI/CD pipelines, Infrastructure as Code, containerization with Docker & Kubernetes, and monitoring strategies.",
+            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Infosys_logo.svg/2560px-Infosys_logo.svg.png",
+            AltText = "Infosys Logo"
+        },
+        new() { 
+            Id = 4, 
+            Client = "Wipro Limited", 
+            Topic = "Azure Security & Compliance Framework", 
+            Year = "2024",
+            ExcerptHtml = "Security-focused training on Azure Sentinel, Key Vault, identity management, compliance standards (ISO 27001, SOC 2), and threat protection.",
+            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Wipro_Primary_Logo_Color_RGB.svg/2560px-Wipro_Primary_Logo_Color_RGB.svg.png",
+            AltText = "Wipro Logo"
+        },
+        new() { 
+            Id = 5, 
+            Client = "Accenture Solutions", 
+            Topic = "Modern Data Engineering & Analytics on Azure", 
+            Year = "2024",
+            ExcerptHtml = "Hands-on training in Azure Synapse, Data Factory, Databricks, and Power BI for building scalable data platforms and real-time analytics.",
+            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Accenture.svg/2560px-Accenture.svg.png",
+            AltText = "Accenture Logo"
+        }
+    };
+    
+    var categories = new Dictionary<int, (string name, string icon, string color)>
+    {
+    };
+    
+    var testimonials = new Dictionary<int, (string quote, string author, string role)>
+    {
+    };
+}
+
+<section class="snake-timeline-wrapper" aria-label="Featured Training Timeline" style="padding: 100px 20px 40px 20px; margin: 0; position: relative; overflow: hidden; background: var(--bg-primary);">
+    <div style="position: absolute; inset: 0; pointer-events: none; opacity: 0.03;">
+        <div style="background-image: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);"></div>
+    </div>
+    
+    <div class="snake-timeline-container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div class="timeline-badge" style="display: inline-block; background: rgba(0, 51, 102, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(0, 51, 102, 0.25); border-radius: 50px; padding: 10px 24px; margin-bottom: 20px;">
+                <span class="timeline-badge-text" style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">🏆 Enterprise Excellence</span>
+            </div>
+            <h2 class="timeline-heading" style="font-size: 3.5rem; font-weight: 900; margin-bottom: 20px; line-height: 1.2;">
+Featured Training Journey</h2>
+            <p class="timeline-subheading" style="font-size: 1.25rem; margin-bottom: 10px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                Empowering Fortune 500 companies with cutting-edge Azure cloud training
+            </p>
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 30px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="stat-number timeline-stat" data-count="500" style="font-size: 2rem; font-weight: 900;">500+</span>
+                    <span class="timeline-stat-label" style="font-size: 0.875rem; text-align: left; line-height: 1.2;">Professionals<br/>Trained</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="stat-number timeline-stat" data-count="50" style="font-size: 2rem; font-weight: 900;">50+</span>
+                    <span class="timeline-stat-label" style="font-size: 0.875rem; text-align: left; line-height: 1.2;">Enterprise<br/>Programs</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="stat-number timeline-stat" data-count="98" style="font-size: 2rem; font-weight: 900;">98+</span>
+                    <span class="timeline-stat-label" style="font-size: 0.875rem; text-align: left; line-height: 1.2;">Satisfaction<br/>Rating</span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>

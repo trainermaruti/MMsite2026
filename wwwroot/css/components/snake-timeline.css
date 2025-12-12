@@ -1,0 +1,284 @@
+/* ===================================================================
+   Snake Timeline Component Styles
+   Production-ready with accessibility & performance optimizations
+   =================================================================== */
+
+:root {
+    --timeline-accent: #4F46E5;
+    --timeline-bg: #ffffff;
+    --timeline-text: #1f2937;
+    --timeline-border: #e5e7eb;
+    --timeline-shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --timeline-bg: #1f2937;
+    --timeline-text: #f9fafb;
+    --timeline-border: #374151;
+    --timeline-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* === Container === */
+.snake-timeline-wrapper {
+    padding: 80px 20px;
+    background: var(--bg-primary, var(--timeline-bg));
+    overflow: hidden;
+}
+
+.snake-timeline-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* === Header === */
+.snake-timeline-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--text-primary, var(--timeline-text));
+    letter-spacing: -0.02em;
+}
+
+.snake-timeline-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    text-align: center;
+    color: var(--text-secondary, #6b7280);
+    margin-bottom: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* === SVG Path === */
+.snake-path {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 120px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.snake-path-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 0.5s ease-out;
+}
+
+/* === Timeline Nodes === */
+.snake-timeline-nodes {
+    position: relative;
+    z-index: 1;
+    padding: 40px 0;
+}
+
+.timeline-node {
+    display: flex;
+    align-items: center;
+    margin-bottom: 120px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.timeline-node.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Left/Right Positioning */
+.timeline-node-left {
+    justify-content: flex-start;
+    padding-right: 50%;
+}
+
+.timeline-node-right {
+    justify-content: flex-end;
+    padding-left: 50%;
+    flex-direction: row-reverse;
+}
+
+/* === Node Dot === */
+.timeline-node-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent, var(--timeline-accent));
+    border: 4px solid var(--bg-primary, var(--timeline-bg));
+    box-shadow: 0 0 0 2px var(--accent, var(--timeline-accent));
+    flex-shrink: 0;
+    margin: 0 30px;
+    position: relative;
+    z-index: 2;
+}
+
+/* === Node Card === */
+.timeline-node-card {
+    background: var(--bg-secondary, #f9fafb);
+    border: 1px solid var(--border-color, var(--timeline-border));
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px var(--timeline-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 500px;
+}
+
+.timeline-node-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px var(--timeline-shadow);
+}
+
+.timeline-node-card:focus-within {
+    outline: 2px solid var(--accent, var(--timeline-accent));
+    outline-offset: 2px;
+}
+
+/* === Image === */
+.timeline-node-image-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.timeline-node-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3/2;
+}
+
+/* === Content === */
+.timeline-node-content {
+    padding-top: 8px;
+}
+
+.timeline-node-year {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent, var(--timeline-accent));
+    background: rgba(79, 70, 229, 0.1);
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+}
+
+.timeline-node-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary, var(--timeline-text));
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.timeline-node-topic {
+    font-size: 1rem;
+    color: var(--text-secondary, #6b7280);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.timeline-node-excerpt {
+    font-size: 0.95rem;
+    color: var(--text-secondary, #6b7280);
+    line-height: 1.6;
+}
+
+/* === Color Variations === */
+.timeline-node.primary .timeline-node-dot {
+    background: var(--primary, #4F46E5);
+    box-shadow: 0 0 0 2px var(--primary, #4F46E5);
+}
+
+.timeline-node.secondary .timeline-node-dot {
+    background: var(--secondary, #10b981);
+    box-shadow: 0 0 0 2px var(--secondary, #10b981);
+}
+
+.timeline-node.accent .timeline-node-dot {
+    background: var(--accent, #f59e0b);
+    box-shadow: 0 0 0 2px var(--accent, #f59e0b);
+}
+
+/* === Empty State === */
+.snake-timeline-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary, #6b7280);
+    font-size: 1.125rem;
+}
+
+/* ===================================================================
+   REDUCED MOTION SUPPORT (Accessibility)
+   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .snake-path-line {
+        stroke-dasharray: 0;
+        stroke-dashoffset: 0;
+    }
+    
+    .timeline-node {
+        opacity: 1;
+        transform: none;
+    }
+    
+    .timeline-node-card {
+        transition: none;
+    }
+}
+
+/* ===================================================================
+   RESPONSIVE DESIGN (Mobile-first)
+   =================================================================== */
+@media (max-width: 768px) {
+    .snake-timeline-wrapper {
+        padding: 60px 16px;
+    }
+    
+    .snake-path {
+        display: none; /* Hide path on mobile for simplicity */
+    }
+    
+    .timeline-node {
+        margin-bottom: 60px;
+        padding: 0 !important;
+        flex-direction: column !important;
+    }
+    
+    .timeline-node-left,
+    .timeline-node-right {
+        padding: 0;
+    }
+    
+    .timeline-node-dot {
+        position: absolute;
+        left: 16px;
+        margin: 0;
+    }
+    
+    .timeline-node-card {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 60px;
+    }
+}
+
+/* ===================================================================
+   PRINT STYLES
+   =================================================================== */
+@media print {
+    .snake-path {
+        display: none;
+    }
+    
+    .timeline-node {
+        page-break-inside: avoid;
+        opacity: 1;
+        transform: none;
+    }
+}

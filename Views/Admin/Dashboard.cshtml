@@ -1,0 +1,220 @@
+@model MarutiTrainingPortal.Models.ViewModels.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Total Trainings</h5>
+                            <h2 class="mb-0">@Model.TotalTrainings</h2>
+                        </div>
+                        <i class="fas fa-chalkboard-teacher fa-3x opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Total Courses</h5>
+                            <h2 class="mb-0">@Model.TotalCourses</h2>
+                        </div>
+                        <i class="fas fa-book fa-3x opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Total Events</h5>
+                            <h2 class="mb-0">@Model.TotalEvents</h2>
+                        </div>
+                        <i class="fas fa-calendar-alt fa-3x opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Unread Messages</h5>
+                            <h2 class="mb-0">@Model.UnreadContactMessages</h2>
+                        </div>
+                        <i class="fas fa-envelope fa-3x opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-line"></i> Monthly Training Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyTrainingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie"></i> Courses by Category</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="coursesByCategoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Messages -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-comments"></i> Recent Contact Messages</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.RecentMessages.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var msg in Model.RecentMessages)
+                            {
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">@msg.Subject</h6>
+                                        <small>@msg.CreatedDate.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                    <p class="mb-1"><strong>From:</strong> @msg.Name (@msg.Email)</p>
+                                    <small class="text-muted">@(msg.Message.Length > 100 ? msg.Message.Substring(0, 100) + "..." : msg.Message)</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">No messages received yet.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-calendar-check"></i> Upcoming Events</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.UpcomingEventsList.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var evt in Model.UpcomingEventsList)
+                            {
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">@evt.Title</h6>
+                                        <small>@evt.StartDate.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt"></i> @evt.Location</p>
+                                    <small class="text-muted">@evt.Description</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">No upcoming events scheduled.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Fetch chart data from server
+        fetch('/Admin/GetChartData')
+            .then(response => response.json())
+            .then(data => {
+                // Monthly Trainings Chart
+                const monthlyCtx = document.getElementById('monthlyTrainingsChart').getContext('2d');
+                new Chart(monthlyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: data.monthlyTrainings.labels,
+                        datasets: [{
+                            label: 'Trainings per Month',
+                            data: data.monthlyTrainings.data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: true }
+                        },
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+
+                // Courses by Category Chart
+                const categoryCtx = document.getElementById('coursesByCategoryChart').getContext('2d');
+                new Chart(categoryCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.coursesByCategory.labels,
+                        datasets: [{
+                            data: data.coursesByCategory.data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)',
+                                'rgba(255, 159, 64, 0.7)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading chart data:', error));
+    </script>
+}

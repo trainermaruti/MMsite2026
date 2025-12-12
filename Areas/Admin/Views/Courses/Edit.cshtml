@@ -1,0 +1,206 @@
+@model Course
+
+@{
+    ViewData["Title"] = "Edit Course";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Course</h1>
+            <p class="text-muted mt-2">Update course information</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <form asp-area="Admin" asp-controller="Courses" asp-action="Edit" method="post" class="needs-validation" novalidate>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CreatedDate" />
+                <input type="hidden" asp-for="PublishedDate" />
+                <input type="hidden" asp-for="TotalEnrollments" />
+                <input type="hidden" asp-for="Rating" />
+                <input type="hidden" asp-for="Price" />
+
+                <div class="modern-card mb-4">
+                    <div class="row g-3">
+                        <!-- Title & Category -->
+                        <div class="col-md-6">
+                            <label asp-for="Title" class="form-label">Course Title <span class="text-danger">*</span></label>
+                            <input asp-for="Title" class="form-control" required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Category" class="form-label">Category</label>
+                            <input asp-for="Category" class="form-control" placeholder="e.g., Azure Fundamentals" />
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-md-12">
+                            <label asp-for="Description" class="form-label">Course Description <span class="text-danger">*</span></label>
+                            <textarea asp-for="Description" class="form-control" rows="6" required id="descriptionInput"></textarea>
+                            <div class="d-flex justify-content-between mt-1">
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                                <small id="wordCount" class="text-muted">0/1000 words</small>
+                            </div>
+                        </div>
+
+                        <!-- Duration & Level -->
+                        <div class="col-md-6">
+                            <label class="form-label">Duration (HH:MM:SS) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="durationDisplay" placeholder="00:00:00" required />
+                            <input type="hidden" asp-for="DurationSeconds" id="durationSeconds" />
+                            <input type="hidden" asp-for="DurationMinutes" id="durationMinutes" />
+                            <span asp-validation-for="DurationSeconds" class="text-danger"></span>
+                            <small class="text-muted">Format: HH:MM:SS (e.g., 05:41:52)</small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Level" class="form-label">Difficulty Level <span class="text-danger">*</span></label>
+                            <select asp-for="Level" class="form-control" required>
+                                <option value="">Select Level</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="All Levels">All Levels</option>
+                            </select>
+                            <span asp-validation-for="Level" class="text-danger"></span>
+                        </div>
+
+                        <!-- Thumbnail & Video URLs -->
+                        <div class="col-md-6">
+                            <label asp-for="ThumbnailUrl" class="form-label">Thumbnail</label>
+                            <div class="thumbnail-input-group">
+                                <input asp-for="ThumbnailUrl" class="form-control mb-2" id="thumbnailUrl" placeholder="Enter URL or upload image" />
+                                <div class="d-flex gap-2 align-items-center mb-2">
+                                    <input type="file" class="form-control" id="thumbnailFile" accept="image/*" style="flex: 1;" />
+                                    <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('thumbnailFile').value = ''; document.getElementById('thumbnailPreview').src = ''; document.getElementById('thumbnailPreview').style.display = 'none';">Clear</button>
+                                </div>
+                                <img id="thumbnailPreview" src="@Model.ThumbnailUrl" alt="Preview" style="@(string.IsNullOrEmpty(Model.ThumbnailUrl) ? "display: none;" : "") max-width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-top: 8px;" />
+                            </div>
+                            <span asp-validation-for="ThumbnailUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="VideoUrl" class="form-label">Video URL</label>
+                            <input asp-for="VideoUrl" class="form-control" placeholder="https://youtube.com/embed/..." />
+                            <span asp-validation-for="VideoUrl" class="text-danger"></span>
+                        </div>
+
+                        <!-- Course Link -->
+                        <div class="col-md-12">
+                            <label asp-for="SkillTechUrl" class="form-label">Course Link (SkillTech URL)</label>
+                            <input asp-for="SkillTechUrl" class="form-control" placeholder="https://skilltech.club/courses/..." />
+                            <span asp-validation-for="SkillTechUrl" class="text-danger"></span>
+                            <small class="text-muted">When users click the course card, they will be redirected to this URL</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-2"></i>Update Course
+                    </button>
+                    <a asp-area="Admin" asp-controller="Courses" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Initialize duration display from existing DurationSeconds value
+        document.addEventListener('DOMContentLoaded', function() {
+            const durationSeconds = parseInt(document.getElementById('durationSeconds').value) || 0;
+            const hours = Math.floor(durationSeconds / 3600);
+            const minutes = Math.floor((durationSeconds % 3600) / 60);
+            const seconds = durationSeconds % 60;
+            const formattedDuration = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+            document.getElementById('durationDisplay').value = formattedDuration;
+        });
+
+        // Duration converter
+        document.getElementById('durationDisplay').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + ':' + value.slice(2);
+            }
+            if (value.length >= 5) {
+                value = value.slice(0, 5) + ':' + value.slice(5);
+            }
+            if (value.length > 8) {
+                value = value.slice(0, 8);
+            }
+            
+            e.target.value = value;
+            
+            const parts = value.split(':');
+            if (parts.length === 3) {
+                const hours = parseInt(parts[0]) || 0;
+                const minutes = parseInt(parts[1]) || 0;
+                const seconds = parseInt(parts[2]) || 0;
+                const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+                document.getElementById('durationSeconds').value = totalSeconds;
+                document.getElementById('durationMinutes').value = Math.floor(totalSeconds / 60);
+            }
+        });
+
+        // Word counter
+        const descriptionInput = document.getElementById('descriptionInput');
+        const wordCount = document.getElementById('wordCount');
+
+        function updateWordCount() {
+            const text = descriptionInput.value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            wordCount.textContent = words + '/1000 words';
+            
+            if (words > 1000) {
+                wordCount.style.color = 'var(--error)';
+            } else if (words > 900) {
+                wordCount.style.color = '#fbbf24';
+            } else {
+                wordCount.style.color = 'var(--text-secondary)';
+            }
+        }
+
+        descField.addEventListener('input', updateWordCount);
+        updateWordCount(); // Initial count
+    </script>
+
+    <script>
+        // Thumbnail file upload handler
+        document.getElementById('thumbnailFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('thumbnailPreview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    document.getElementById('thumbnailUrl').value = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Show preview if URL is entered
+        document.getElementById('thumbnailUrl').addEventListener('input', function() {
+            const url = this.value;
+            if (url && (url.startsWith('http') || url.startsWith('data:'))) {
+                const preview = document.getElementById('thumbnailPreview');
+                preview.src = url;
+                preview.style.display = 'block';
+            }
+        });
+    </script>
+}

@@ -1,0 +1,129 @@
+name: CI/CD - Build, Test, and Deploy Admin Portal
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  PROJECT_PATH: './MarutiTrainingPortal.csproj'
+  PUBLISH_PATH: './publish'
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+      
+    - name: Build project
+      run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore
+      
+    - name: Run unit tests
+      run: dotnet test ${{ env.PROJECT_PATH }} --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: '**/test-results.trx'
+        
+    - name: Publish application
+      run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --output ${{ env.PUBLISH_PATH }} --no-build
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: webapp
+        path: ${{ env.PUBLISH_PATH }}
+
+  deploy-azure:
+    name: Deploy to Azure App Service
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: webapp
+        path: ${{ env.PUBLISH_PATH }}
+        
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'your-azure-app-service-name'  # REPLACE with your Azure App Service name
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        package: ${{ env.PUBLISH_PATH }}
+
+  deploy-docker:
+    name: Build and Push Docker Image (Optional)
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/marutitraining:latest
+          ${{ secrets.DOCKER_USERNAME }}/marutitraining:${{ github.sha }}
+        cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/marutitraining:buildcache
+        cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/marutitraining:buildcache,mode=max
+
+# REQUIRED GITHUB SECRETS:
+# 
+# For Azure Deployment:
+# - AZURE_PUBLISH_PROFILE: Download from Azure Portal → App Service → Get publish profile
+#
+# For Docker Deployment (Optional):
+# - DOCKER_USERNAME: Your Docker Hub username
+# - DOCKER_PASSWORD: Your Docker Hub password or access token
+#
+# REQUIRED ENVIRONMENT VARIABLES (Set in Azure App Service → Configuration):
+# - ASPNETCORE_Admin__Email: Admin email address
+# - ASPNETCORE_Admin__Password: Admin password (8+ chars, uppercase, lowercase, digit, special char)
+# - ConnectionStrings__DefaultConnection: SQL Server connection string
+#
+# SETUP INSTRUCTIONS:
+# 1. Create Azure App Service (free tier available: F1)
+# 2. Download publish profile from Azure Portal
+# 3. Add publish profile to GitHub Secrets as AZURE_PUBLISH_PROFILE
+# 4. Update 'app-name' in deploy-azure job with your Azure App Service name
+# 5. Set environment variables in Azure App Service → Configuration → Application settings
+# 6. Push to main branch to trigger deployment

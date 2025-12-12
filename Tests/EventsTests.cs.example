@@ -1,0 +1,272 @@
+using Xunit;
+using Microsoft.EntityFrameworkCore;
+using MarutiTrainingPortal.Data;
+using MarutiTrainingPortal.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MarutiTrainingPortal.Tests
+{
+    public class EventsTests
+    {
+        private ApplicationDbContext GetInMemoryDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            return new ApplicationDbContext(options);
+        }
+
+        [Fact]
+        public async Task CreateEvent_WithValidData_Success()
+        {
+            // Arrange
+            using var context = GetInMemoryDbContext();
+            var evt = new TrainingEvent
+            {
+                Title = "Test Event",
+                Description = "Test Description",
+                EventType = "Webinar",
+                StartDate = DateTime.UtcNow.AddDays(7),
+                EndDate = DateTime.UtcNow.AddDays(7).AddHours(2),
+                Location = "Online",
+                MaxParticipants = 100,
+                IsOnline = true,
+                TimeZone = "UTC",
+                Status = "Draft"
+            };
+
+            // Act
+            context.TrainingEvents.Add(evt);
+            await context.SaveChangesAsync();
+
+            // Assert
+            var saved = await context.TrainingEvents.FindAsync(evt.Id);
+            Assert.NotNull(saved);
+            Assert.Equal("Test Event", saved.Title);
+            Assert.Equal("Draft", saved.Status);
+        }
+
+        [Fact]
+        public void Event_CapacityCalculation_ReturnsCorrectPercentage()
+        {
+            // Arrange
+            var evt = new TrainingEvent
+            {
+                MaxParticipants = 100,
+                RegisteredParticipants = 75
+            };
+
+            // Act
+            var percentage = evt.CapacityPercentage;
+
+            // Assert
+            Assert.Equal(75, percentage);
+        }
+
+        [Fact]
+        public void Event_IsFull_WhenAtCapacity()
+        {
+            // Arrange
+            var evt = new TrainingEvent
+            {
+                MaxParticipants = 50,
+                RegisteredParticipants = 50
+            };
+
+            // Assert
+            Assert.True(evt.IsFull);
+        }
+
+        [Fact]
+        public void Event_IsNotFull_WhenBelowCapacity()
+        {
+            // Arrange
+            var evt = new TrainingEvent
+            {
+                MaxParticipants = 50,
+                RegisteredParticipants = 25
+            };
+
+            // Assert
+            Assert.False(evt.IsFull);
+        }
+
+        [Fact]
+        public void Event_AvailableSlots_CalculatedCorrectly()
+        {
+            // Arrange
+            var evt = new TrainingEvent
+            {
+                MaxParticipants = 100,
+                RegisteredParticipants = 35
+            };
+
+            // Act
+            var available = evt.AvailableSlots;
+
+            // Assert
+            Assert.Equal(65, available);
+        }
+
+        [Fact]
+        public async Task ExportRegistrations_ReturnsCorrectData()
+        {
+            // Arrange
+            using var context = GetInMemoryDbContext();
+            var evt = new TrainingEvent
+            {
+                Title = "Test Event",
+                Description = "Test",
+                EventType = "Workshop",
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddHours(2),
+                Location = "Test",
+                MaxParticipants = 10
+            };
+            context.TrainingEvents.Add(evt);
+            await context.SaveChangesAsync();
+
+            var registration = new TrainingEventRegistration
+            {
+                TrainingEventId = evt.Id,
+                Name = "John Doe",
+                Email = "john@example.com",
+                Phone = "1234567890"
+            };
+            context.TrainingEventRegistrations.Add(registration);
+            await context.SaveChangesAsync();
+
+            // Act
+            var registrations = await context.TrainingEventRegistrations
+                .Where(r => r.TrainingEventId == evt.Id && !r.IsDeleted)
+                .ToListAsync();
+
+            // Assert
+            Assert.Single(registrations);
+            Assert.Equal("John Doe", registrations[0].Name);
+            Assert.Equal("john@example.com", registrations[0].Email);
+        }
+
+        [Fact]
+        public async Task SoftDelete_Event_SetsIsDeletedFlag()
+        {
+            // Arrange
+            using var context = GetInMemoryDbContext();
+            var evt = new TrainingEvent
+            {
+                Title = "Test Event",
+                Description = "Test",
+                EventType = "Seminar",
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddHours(1),
+                Location = "Test Location",
+                MaxParticipants = 20,
+                IsDeleted = false
+            };
+            context.TrainingEvents.Add(evt);
+            await context.SaveChangesAsync();
+
+            // Act
+            evt.IsDeleted = true;
+            context.TrainingEvents.Update(evt);
+            await context.SaveChangesAsync();
+
+            // Assert
+            var deletedEvent = await context.TrainingEvents.FindAsync(evt.Id);
+            Assert.NotNull(deletedEvent);
+            Assert.True(deletedEvent.IsDeleted);
+        }
+
+        [Fact]
+        public async Task GetPagedEvents_ExcludesDeleted()
+        {
+            // Arrange
+            using var context = GetInMemoryDbContext();
+            
+            var evt1 = new TrainingEvent
+            {
+                Title = "Active Event",
+                Description = "Test",
+                EventType = "Webinar",
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddHours(1),
+                Location = "Online",
+                MaxParticipants = 50,
+                IsDeleted = false
+            };
+
+            var evt2 = new TrainingEvent
+            {
+                Title = "Deleted Event",
+                Description = "Test",
+                EventType = "Workshop",
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddHours(1),
+                Location = "Office",
+                MaxParticipants = 30,
+                IsDeleted = true
+            };
+
+            context.TrainingEvents.AddRange(evt1, evt2);
+            await context.SaveChangesAsync();
+
+            // Act
+            var activeEvents = await context.TrainingEvents
+                .Where(e => !e.IsDeleted)
+                .ToListAsync();
+
+            // Assert
+            Assert.Single(activeEvents);
+            Assert.Equal("Active Event", activeEvents[0].Title);
+        }
+
+        [Theory]
+        [InlineData("Draft")]
+        [InlineData("Upcoming")]
+        [InlineData("Open")]
+        [InlineData("Closed")]
+        public void Event_Status_AcceptsValidValues(string status)
+        {
+            // Arrange & Act
+            var evt = new TrainingEvent
+            {
+                Status = status
+            };
+
+            // Assert
+            Assert.Equal(status, evt.Status);
+        }
+
+        [Fact]
+        public async Task CreateRegistration_IncrementsParticipantCount()
+        {
+            // Arrange
+            using var context = GetInMemoryDbContext();
+            var evt = new TrainingEvent
+            {
+                Title = "Test Event",
+                Description = "Test",
+                EventType = "Conference",
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddHours(1),
+                Location = "Convention Center",
+                MaxParticipants = 100,
+                RegisteredParticipants = 10
+            };
+            context.TrainingEvents.Add(evt);
+            await context.SaveChangesAsync();
+
+            // Act
+            evt.RegisteredParticipants++;
+            context.TrainingEvents.Update(evt);
+            await context.SaveChangesAsync();
+
+            // Assert
+            var updated = await context.TrainingEvents.FindAsync(evt.Id);
+            Assert.Equal(11, updated.RegisteredParticipants);
+        }
+    }
+}

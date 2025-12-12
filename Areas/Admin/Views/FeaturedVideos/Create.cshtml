@@ -1,0 +1,97 @@
+@model MarutiTrainingPortal.Models.FeaturedVideo
+
+@{
+    ViewData["Title"] = "Create Featured Video";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Create Featured Video</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter video title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter video description (optional)"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="YouTubeUrl" class="form-label"></label>
+                            <input asp-for="YouTubeUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Paste the full YouTube video URL (e.g., https://www.youtube.com/watch?v=ABC123 or https://youtu.be/ABC123)
+                            </small>
+                            <span asp-validation-for="YouTubeUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DisplayOrder" class="form-label"></label>
+                            <input asp-for="DisplayOrder" class="form-control" type="number" value="0" />
+                            <small class="form-text text-muted">
+                                Lower numbers appear first. Only one video will be shown on the homepage.
+                            </small>
+                            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                            <label asp-for="IsActive" class="form-check-label"></label>
+                            <small class="form-text text-muted d-block">
+                                Only active videos will be displayed on the homepage.
+                            </small>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Create Video
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i> How to use
+                </div>
+                <div class="card-body">
+                    <h6>YouTube URL Formats:</h6>
+                    <ul class="small">
+                        <li><code>https://www.youtube.com/watch?v=ABC123</code></li>
+                        <li><code>https://youtu.be/ABC123</code></li>
+                    </ul>
+                    <hr />
+                    <h6>Tips:</h6>
+                    <ul class="small">
+                        <li>Only one active video will be displayed on the homepage</li>
+                        <li>The video with the lowest display order will be shown</li>
+                        <li>Make sure the video is set to public or unlisted on YouTube</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

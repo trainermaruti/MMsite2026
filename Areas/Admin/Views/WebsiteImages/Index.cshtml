@@ -1,0 +1,85 @@
+@model IEnumerable<MarutiTrainingPortal.Models.WebsiteImage>
+
+@{
+    ViewData["Title"] = "Website Images";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Website Images</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Image
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Category Filter -->
+    <div class="mb-4">
+        <div class="btn-group" role="group">
+            <a href="@Url.Action("Index", new { category = "All" })" 
+               class="btn @(ViewBag.SelectedCategory == "All" ? "btn-primary" : "btn-outline-primary")">
+                All Images
+            </a>
+            @foreach (var cat in ViewBag.Categories)
+            {
+                <a href="@Url.Action("Index", new { category = cat })" 
+                   class="btn @(ViewBag.SelectedCategory == cat ? "btn-primary" : "btn-outline-primary")">
+                    @cat
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                @if (Model.Any())
+                {
+                    @foreach (var image in Model)
+                    {
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card h-100">
+                                <img src="@image.ImageUrl" class="card-img-top" alt="@image.AltText" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h6 class="card-title">@image.DisplayName</h6>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            <strong>Key:</strong> @image.ImageKey<br/>
+                                            <strong>Category:</strong> @image.Category
+                                        </small>
+                                    </p>
+                                    @if (!string.IsNullOrEmpty(image.Description))
+                                    {
+                                        <p class="card-text"><small>@image.Description</small></p>
+                                    }
+                                </div>
+                                <div class="card-footer bg-transparent">
+                                    <a asp-action="Edit" asp-route-id="@image.Id" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@image.Id" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-images fa-4x text-muted mb-3"></i>
+                        <p class="text-muted">No images found. Click "Add New Image" to upload your first image.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+@model TrainingEvent
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>Edit Event</h1>
+            <hr />
+
+            <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Event Title <span class="text-danger">*</span></label>
+                    <input asp-for="Title" class="form-control" required />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Event Description <span class="text-danger">*</span></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="StartDate" class="form-label">Start Date & Time <span class="text-danger">*</span></label>
+                            <input asp-for="StartDate" type="datetime-local" class="form-control" required />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="EndDate" class="form-label">End Date & Time</label>
+                            <input asp-for="EndDate" type="datetime-local" class="form-control" required />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Location" class="form-label">Location <span class="text-danger">*</span></label>
+                            <input asp-for="Location" class="form-control" required />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="EventType" class="form-label">Event Type <span class="text-danger">*</span></label>
+                            <select asp-for="EventType" class="form-control" required>
+                                <option value="Webinar">Webinar</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Bootcamp">Bootcamp</option>
+                                <option value="Conference">Conference</option>
+                                <option value="Training">Training</option>
+                                <option value="Certification">Certification Exam</option>
+                            </select>
+                            <span asp-validation-for="EventType" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="MaxParticipants" class="form-label">Max Participants <span class="text-danger">*</span></label>
+                            <input asp-for="MaxParticipants" type="number" class="form-control" required />
+                            <span asp-validation-for="MaxParticipants" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="RegisteredParticipants" class="form-label">Currently Registered</label>
+                            <input asp-for="RegisteredParticipants" type="number" class="form-control" />
+                            <span asp-validation-for="RegisteredParticipants" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RegistrationLink" class="form-label">Registration Link <span class="text-danger">*</span></label>
+                    <input asp-for="RegistrationLink" class="form-control" required />
+                    <span asp-validation-for="RegistrationLink" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Event Banner Image URL (Optional)</label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-info btn-lg">
+                        <i class="fas fa-save"></i> Update Event
+                    </button>
+                    <a href="/Events" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

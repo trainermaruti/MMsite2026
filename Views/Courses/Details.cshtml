@@ -1,0 +1,98 @@
+@model Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8">
+            @if (!string.IsNullOrEmpty(Model.ThumbnailUrl))
+            {
+                <img src="@Model.ThumbnailUrl" class="img-fluid rounded mb-4" alt="@Model.Title" style="max-height: 400px; object-fit: cover;">
+            }
+            else
+            {
+                <div class="bg-light rounded mb-4 d-flex align-items-center justify-content-center" style="height: 300px;">
+                    <i class="fas fa-image fa-5x text-muted"></i>
+                </div>
+            }
+
+            <h1>@Model.Title</h1>
+            <p class="lead">
+                <span class="badge bg-primary">@Model.Level</span>
+                <span class="badge bg-info">@Model.Category</span>
+            </p>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Course Description</h5>
+                </div>
+                <div class="card-body">
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.VideoUrl))
+            {
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Video Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="ratio ratio-16x9">
+                            <iframe src="@Model.VideoUrl" allowfullscreen="" allow="autoplay"></iframe>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Course Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Price</h6>
+                        <p class="h4 text-success">₹@Model.Price</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Duration</h6>
+                        <p class="h6">@Model.DurationMinutes minutes</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Level</h6>
+                        <p class="h6">@Model.Level</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Category</h6>
+                        <p class="h6">@Model.Category</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Rating</h6>
+                        <p class="h6"><i class="fas fa-star text-warning"></i> @Model.Rating / 5</p>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <h6 class="text-muted">Enrollments</h6>
+                        <p class="h6">@Model.TotalEnrollments students</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="@Model.VideoUrl" class="btn btn-success btn-lg w-100 mb-2" target="_blank"><i class="fas fa-play"></i> Enroll Now</a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a href="/Courses" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+</div>
