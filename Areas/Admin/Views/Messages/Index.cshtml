@@ -11,6 +11,8 @@
     var totalMessages = ViewBag.TotalMessages;
 }
 
+@Html.AntiForgeryToken()
+
 <link rel="stylesheet" href="~/css/admin-inbox.css" />
 
 @if (TempData["SuccessMessage"] != null)
@@ -210,7 +212,7 @@
 </div>
 
 <!-- Message Modal -->
-<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="background: var(--bg-secondary); border: 1px solid var(--border-color);">
             <div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
@@ -373,13 +375,16 @@
             const newReadStatus = !isCurrentlyRead;
             
             try {
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
                 const response = await fetch(`/Admin/Messages/MarkAsRead/${currentMessageId}`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: JSON.stringify({ isRead: newReadStatus })
+                    body: new URLSearchParams({
+                        '__RequestVerificationToken': token,
+                        'isRead': newReadStatus
+                    })
                 });
                 
                 const data = await response.json();
@@ -422,11 +427,15 @@
             if (!messageToDelete) return;
             
             try {
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
                 const response = await fetch(`/Admin/Messages/Delete/${messageToDelete}`, {
                     method: 'POST',
                     headers: {
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
-                    }
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        '__RequestVerificationToken': token
+                    })
                 });
                 
                 const data = await response.json();
@@ -504,5 +513,28 @@
                 toast.remove();
             }, 3000);
         }
+
+        // Fix modal backdrop click issues
+        document.addEventListener('hidden.bs.modal', function (e) {
+            // Remove backdrop if it exists
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            // Ensure body is scrollable
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        });
+
+        // Prevent modal backdrop from blocking clicks
+        document.addEventListener('show.bs.modal', function (e) {
+            // Ensure the backdrop allows clicks to pass through to the page
+            setTimeout(() => {
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) {
+                    backdrop.style.pointerEvents = 'none';
+                }
+            }, 0);
+        });
     </script>
 }

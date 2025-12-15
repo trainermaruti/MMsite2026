@@ -421,3 +421,59 @@
         max-width: 150px;
     }
 }
+
+/* Modal Z-index and clickability fixes */
+.modal {
+    z-index: 1050 !important;
+    pointer-events: none;
+}
+
+.modal.show {
+    pointer-events: auto;
+}
+
+.modal-backdrop {
+    z-index: 1040 !important;
+    background-color: transparent !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    display: none !important;
+}
+
+.modal-dialog {
+    pointer-events: auto !important;
+    z-index: 1051 !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+.modal-content {
+    pointer-events: auto !important;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Fix body overflow when modal is open */
+body.modal-open {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+}
+
+/* Ensure buttons are clickable */
+.modal-footer button,
+.modal-body button,
+.modal-header button {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Ensure all interactive elements in modal are clickable */
+.modal input,
+.modal textarea,
+.modal select,
+.modal a {
+    pointer-events: auto !important;
+}
+
+/* Override any global rules that might block interaction */
+.modal-dialog * {
+    pointer-events: auto !important;
+}

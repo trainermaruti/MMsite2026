@@ -3,30 +3,26 @@ using MarutiTrainingPortal.Models;
 using MarutiTrainingPortal.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace MarutiTrainingPortal.Controllers
 {
     public class ContactController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IEmailSender _emailSender;
+        private readonly ContactService _contactService;
         private readonly IHtmlSanitizerService _htmlSanitizer;
         private readonly IRateLimitService _rateLimiter;
-        private readonly ILogger<ContactController> _logger;
 
         public ContactController(
             ApplicationDbContext context, 
-            IEmailSender emailSender, 
+            ContactService contactService,
             IHtmlSanitizerService htmlSanitizer,
-            IRateLimitService rateLimiter,
-            ILogger<ContactController> logger)
+            IRateLimitService rateLimiter)
         {
             _context = context;
-            _emailSender = emailSender;
+            _contactService = contactService;
             _htmlSanitizer = htmlSanitizer;
             _rateLimiter = rateLimiter;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -37,231 +33,113 @@ namespace MarutiTrainingPortal.Controllers
             return View(profile);
         }
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
-        public IActionResult SendMessage()
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Submit([FromForm] ContactFormModel model)
         {
-            // Redirect GET requests to Index page
-            return RedirectToAction(nameof(Index));
+            // Rate limiting: 3 requests per 10 minutes per IP
+            var identifier = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+            if (!_rateLimiter.IsAllowed(identifier, maxRequests: 3, window: TimeSpan.FromMinutes(10)))
+            {
+                var errorMsg = "Too many requests. Please try again in a few minutes.";
+                
+                // AJAX request
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" || Request.ContentType?.Contains("application/json") == true)
+                {
+                    return Json(new { success = false, message = errorMsg });
+                }
+                
+                TempData["ErrorMessage"] = errorMsg;
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                var errorMessage = string.Join(", ", errors);
+
+                // AJAX request
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" || Request.ContentType?.Contains("application/json") == true)
+                {
+                    return Json(new { success = false, message = errorMessage });
+                }
+
+                TempData["ErrorMessage"] = errorMessage;
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Sanitize user input to prevent XSS
+            model.Name = _htmlSanitizer.Sanitize(model.Name);
+            model.Subject = _htmlSanitizer.Sanitize(model.Subject);
+            model.Message = _htmlSanitizer.Sanitize(model.Message);
+            if (!string.IsNullOrEmpty(model.Company))
+                model.Company = _htmlSanitizer.Sanitize(model.Company);
+
+            // Capture IP and User Agent
+            var sourceIp = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var userAgent = Request.Headers["User-Agent"].ToString();
+
+            try
+            {
+                // Submit via ContactService
+                var (success, message) = await _contactService.SubmitContactMessageAsync(model, sourceIp, userAgent);
+
+                // AJAX request
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" || Request.ContentType?.Contains("application/json") == true)
+                {
+                    return Json(new { success, message });
+                }
+
+                // Regular form submission
+                if (success)
+                {
+                    TempData["SuccessMessage"] = message;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = message;
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                var errorMsg = "An unexpected error occurred. Please try again or contact us directly.";
+                
+                // Log the error
+                Console.WriteLine($"Contact form error: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+
+                // AJAX request
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" || Request.ContentType?.Contains("application/json") == true)
+                {
+                    return Json(new { success = false, message = errorMsg });
+                }
+
+                TempData["ErrorMessage"] = errorMsg;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
+        // Keep legacy endpoint for backwards compatibility
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendMessage(ContactMessage message)
         {
-            _logger.LogInformation("Contact form submission received from {IP}", HttpContext.Connection.RemoteIpAddress);
-            
-            // Rate limiting: 10 requests per hour per IP
-            var identifier = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-            if (!_rateLimiter.IsAllowed(identifier, maxRequests: 10, window: TimeSpan.FromHours(1)))
+            // Redirect to new Submit action
+            var model = new ContactFormModel
             {
-                _logger.LogWarning("Rate limit exceeded for IP: {IP}", identifier);
-                TempData["ErrorMessage"] = "Too many requests. Please try again later.";
-                return RedirectToAction(nameof(Index));
-            }
+                Name = message.Name,
+                Email = message.Email,
+                Phone = message.PhoneNumber,
+                Company = message.Company,
+                Subject = message.Subject,
+                Message = message.Message
+            };
 
-            _logger.LogInformation("ModelState valid: {IsValid}", ModelState.IsValid);
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach (var error in errors)
-                {
-                    _logger.LogWarning("Validation error: {ErrorMessage}", error.ErrorMessage);
-                }
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Sanitize user input to prevent XSS
-                    message.Name = _htmlSanitizer.Sanitize(message.Name);
-                    message.Subject = _htmlSanitizer.Sanitize(message.Subject);
-                    message.Message = _htmlSanitizer.Sanitize(message.Message);
-                    
-                    // Set the creation date and defaults
-                    message.CreatedDate = DateTime.UtcNow;
-                    message.IsRead = false;
-                    message.IsDeleted = false;
-                    if (string.IsNullOrEmpty(message.Status))
-                    {
-                        message.Status = "New";
-                    }
-
-                    _context.ContactMessages.Add(message);
-                    await _context.SaveChangesAsync();
-                    _logger.LogInformation("Message saved successfully. ID: {MessageId}, From: {Name}", message.Id, message.Name);
-
-                    // Send email notification to admin
-                    try
-                    {
-                        await _emailSender.SendEmailAsync(
-                            "admin@marutitraining.com",
-                            $"New Contact Message: {message.Subject}",
-                            $@"<h3>New Contact Form Submission</h3>
-                               <p><strong>From:</strong> {message.Name} ({message.Email})</p>
-                               <p><strong>Subject:</strong> {message.Subject}</p>
-                               <p><strong>Message:</strong></p>
-                               <p>{message.Message}</p>
-                               <p><em>Submitted on: {message.CreatedDate:yyyy-MM-dd HH:mm}</em></p>"
-                        );
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log error but don't fail the request
-                        Console.WriteLine($"Email sending failed: {ex.Message}");
-                    }
-
-                    TempData["SuccessMessage"] = "Your message has been sent successfully. We'll get back to you soon!";
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    // Log the error
-                    _logger.LogError(ex, "Error saving contact message: {ErrorMessage}", ex.Message);
-                    TempData["ErrorMessage"] = $"Error saving message: {ex.Message}";
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-
-            // If ModelState is invalid, redirect to Index with error message
-            TempData["ErrorMessage"] = "Please check the form and try again. All required fields must be filled.";
-            return RedirectToAction(nameof(Index));
-        }
-
-        // DEBUG: Check message count
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> DebugMessages()
-        {
-            var allMessages = await _context.ContactMessages.ToListAsync();
-            var nonDeletedMessages = await _context.ContactMessages.Where(m => !m.IsDeleted).ToListAsync();
-            
-            return Json(new
-            {
-                total = allMessages.Count,
-                nonDeleted = nonDeletedMessages.Count,
-                messages = nonDeletedMessages.Select(m => new
-                {
-                    m.Id,
-                    m.Name,
-                    m.Email,
-                    m.Subject,
-                    m.CreatedDate,
-                    m.IsDeleted,
-                    m.IsRead
-                }).ToList()
-            });
-        }
-
-        // DEBUG: Create a test message
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> DebugCreateMessage()
-        {
-            try
-            {
-                var testMessage = new ContactMessage
-                {
-                    Name = "Test User",
-                    Email = "test@example.com",
-                    Subject = "Test Message",
-                    Message = "This is a test message",
-                    PhoneNumber = "1234567890",
-                    CreatedDate = DateTime.UtcNow,
-                    IsRead = false,
-                    IsDeleted = false,
-                    Status = "New"
-                };
-
-                _context.ContactMessages.Add(testMessage);
-                await _context.SaveChangesAsync();
-
-                return Json(new
-                {
-                    success = true,
-                    message = "Test message created",
-                    id = testMessage.Id,
-                    isDeleted = testMessage.IsDeleted
-                });
-            }
-            catch (Exception ex)
-            {
-                return Json(new
-                {
-                    success = false,
-                    error = ex.Message,
-                    innerError = ex.InnerException?.Message
-                });
-            }
-        }
-
-        // DEBUG: Bypass query filter
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> DebugAllMessages()
-        {
-            var allMessages = await _context.ContactMessages.IgnoreQueryFilters().ToListAsync();
-            
-            return Json(new
-            {
-                totalCount = allMessages.Count,
-                messages = allMessages.Select(m => new
-                {
-                    m.Id,
-                    m.Name,
-                    m.Email,
-                    m.Subject,
-                    m.CreatedDate,
-                    m.IsDeleted,
-                    m.IsRead,
-                    m.Status
-                }).ToList()
-            });
-        }
-
-        // DEBUG: Show what admin portal will see
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> DebugAdminView()
-        {
-            // This is what the admin will see (with query filter applied)
-            var visibleMessages = await _context.ContactMessages.ToListAsync();
-            
-            // This is everything in the database
-            var allMessages = await _context.ContactMessages.IgnoreQueryFilters().ToListAsync();
-            
-            return Json(new
-            {
-                visibleInAdminPortal = visibleMessages.Count,
-                totalInDatabase = allMessages.Count,
-                deleted = allMessages.Count(m => m.IsDeleted),
-                notDeleted = allMessages.Count(m => !m.IsDeleted),
-                visibleMessages = visibleMessages.Select(m => new
-                {
-                    m.Id,
-                    m.Name,
-                    m.Email,
-                    m.Subject,
-                    m.CreatedDate,
-                    m.IsDeleted,
-                    m.IsRead,
-                    m.Status
-                }).OrderByDescending(m => m.CreatedDate).ToList(),
-                allMessages = allMessages.Select(m => new
-                {
-                    m.Id,
-                    m.Name,
-                    m.Email,
-                    m.Subject,
-                    m.CreatedDate,
-                    m.IsDeleted,
-                    m.IsRead,
-                    m.Status
-                }).OrderByDescending(m => m.CreatedDate).ToList()
-            });
+            return await Submit(model);
         }
     }
 }
-

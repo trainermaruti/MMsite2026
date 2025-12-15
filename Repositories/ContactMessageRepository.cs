@@ -19,7 +19,24 @@ namespace MarutiTrainingPortal.Repositories
             string? searchQuery = null, 
             string? filter = "All")
         {
+            // Auto-cleanup: Soft delete messages older than 28 days
+            var cutoffDate = DateTime.Now.AddDays(-28);
+            var oldMessages = await _context.ContactMessages
+                .Where(m => !m.IsDeleted && m.CreatedDate < cutoffDate)
+                .ToListAsync();
+            
+            if (oldMessages.Any())
+            {
+                foreach (var msg in oldMessages)
+                {
+                    msg.IsDeleted = true;
+                    msg.UpdatedDate = DateTime.Now;
+                }
+                await _context.SaveChangesAsync();
+            }
+
             var query = _context.ContactMessages
+                .Where(m => !m.IsDeleted)
                 .Include(m => m.Event)
                 .AsQueryable();
 
@@ -57,13 +74,13 @@ namespace MarutiTrainingPortal.Repositories
         {
             return await _context.ContactMessages
                 .Include(m => m.Event)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && !m.IsDeleted);
         }
 
         public async Task<bool> MarkAsReadAsync(int id, bool isRead = true)
         {
             var message = await _context.ContactMessages
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id && !m.IsDeleted);
 
             if (message == null) return false;
 
@@ -91,19 +108,21 @@ namespace MarutiTrainingPortal.Repositories
         public async Task<int> GetNewCountAsync()
         {
             return await _context.ContactMessages
-                .Where(m => !m.IsRead)
+                .Where(m => !m.IsDeleted && !m.IsRead)
                 .CountAsync();
         }
 
         public async Task<int> GetTotalCountAsync()
         {
             return await _context.ContactMessages
+                .Where(m => !m.IsDeleted)
                 .CountAsync();
         }
 
         public async Task<List<ContactMessage>> ExportAsync(string? filter = "All")
         {
             var query = _context.ContactMessages
+                .Where(m => !m.IsDeleted)
                 .Include(m => m.Event)
                 .AsQueryable();
 

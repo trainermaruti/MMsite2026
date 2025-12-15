@@ -52,8 +52,11 @@ builder.Services.AddHttpClient();
 // Add CourseImportService
 builder.Services.AddScoped<CourseImportService>();
 
-// Add Email Service
+// Add Email Service (using built-in EmailSender with updated interface)
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+// Add Contact Service
+builder.Services.AddScoped<ContactService>();
 
 // Add HTML Sanitizer Service (Ganss.XSS - free)
 builder.Services.AddScoped<IHtmlSanitizerService, HtmlSanitizerService>();
@@ -83,13 +86,10 @@ builder.Services.AddScoped<ChatbotService>();
 builder.Services.AddScoped<MarutiTrainingPortal.Repositories.IContactMessageRepository, MarutiTrainingPortal.Repositories.ContactMessageRepository>();
 builder.Services.AddScoped<MarutiTrainingPortal.Services.IContactMessageService, MarutiTrainingPortal.Services.ContactMessageService>();
 
-// Add Message Cleanup Service (28-day auto-delete)
-builder.Services.AddScoped<IMessageCleanupService, MessageCleanupService>();
-
-// Add Rate Limit Cleanup Background Service
+// Add Background Services
+builder.Services.AddScoped<MarutiTrainingPortal.Services.IMessageCleanupService, MarutiTrainingPortal.Services.MessageCleanupService>();
 builder.Services.AddHostedService<MarutiTrainingPortal.Middleware.RateLimitCleanupService>();
-
-// Add Message Cleanup Background Service (auto-delete messages older than 28 days)
+builder.Services.AddHostedService<MarutiTrainingPortal.Services.ContactMessageCleanupService>();
 builder.Services.AddHostedService<MarutiTrainingPortal.Services.MessageCleanupBackgroundService>();
 
 // Add session for rate limiting

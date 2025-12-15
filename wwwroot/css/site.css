@@ -256,6 +256,17 @@ body {
   color: inherit !important;
 }
 
+/* Override alert-success for dark mode visibility */
+.alert-success {
+  background-color: #0d3a1e !important;
+  border-color: #28a745 !important;
+  color: #ffffff !important;
+}
+
+.alert-success .btn-close {
+  filter: brightness(0) invert(1);
+}
+
 /* Default white text for dark backgrounds */
 *, *::before, *::after {
   color: #ffffff;

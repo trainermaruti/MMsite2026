@@ -15,11 +15,15 @@ namespace MarutiTrainingPortal.Models
         [StringLength(200, ErrorMessage = "Email cannot exceed 200 characters")]
         public string Email { get; set; } = string.Empty;
         
+        [Phone(ErrorMessage = "Please enter a valid phone number")]
         [StringLength(20, ErrorMessage = "Phone number cannot exceed 20 characters")]
         public string? PhoneNumber { get; set; }
         
         // Alias for PhoneNumber to maintain compatibility
         public string? Phone => PhoneNumber;
+
+        [StringLength(100)]
+        public string? Company { get; set; }
         
         [Required(ErrorMessage = "Subject is required")]
         [StringLength(200, ErrorMessage = "Subject cannot exceed 200 characters")]
@@ -30,6 +34,13 @@ namespace MarutiTrainingPortal.Models
         public string Message { get; set; } = string.Empty;
         
         public bool IsRead { get; set; } = false;
+
+        // IP / UserAgent for spam detection/debug
+        public string? SourceIp { get; set; }
+        public string? UserAgent { get; set; }
+
+        // Alias for CreatedDate to maintain compatibility
+        public DateTime SubmittedAt => CreatedDate;
         
         // For event registration interest
         public int? EventId { get; set; }

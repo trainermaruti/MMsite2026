@@ -6,6 +6,7 @@ namespace MarutiTrainingPortal.Services
     public interface IEmailSender
     {
         Task SendEmailAsync(string toEmail, string subject, string body);
+        Task<bool> SendEmailAsync(string toEmail, string toName, string subject, string htmlBody, string? plainTextBody = null);
     }
 
     public class EmailSender : IEmailSender
@@ -60,6 +61,51 @@ namespace MarutiTrainingPortal.Services
             {
                 _logger.LogError(ex, $"Failed to send email to {toEmail}");
                 throw;
+            }
+        }
+
+        public async Task<bool> SendEmailAsync(string toEmail, string toName, string subject, string htmlBody, string? plainTextBody = null)
+        {
+            try
+            {
+                var smtpHost = _configuration["EmailSettings:SmtpHost"] ?? "smtp.gmail.com";
+                var smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "587");
+                var smtpUsername = _configuration["EmailSettings:SmtpUsername"];
+                var smtpPassword = _configuration["EmailSettings:SmtpPassword"];
+                var fromEmail = _configuration["EmailSettings:FromEmail"];
+                var fromName = _configuration["EmailSettings:FromName"] ?? "Maruti Training Portal";
+
+                if (string.IsNullOrEmpty(smtpUsername) || string.IsNullOrEmpty(smtpPassword))
+                {
+                    _logger.LogWarning("Email settings not configured. Email not sent.");
+                    return false;
+                }
+
+                using var smtpClient = new SmtpClient(smtpHost, smtpPort)
+                {
+                    EnableSsl = true,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(smtpUsername, smtpPassword)
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(fromEmail ?? smtpUsername, fromName),
+                    Subject = subject,
+                    Body = htmlBody,
+                    IsBodyHtml = true
+                };
+
+                mailMessage.To.Add(new MailAddress(toEmail, toName));
+
+                await smtpClient.SendMailAsync(mailMessage);
+                _logger.LogInformation($"Email sent successfully to {toEmail}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Failed to send email to {toEmail}");
+                return false;
             }
         }
     }

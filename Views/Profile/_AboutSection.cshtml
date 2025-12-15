@@ -172,14 +172,21 @@
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
 }
 
-/* Mobile: Centered at top with smaller size */
+/* Mobile: Position badge at bottom right to avoid covering face */
 @@media (max-width: 767px) {
     .about-image-wrapper {
         padding: 30px 0 0 30px !important;
     }
     
+    .experience-badge-responsive {
+        top: auto !important;
+        left: auto !important;
+        bottom: -20px !important;
+        right: -20px !important;
+    }
+    
     .experience-badge-responsive img {
-        width: 80px;
+        width: 100px;
     }
 }
 
