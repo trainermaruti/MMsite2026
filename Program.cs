@@ -9,10 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add DbContext - SQLite for development, switch to SQL Server for production
-// Production: use builder.Configuration.GetConnectionString("DefaultConnection")
+// Add DbContext - SQLite for development, SQL Server for production
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite("Data Source=MarutiTrainingPortal.db"));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    
+    if (builder.Environment.IsProduction())
+    {
+        // Use SQL Server in production (Azure SQL Database)
+        options.UseSqlServer(connectionString);
+    }
+    else
+    {
+        // Use SQLite in development
+        options.UseSqlite(connectionString ?? "Data Source=MarutiTrainingPortal.db");
+    }
+});
 
 // Add Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -112,12 +124,19 @@ var app = builder.Build();
 // Seed admin user from configuration (User Secrets in dev, Environment Variables in prod)
 using (var scope = app.Services.CreateScope())
 {
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    
+    // Apply migrations automatically (for production deployment)
+    if (app.Environment.IsProduction())
+    {
+        await dbContext.Database.MigrateAsync();
+    }
+    
     await AdminSeeder.SeedAdminUserAsync(scope.ServiceProvider, app.Configuration);
     
     // Seed initial website images if running with seed-images argument
     if (args.Contains("seed-images"))
     {
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await SeedInitialImages.SeedImages(dbContext);
     }
 }
