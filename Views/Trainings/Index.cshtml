@@ -52,8 +52,8 @@
                                     <p class="card-text">@training.Description</p>
                                     <small class="text-muted"><strong>Topics:</strong> @training.Topics</small>
                                 </div>
-                                <div class="card-footer bg-light">
-                                    <span class="btn btn-sm btn-primary w-100">View on SkillTech.club <i class="fas fa-arrow-right"></i></span>
+                                <div class="card-footer bg-light" style="pointer-events: none;">
+                                    <span class="btn btn-sm btn-primary w-100" style="pointer-events: none;">View on SkillTech.club <i class="fas fa-arrow-right"></i></span>
                                 </div>
                             </div>
                         </a>
@@ -68,7 +68,7 @@
                             }
                             else
                             {
-                                <div class="card-img-top" style="height: 200px; background: linear-gradient(135deg, #001f3f 0%, #003366 100%);"></div>
+                                <div class="card-img-top" style="height: 200px; background: linear-gradient(135deg, #001f3f 0%, #003366 100%); pointer-events: none;"></div>
                             }
                             <div class="card-body">
                                 <h5 class="card-title">@training.Title</h5>
@@ -78,8 +78,8 @@
                                 <p class="card-text">@training.Description</p>
                                 <small class="text-muted"><strong>Topics:</strong> @training.Topics</small>
                             </div>
-                            <div class="card-footer bg-light">
-                                <a href="/Trainings/Details/@training.Id" class="btn btn-sm btn-primary">View Details</a>
+                            <div class="card-footer bg-light" style="position: relative; z-index: 10;">
+                                <a href="/Trainings/Details/@training.Id" class="btn btn-sm btn-primary" style="position: relative; z-index: 20; pointer-events: auto;">View Details</a>
                             </div>
                         </div>
                     }

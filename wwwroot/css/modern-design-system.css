@@ -658,6 +658,16 @@
   .bento-item-large {
     grid-column: span 1;
   }
+  
+  /* Responsive table - horizontal scroll */
+  .modern-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .modern-table {
+    min-width: 800px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -671,6 +681,77 @@
   
   .bento-grid {
     grid-template-columns: 1fr;
+  }
+  
+  /* Mobile table adjustments */
+  .modern-table th,
+  .modern-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  
+  .modern-table th {
+    font-size: 11px;
+  }
+  
+  /* Stack action buttons on mobile */
+  .modern-table .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .modern-table .btn-group .btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  
+  /* Card layout alternative for small screens */
+  @media (max-width: 600px) {
+    .modern-table-container.mobile-cards {
+      overflow-x: visible;
+    }
+    
+    .modern-table-container.mobile-cards .modern-table {
+      min-width: auto;
+    }
+    
+    .modern-table-container.mobile-cards .modern-table thead {
+      display: none;
+    }
+    
+    .modern-table-container.mobile-cards .modern-table tbody,
+    .modern-table-container.mobile-cards .modern-table tr {
+      display: block;
+    }
+    
+    .modern-table-container.mobile-cards .modern-table tr {
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .modern-table-container.mobile-cards .modern-table td {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .modern-table-container.mobile-cards .modern-table td:last-child {
+      border-bottom: none;
+    }
+    
+    .modern-table-container.mobile-cards .modern-table td::before {
+      content: attr(data-label);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-right: 12px;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
   }
 }
 

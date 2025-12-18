@@ -34,8 +34,8 @@
                         <a href="@trainingEvent.SkillTechUrl" target="_blank" class="text-decoration-none h-100 d-block">
                             <div class="card h-100 shadow-lg hover-lift" style="cursor: pointer; transition: all 0.3s ease; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); background: var(--card-bg);">
                                 <!-- Event Type Badge - Top Right -->
-                                <div style="position: absolute; top: 16px; right: 16px; z-index: 10;">
-                                    <span class="badge bg-success" style="font-size: 11px; padding: 6px 12px;">
+                                <div style="position: absolute; top: 16px; right: 16px; z-index: 10; pointer-events: none;">
+                                    <span class="badge bg-success" style="font-size: 11px; padding: 6px 12px; pointer-events: none;">
                                         <i class="fas fa-external-link-alt me-1"></i>SkillTech
                                     </span>
                                 </div>
@@ -54,9 +54,8 @@
                                 }
                                 else
                                 {
-                                    <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24px; position: relative; min-height: 120px; display: flex; align-items: center;">
-                                        <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
-                                            @trainingEvent.EventType
+                                <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24px; position: relative; min-height: 120px; display: flex; align-items: center; pointer-events: none;">
+                                    <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; pointer-events: none;">
                                         </span>
                                     </div>
                                 }
@@ -97,9 +96,9 @@
                             @if (!string.IsNullOrEmpty(trainingEvent.BannerUrl))
                             {
                                 <div style="position: relative; width: 100%; height: 200px; overflow: hidden;">
-                                    <img src="@trainingEvent.BannerUrl" alt="@trainingEvent.Title" style="width: 100%; height: 100%; object-fit: cover;">
-                                    <div style="position: absolute; bottom: 16px; left: 16px;">
-                                        <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
+                                    <img src="@trainingEvent.BannerUrl" alt="@trainingEvent.Title" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+                                    <div style="position: absolute; bottom: 16px; left: 16px; pointer-events: none;">
+                                        <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; pointer-events: none;">
                                             @trainingEvent.EventType
                                         </span>
                                     </div>
@@ -107,8 +106,8 @@
                             }
                             else
                             {
-                                <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24x; position: relative; min-height: 120px; display: flex; align-items: center;">
-                                    <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;">
+                                <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24x; position: relative; min-height: 120px; display: flex; align-items: center; pointer-events: none;">
+                                    <span class="badge badge-event-type" style="background: rgba(30, 58, 138, 0.95); color: #ffffff !important; padding: 8px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; pointer-events: none;">
                                         @trainingEvent.EventType
                                     </span>
                                 </div>
@@ -138,20 +137,20 @@
                                         <span style="font-weight: 500;">@trainingEvent.StartDate.ToString("dd MMM yyyy, HH:mm")</span>
                                     </div>
                                     
-                                    <div class="d-flex gap-2" style="position: relative; z-index: 10;">
+                                    <div class="d-flex gap-2" style="position: relative; z-index: 20; pointer-events: auto;">
                                         @if (!trainingEvent.MaxParticipants.HasValue || trainingEvent.RegisteredParticipants < trainingEvent.MaxParticipants.Value)
                                         {
-                                            <a href="@trainingEvent.RegistrationLink" class="btn btn-primary btn-sm" target="_blank" style="flex: 1; position: relative; z-index: 10;" onclick="event.stopPropagation();">
+                                            <a href="@trainingEvent.RegistrationLink" class="btn btn-primary btn-sm" target="_blank" style="flex: 1; position: relative; z-index: 20; pointer-events: auto;" onclick="event.stopPropagation();">
                                                 <i class="fas fa-clipboard-list" style="color: #ffffff !important;"></i> Join Now
                                             </a>
                                         }
                                         else
                                         {
-                                            <button class="btn btn-secondary btn-sm" disabled style="flex: 1; position: relative; z-index: 10;">
+                                            <button class="btn btn-secondary btn-sm" disabled style="flex: 1; position: relative; z-index: 20; pointer-events: auto;">
                                                 <i class="fas fa-exclamation-circle" style="color: #ffffff !important;"></i> Full
                                             </button>
                                         }
-                                        <a href="/Events/Details/@trainingEvent.Id" class="btn btn-outline-primary btn-sm" style="flex: 0 0 auto; position: relative; z-index: 10;" onclick="event.stopPropagation();">
+                                        <a href="/Events/Details/@trainingEvent.Id" class="btn btn-outline-primary btn-sm" style="flex: 0 0 auto; position: relative; z-index: 20; pointer-events: auto;" onclick="event.stopPropagation();">
                                             <i class="fas fa-info-circle" style="color: #ffffff !important;"></i> Details
                                         </a>
                                     </div>
