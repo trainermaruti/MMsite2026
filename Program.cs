@@ -134,10 +134,10 @@ using (var scope = app.Services.CreateScope())
     
     await AdminSeeder.SeedAdminUserAsync(scope.ServiceProvider, app.Configuration);
     
-    // Seed initial website images if running with seed-images argument
-    if (args.Contains("seed-images"))
+    // Import courses from JSON file if database is empty
+    if (!await dbContext.Courses.AnyAsync())
     {
-        await SeedInitialImages.SeedImages(dbContext);
+        await CourseImporter.ImportCourses(dbContext);
     }
 }
 

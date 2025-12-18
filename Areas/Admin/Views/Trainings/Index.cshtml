@@ -14,17 +14,23 @@
 }
 
 <!-- Modern Page Header -->
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
     <div>
         <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
             <i class="fas fa-chalkboard-teacher" style="color: var(--primary); margin-right: 12px;"></i>Manage Trainings
         </h1>
         <p style="color: var(--text-secondary); font-size: 15px; margin: 0;">Create, edit, and manage all corporate training records</p>
     </div>
-    <div>
-        <a asp-area="Admin" asp-controller="Trainings" asp-action="Create" class="modern-btn modern-btn-primary">
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <a asp-area="Admin" asp-controller="Trainings" asp-action="Create" class="modern-btn modern-btn-primary" style="white-space: nowrap;">
             <i class="fas fa-plus me-2"></i>Add New Training
         </a>
+        <button type="button" onclick="importFromJson()" class="btn btn-info" style="white-space: nowrap;">
+            <i class="fas fa-file-import me-2"></i>Import from JSON
+        </button>
+        <button type="button" onclick="syncToJson()" class="modern-btn" style="white-space: nowrap; min-width: auto; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
+            <i class="fas fa-sync-alt me-2"></i>Sync to JSON
+        </button>
     </div>
 </div>
 
@@ -108,6 +114,79 @@ else
                 }, 3000);
             });
         });
+
+        // Sync to JSON function
+        async function syncToJson() {
+            const btn = event.target.closest('button');
+            const icon = btn.querySelector('i');
+            
+            icon.classList.add('fa-spin');
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('@Url.Action("SyncToJson", "Trainings", new { area = "Admin" })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                    }
+                });
+                
+                if (response.ok) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                    alertDiv.style.cssText = 'background: var(--success-light); border: 1px solid var(--success); color: var(--success); border-radius: 12px; margin-bottom: 24px;';
+                    alertDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Successfully synced all trainings to JSON file!<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                    document.querySelector('.modern-card').insertAdjacentElement('beforebegin', alertDiv);
+                    
+                    setTimeout(() => {
+                        const bsAlert = new bootstrap.Alert(alertDiv);
+                        bsAlert.close();
+                    }, 3000);
+                } else {
+                    throw new Error('Sync failed');
+                }
+            } catch (error) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.style.cssText = 'background: #fee; border: 1px solid #f00; color: #c00; border-radius: 12px; margin-bottom: 24px;';
+                alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Error syncing to JSON file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                document.querySelector('.modern-card').insertAdjacentElement('beforebegin', alertDiv);
+            } finally {
+                icon.classList.remove('fa-spin');
+                btn.disabled = false;
+            }
+        }
+
+        // Import from JSON function
+        async function importFromJson() {
+            const btn = event.target.closest('button');
+            const icon = btn.querySelector('i');
+            
+            icon.classList.add('fa-spin');
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('@Url.Action("ImportFromJson", "Trainings", new { area = "Admin" })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                    }
+                });
+                
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    throw new Error('Import failed');
+                }
+            } catch (error) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Error importing from JSON file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                document.querySelector('.modern-card').insertAdjacentElement('beforebegin', alertDiv);
+                icon.classList.remove('fa-spin');
+                btn.disabled = false;
+            }
+        }
 
         // Search functionality
         // Search functionality - form based search

@@ -226,7 +226,7 @@
             <!-- Avatar Dropdown -->
             <div class="avatar-dropdown" id="avatarDropdown" style="position: fixed; top: 20px; right: 20px; z-index: 999;">
                 <div class="avatar-dropdown-toggle" onclick="toggleAvatarDropdown()">
-                    <img src="@await ImageService.GetImageUrlAsync("profile_main")" alt="@User.Identity?.Name" class="avatar-img" />
+                    <img src="@await ImageService.GetImageUrlAsync("home_profile_photo")" alt="@User.Identity?.Name" class="avatar-img" />
                     <i class="fas fa-chevron-down" style="color: var(--text-secondary); font-size: 14px; margin-left: 8px;"></i>
                 </div>
 

@@ -1,0 +1,178 @@
+[
+  {
+    "Title": "Azure Fundamentals Certification (AZ-900)",
+    "Description": "Launch Your Cloud Journey with the AZ-900 Azure Fundamentals Certification. In today's technology-focused world, the cloud is not just the future, it's NOW. This course has been expertly created by SkillTech to help enlighten people about cloud computing. We break down complicated material into easily understood modules. Master core cloud concepts including High Availability, Scalability, Elasticity, and Disaster Recovery. Explore Azure architecture, services, management, and governance. Learn how to differentiate between key cloud models (IaaS, PaaS, SaaS) and deployment models (Public, Private, Hybrid).",
+    "Category": "Azure Fundamentals",
+    "Level": "Beginner",
+    "DurationMinutes": 295,
+    "VideoUrl": "https://www.youtube.com/embed/NKEFWGpHUhk",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AZ%20900%20azure%20fundamentals.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-fundamentals-certification/az-900-certification/1"
+  },
+  {
+    "Title": "Azure AI Fundamentals Certification (AI-900)",
+    "Description": "Artificial intelligence (AI) and machine learning are disrupting every industry on the planet. The AI-900 Azure AI Fundamentals certification is your important first step into this exciting and future-proof world. Learn about AI workloads, machine learning principles on Azure, computer vision features, and natural language processing (NLP) workloads. Understand fundamental principles of responsible AI including fairness, reliability, privacy, and inclusiveness. Use Azure's Automated ML and Designer tools for no-code machine learning solutions.",
+    "Category": "Azure AI",
+    "Level": "Beginner",
+    "DurationMinutes": 488,
+    "VideoUrl": "https://www.youtube.com/embed/UpKRw-6JmCU",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%20900%20azure%20ai%20fundamentals.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-900-certification/2"
+  },
+  {
+    "Title": "Azure Data Fundamentals Certification (DP-900)",
+    "Description": "Launch Your Data Career in the Cloud with the DP-900 Certification. In this data-driven world, learning to utilize cloud services to manage and manipulate data is no longer an option. This course is the ideal first course for anyone wishing to pursue a career path in data engineering, data science, or database administration. Learn about fundamentals of database concepts in a cloud environment, basics of Non-relational and Relational data, and building large scale data analytics solutions using Azure services including Azure Synapse Analytics, Azure Databricks, and Power BI.",
+    "Category": "Azure Fundamentals",
+    "Level": "Beginner",
+    "DurationMinutes": 218,
+    "VideoUrl": "https://www.youtube.com/embed/N0rZM9Sgg_w",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/DP%20900%20azure%20data%20fundamentals.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-fundamentals-certification/dp-900-certification/4"
+  },
+  {
+    "Title": "Microsoft Copilots Studio Certification (AI-3018)",
+    "Description": "Microsoft Copilot is more than an assistant, it's a new way of working. The AI-3018: Foundations of Microsoft Copilot course will be your roadmap to becoming an early leader in this transformational space. Learn the fundamental architecture of Microsoft Copilot including Large Language Models (LLMs), Microsoft Graph, and Microsoft 365 Apps. Discover how to create and implement plugins to expand Copilot's functionality, use Microsoft Graph connectors, and integrate with Power Platform. Develop strategic plans for Copilot adoption and learn to manage licenses, permissions, and security policies.",
+    "Category": "Microsoft Copilot",
+    "Level": "Beginner",
+    "DurationMinutes": 160,
+    "VideoUrl": "https://www.youtube.com/embed/nVJLr3-5OA4",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%203018%20copilot%20foundation.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/microsoft-copilot-studio/ai-3018-copilot-certification/5"
+  },
+  {
+    "Title": "Azure Architect Expert Certification (AZ-305)",
+    "Description": "Design and architect Azure solutions at enterprise scale. Learn infrastructure design patterns, security, scalability, and governance best practices. Master the skills needed to design identity, governance, monitoring solutions, data storage solutions, business continuity solutions, and infrastructure solutions. This advanced course prepares you for the Azure Solutions Architect Expert certification and real-world enterprise architecture challenges.",
+    "Category": "Azure Architect",
+    "Level": "Advanced",
+    "DurationMinutes": 341,
+    "VideoUrl": "https://www.youtube.com/embed/xBl5v3VhQEk",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AZ%20305%20azure%20architect.webp",
+    "Price": 5999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-architect-course/az-305-certification/6"
+  },
+  {
+    "Title": "Azure Developer Certification (AZ-204)",
+    "Description": "Develop applications and services on Azure. Learn to build cloud-native solutions using Azure SDKs, APIs, storage, and compute services. Master Azure compute solutions, Azure Functions, blob storage, Cosmos DB, user authentication and authorization, secure cloud solutions, API Management, event-based and message-based solutions, monitoring and logging, and Azure integrations. This comprehensive course prepares you for the Azure Developer Associate certification.",
+    "Category": "Azure Developer",
+    "Level": "Intermediate",
+    "DurationMinutes": 897,
+    "VideoUrl": "https://www.youtube.com/embed/HrMc_otnWBs",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AZ%20204%20azure%20developer.webp",
+    "Price": 4999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-developer-certification/az-204-certification/11"
+  },
+  {
+    "Title": "Azure Administrator Certification (AZ-104)",
+    "Description": "Become a skilled Azure Administrator capable of managing Azure subscriptions, securing identities, administering infrastructure, configuring virtual networking, and managing Azure resources. Learn to implement and manage storage, deploy and manage Azure compute resources, configure and manage virtual networks, monitor and back up Azure resources. This intermediate course prepares you for the Azure Administrator Associate certification and real-world cloud administration tasks.",
+    "Category": "Azure Admin",
+    "Level": "Intermediate",
+    "DurationMinutes": 385,
+    "VideoUrl": "https://www.youtube.com/embed/10PbGbTUSAg",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AZ%20104%20azure%20administrator.webp",
+    "Price": 4999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-administrator-training/az-104-certification/12"
+  },
+  {
+    "Title": "Azure AI Engineer Certification (AI-102)",
+    "Description": "Design and implement Azure AI solutions that leverage Azure Cognitive Services, Azure Cognitive Search, and Microsoft Bot Framework. Learn to develop solutions that analyze text, speech, images, and videos. Master natural language processing, knowledge mining, conversational AI, and computer vision solutions. Implement responsible AI practices and monitor AI solutions. This intermediate course prepares you for the Azure AI Engineer Associate certification.",
+    "Category": "Azure AI",
+    "Level": "Intermediate",
+    "DurationMinutes": 1005,
+    "VideoUrl": "https://www.youtube.com/embed/I7fdWafTcPY",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%20102%20azure%20ai%20engineer.webp",
+    "Price": 4999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-102-certification/13"
+  },
+  {
+    "Title": "Azure DevOps Engineer Expert (AZ-400)",
+    "Description": "Master DevOps practices and Azure DevOps services. Learn to design and implement strategies for collaboration, code, infrastructure, security, compliance, continuous integration, continuous delivery, dependency management, application infrastructure, and continuous feedback. Implement source control, build and release pipelines, dependency management, application infrastructure, and continuous feedback mechanisms. This advanced course prepares you for the Azure DevOps Engineer Expert certification.",
+    "Category": "Azure DevOps",
+    "Level": "Advanced",
+    "DurationMinutes": 418,
+    "VideoUrl": "https://www.youtube.com/embed/_Nd5Ox_D5JE",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AZ%20400%20azure%20devops.webp",
+    "Price": 5999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-devops-course/az-400-certification/14"
+  },
+  {
+    "Title": "AI Agents & Semantic Kernel Development",
+    "Description": "Build intelligent AI agents using Semantic Kernel and Azure AI services. Learn to develop autonomous agents that can reason, plan, and execute tasks. Master prompt engineering, function calling, plugins, planners, and memory management. Understand how to create conversational agents, task automation agents, and multi-agent systems. Explore integration with Azure OpenAI Service, vector databases, and enterprise data sources for building production-ready AI agent applications.",
+    "Category": "Azure AI",
+    "Level": "Intermediate",
+    "DurationMinutes": 479,
+    "VideoUrl": "https://www.youtube.com/embed/9bTBn8nb7wE",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%20Agent%20development.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-agent-certification/16"
+  },
+  {
+    "Title": "Azure OpenAI Service Development (AI-3016)",
+    "Description": "Build enterprise AI applications using Azure OpenAI Service. Learn to leverage GPT-4, ChatGPT, and DALL-E models for natural language processing, content generation, and image creation. Master prompt engineering techniques, fine-tuning models, implementing retrieval-augmented generation (RAG), managing tokens and costs, and ensuring responsible AI practices. Discover how to integrate Azure OpenAI with your applications, implement content filtering, and deploy production-ready AI solutions.",
+    "Category": "Azure AI",
+    "Level": "Intermediate",
+    "DurationMinutes": 210,
+    "VideoUrl": "https://www.youtube.com/embed/5eCk_HwSMDw",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%203016%20azure%20openai.webp",
+    "Price": 4999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3016-certification/18"
+  },
+  {
+    "Title": "Azure Document Intelligence (AI-3026)",
+    "Description": "Extract insights from documents using Azure AI Document Intelligence (formerly Form Recognizer). Learn to build intelligent document processing solutions that can analyze receipts, invoices, business cards, ID documents, and custom forms. Master prebuilt models, custom models, layout analysis, and integration with cognitive services. Understand document classification, key-value pair extraction, table extraction, and how to build end-to-end document processing pipelines for enterprise scenarios.",
+    "Category": "Azure AI",
+    "Level": "Intermediate",
+    "DurationMinutes": 218,
+    "VideoUrl": "https://www.youtube.com/embed/uyMbF7vJKs0",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%203026%20document%20intelligence.webp",
+    "Price": 4999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3026-certification/19"
+  },
+  {
+    "Title": "Azure AI Vision & Image Analysis (AI-3004)",
+    "Description": "Develop computer vision solutions using Azure AI Vision services. Learn to analyze images and videos for object detection, face recognition, optical character recognition (OCR), spatial analysis, and custom vision models. Master image classification, object detection, image segmentation, and video analysis techniques. Understand how to implement real-time video analytics, build custom vision models, and integrate AI vision capabilities into applications for retail, manufacturing, security, and healthcare scenarios.",
+    "Category": "Azure AI",
+    "Level": "Intermediate",
+    "DurationMinutes": 124,
+    "VideoUrl": "https://www.youtube.com/embed/ZfS_Gc2UHxE",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%203004%20vision.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3004-certification/20"
+  },
+  {
+    "Title": "Azure AI Language Services (AI-3003)",
+    "Description": "Build natural language processing applications using Azure AI Language services. Learn to implement sentiment analysis, key phrase extraction, named entity recognition, language detection, text analytics, question answering, and conversational language understanding. Master custom text classification, custom named entity recognition, and text summarization. Understand how to build chatbots, analyze customer feedback, extract insights from documents, and create intelligent language-powered applications.",
+    "Category": "Azure AI",
+    "Level": "Intermediate",
+    "DurationMinutes": 169,
+    "VideoUrl": "https://www.youtube.com/embed/aqx4p2bGg9k",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%203003%20language.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3003-certification/21"
+  },
+  {
+    "Title": "Azure AI Speech Services (AI-3002)",
+    "Description": "Develop speech-enabled applications using Azure AI Speech services. Learn to implement speech-to-text, text-to-speech, speech translation, speaker recognition, and pronunciation assessment. Master real-time speech transcription, custom speech models, neural text-to-speech voices, and speech synthesis markup language (SSML). Understand how to build voice assistants, transcription services, call center analytics, and accessibility features. Explore integration with telephony, IoT devices, and multi-modal applications.",
+    "Category": "Azure AI",
+    "Level": "Intermediate",
+    "DurationMinutes": 146,
+    "VideoUrl": "https://www.youtube.com/embed/ZqF_qYwWowY",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/AI%203002%20speech.webp",
+    "Price": 0,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3002-certification/22"
+  },
+  {
+    "Title": "Microservices with Containers and AKS",
+    "Description": "Build, deploy, and scale microservices applications using Docker containers and Azure Kubernetes Service (AKS). Learn container fundamentals, Docker images, Kubernetes architecture, pods, services, deployments, and ingress controllers. Master CI/CD pipelines for containerized applications, service mesh implementation, monitoring and logging, security best practices, and scaling strategies. Understand how to design microservices architecture, implement API gateways, manage configurations, and deploy production-grade containerized applications on AKS.",
+    "Category": "Azure Developer",
+    "Level": "Beginner",
+    "DurationMinutes": 304,
+    "VideoUrl": "https://www.youtube.com/embed/FdCqLHQWoRU",
+    "ThumbnailUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/Microservices%20containers%20aks.webp",
+    "Price": 4999,
+    "SkillTechUrl": "https://skilltech.club/courses/azure-developer-certification/microservices-with-containers-and-aks/24"
+  }
+]

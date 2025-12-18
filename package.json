@@ -3,9 +3,19 @@
   "version": "1.7.0",
   "description": "Maruti Makwana Corporate Training Portal",
   "scripts": {
-    "build:css": "echo 'Run: npx tailwindcss -c tailwind.config.js -i ./wwwroot/css/site.css -o ./wwwroot/css/site.css --minify'",
-    "dev": "echo 'Run: dotnet watch run'",
-    "test:e2e": "echo 'Install Playwright first: npm install --save-dev @playwright/test'"
+    "build:css": "npx tailwindcss -c tailwind.config.js -i ./wwwroot/css/site.css -o ./wwwroot/css/site.css --minify",
+    "dev": "dotnet watch run",
+    "test": "playwright test",
+    "test:trainings": "playwright test Tests/trainings.spec.ts",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:headed": "playwright test --headed",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
+    "test:report": "playwright show-report",
+    "test:codegen": "playwright codegen http://localhost:5204/Trainings"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",

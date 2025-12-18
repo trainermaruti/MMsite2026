@@ -19,12 +19,12 @@
                     
                     @* Profile Image Container - POSITIONED RELATIVE FOR BADGE *@
                     <div style="position: relative; z-index: 2; width: 100%; max-width: 380px;">
-                        <img src="@await ImageService.GetImageUrlAsync("profile_hero")" alt="Maruti Makwana - About" 
+                        <img src="@await ImageService.GetImageUrlAsync("about_profile_image")" alt="Maruti Makwana - About" 
                              style="width: 100%; height: auto; border-radius: 20px; border: 3px solid rgba(255, 255, 255, 0.1); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); display: block; object-fit: cover;" />
                         
                         @* Experience Badge - Positioned in Top-Left Corner with transparent background *@
                         <div class="experience-badge-responsive" style="position: absolute; top: -24px; left: -24px; z-index: 3;">
-                            <img src="@await ImageService.GetImageUrlAsync("experience_badge")" 
+                            <img src="@await ImageService.GetImageUrlAsync("about_experience_badge")" 
                                  alt="19+ years professional experience" 
                                  style="width: 128px; height: auto; display: block; filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4)); background: transparent;" />
                         </div>

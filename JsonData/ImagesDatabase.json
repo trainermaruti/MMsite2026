@@ -1,0 +1,34 @@
+[
+  {
+    "ImageKey": "about_profile_image",
+    "DisplayName": "About Page Profile Photo",
+    "Description": "Azure Expert profile photo with circular frame and blue glow - displayed on Profile About page",
+    "ImageUrl": "/images/9c7ba55e-b08a-47d0-a04f-8e0e75c08bd9_22.png",
+    "AltText": "Maruti Makwana - Azure Expert",
+    "Category": "About"
+  },
+  {
+    "ImageKey": "about_experience_badge",
+    "DisplayName": "About Page Experience Badge",
+    "Description": "19\u002B Years Experience Badge with blue ribbon - displayed on Profile About page",
+    "ImageUrl": "/images/278b3def-245d-4563-a853-c4bf0e6a61b0_bd771bda-8d3a-4277-8891-1d786ac8e936_cf999f00-45fd-48a1-9f40-50aaf8470910_MCT-Badges_MCT-Badge---Certified-Trainer---Logo.png",
+    "AltText": "15\u002B Years Experience Badge",
+    "Category": "About"
+  },
+  {
+    "ImageKey": "home_profile_photo",
+    "DisplayName": "Home Page Profile Photo",
+    "Description": "Azure Expert profile photo with circular frame - displayed on Home page hero section",
+    "ImageUrl": "/images/41258b2e-84fd-413e-a335-009a905a8742_44.png",
+    "AltText": "Maruti Makwana - Azure Expert Trainer",
+    "Category": "Home"
+  },
+  {
+    "ImageKey": "home_professional_profile",
+    "DisplayName": "Home Page Professional Photo",
+    "Description": "Professional profile photo in white blazer - displayed on Home page",
+    "ImageUrl": "/images/e307b8d8-22cb-4e56-91c5-0e4a0faca7ba_ffc8b0ee-c64e-454c-958d-a263cb8ede0e.jpg",
+    "AltText": "Maruti Makwana - Professional Profile",
+    "Category": "Home"
+  }
+]

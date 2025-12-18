@@ -108,6 +108,7 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 trainingEvent.CreatedDate = DateTime.UtcNow;
                 _context.TrainingEvents.Add(trainingEvent);
                 await _context.SaveChangesAsync();
+                await SaveEventsToJsonAsync();
                 TempData["SuccessMessage"] = "Event created successfully!";
                 return RedirectToAction(nameof(Index));
             }
@@ -156,6 +157,7 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                     trainingEvent.UpdatedDate = DateTime.UtcNow;
                     _context.Update(trainingEvent);
                     await _context.SaveChangesAsync();
+                    await SaveEventsToJsonAsync();
                     TempData["SuccessMessage"] = "Event updated successfully!";
                 }
                 catch (DbUpdateConcurrencyException)
@@ -182,6 +184,7 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 trainingEvent.IsDeleted = true;
                 trainingEvent.UpdatedDate = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
+                await SaveEventsToJsonAsync();
                 TempData["SuccessMessage"] = "Event deleted successfully!";
             }
             return RedirectToAction(nameof(Index));
@@ -296,6 +299,153 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 .ToList();
 
             return timeZones;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SyncToJson()
+        {
+            try
+            {
+                await SaveEventsToJsonAsync();
+                TempData["SuccessMessage"] = "Successfully synced all events to JSON file!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error syncing to JSON: {ex.Message}";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportFromJson()
+        {
+            try
+            {
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "EventsDatabase.json");
+                
+                if (!System.IO.File.Exists(jsonPath))
+                {
+                    TempData["ErrorMessage"] = "JSON file not found!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var jsonContent = await System.IO.File.ReadAllTextAsync(jsonPath);
+                var events = System.Text.Json.JsonSerializer.Deserialize<List<TrainingEvent>>(jsonContent);
+
+                if (events == null || !events.Any())
+                {
+                    TempData["ErrorMessage"] = "No events found in JSON file!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var validTitles = events.Select(e => e.Title).ToHashSet();
+                var eventsToDelete = await _context.TrainingEvents
+                    .Where(e => !validTitles.Contains(e.Title))
+                    .ToListAsync();
+
+                _context.TrainingEvents.RemoveRange(eventsToDelete);
+
+                int imported = 0;
+                int updated = 0;
+
+                foreach (var evt in events)
+                {
+                    var existing = await _context.TrainingEvents
+                        .FirstOrDefaultAsync(e => e.Title == evt.Title);
+
+                    if (existing == null)
+                    {
+                        var newEvent = new TrainingEvent
+                        {
+                            Title = evt.Title,
+                            Description = evt.Description,
+                            Summary = evt.Summary,
+                            EventType = evt.EventType,
+                            StartDate = evt.StartDate,
+                            EndDate = evt.EndDate,
+                            TimeZone = evt.TimeZone,
+                            Location = evt.Location,
+                            IsOnline = evt.IsOnline,
+                            MaxParticipants = evt.MaxParticipants,
+                            RegistrationLink = evt.RegistrationLink,
+                            ImageUrl = evt.ImageUrl,
+                            BannerUrl = evt.BannerUrl,
+                            SkillTechUrl = evt.SkillTechUrl,
+                            Status = evt.Status,
+                            CreatedDate = DateTime.UtcNow,
+                            IsDeleted = false
+                        };
+                        _context.TrainingEvents.Add(newEvent);
+                        imported++;
+                    }
+                    else
+                    {
+                        existing.Description = evt.Description;
+                        existing.Summary = evt.Summary;
+                        existing.EventType = evt.EventType;
+                        existing.StartDate = evt.StartDate;
+                        existing.EndDate = evt.EndDate;
+                        existing.TimeZone = evt.TimeZone;
+                        existing.Location = evt.Location;
+                        existing.IsOnline = evt.IsOnline;
+                        existing.MaxParticipants = evt.MaxParticipants;
+                        existing.RegistrationLink = evt.RegistrationLink;
+                        existing.ImageUrl = evt.ImageUrl;
+                        existing.BannerUrl = evt.BannerUrl;
+                        existing.SkillTechUrl = evt.SkillTechUrl;
+                        existing.Status = evt.Status;
+                        existing.UpdatedDate = DateTime.UtcNow;
+                        existing.IsDeleted = false;
+                        updated++;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Import complete! Imported: {imported}, Updated: {updated}, Removed: {eventsToDelete.Count}";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error importing from JSON: {ex.Message}";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task SaveEventsToJsonAsync()
+        {
+            try
+            {
+                var events = await _context.TrainingEvents.OrderBy(e => e.Id).ToListAsync();
+                var jsonData = events.Select(e => new
+                {
+                    e.Title,
+                    e.Description,
+                    e.Summary,
+                    e.EventType,
+                    e.StartDate,
+                    e.EndDate,
+                    e.TimeZone,
+                    e.Location,
+                    e.IsOnline,
+                    e.MaxParticipants,
+                    e.RegistrationLink,
+                    e.ImageUrl,
+                    e.BannerUrl,
+                    e.SkillTechUrl,
+                    e.Status
+                }).ToList();
+
+                var json = System.Text.Json.JsonSerializer.Serialize(jsonData, new System.Text.Json.JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+
+                var filePath = Path.Combine("JsonData", "EventsDatabase.json");
+                await System.IO.File.WriteAllTextAsync(filePath, json);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error saving events to JSON: {ex.Message}");
+            }
         }
     }
 }

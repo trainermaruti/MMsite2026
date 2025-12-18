@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarutiTrainingPortal.Data;
 using MarutiTrainingPortal.Models;
+using MarutiTrainingPortal.Services;
 
 namespace MarutiTrainingPortal.Areas.Admin.Controllers
 {
@@ -12,17 +13,19 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
+        private readonly IImageService _imageService;
 
-        public WebsiteImagesController(ApplicationDbContext context, IWebHostEnvironment environment)
+        public WebsiteImagesController(ApplicationDbContext context, IWebHostEnvironment environment, IImageService imageService)
         {
             _context = context;
             _environment = environment;
+            _imageService = imageService;
         }
 
         // GET: Admin/WebsiteImages
         public async Task<IActionResult> Index(string category = "All")
         {
-            var query = _context.WebsiteImages.AsQueryable();
+            var query = _context.WebsiteImages.Where(i => !i.IsDeleted).AsQueryable();
 
             if (category != "All" && !string.IsNullOrEmpty(category))
             {
@@ -32,6 +35,7 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
             var images = await query.OrderBy(i => i.Category).ThenBy(i => i.DisplayName).ToListAsync();
             
             ViewBag.Categories = await _context.WebsiteImages
+                .Where(i => !i.IsDeleted && !string.IsNullOrEmpty(i.Category))
                 .Select(i => i.Category)
                 .Distinct()
                 .OrderBy(c => c)
@@ -75,6 +79,8 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 image.CreatedDate = DateTime.UtcNow;
                 _context.WebsiteImages.Add(image);
                 await _context.SaveChangesAsync();
+                _imageService.ClearCache();
+                await SaveImagesToJsonAsync();
                 TempData["SuccessMessage"] = "Image added successfully!";
                 return RedirectToAction(nameof(Index));
             }
@@ -139,6 +145,8 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                     image.UpdatedDate = DateTime.UtcNow;
                     _context.Update(image);
                     await _context.SaveChangesAsync();
+                    _imageService.ClearCache();
+                    await SaveImagesToJsonAsync();
                     TempData["SuccessMessage"] = "Image updated successfully!";
                 }
                 catch (DbUpdateConcurrencyException)
@@ -186,6 +194,8 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 image.IsDeleted = true;
                 _context.Update(image);
                 await _context.SaveChangesAsync();
+                _imageService.ClearCache();
+                await SaveImagesToJsonAsync();
                 TempData["SuccessMessage"] = "Image deleted successfully!";
             }
 
@@ -195,6 +205,134 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
         private bool ImageExists(int id)
         {
             return _context.WebsiteImages.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SyncToJson()
+        {
+            try
+            {
+                await SaveImagesToJsonAsync();
+                TempData["SuccessMessage"] = "Successfully synced all images to JSON file!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error syncing to JSON: {ex.Message}";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST: Admin/WebsiteImages/ImportFromJson
+        [HttpPost]
+        public async Task<IActionResult> ImportFromJson()
+        {
+            try
+            {
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "ImagesDatabase.json");
+                
+                if (!System.IO.File.Exists(jsonPath))
+                {
+                    TempData["ErrorMessage"] = "JSON file not found!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var jsonContent = await System.IO.File.ReadAllTextAsync(jsonPath);
+                var images = System.Text.Json.JsonSerializer.Deserialize<List<WebsiteImage>>(jsonContent);
+
+                if (images == null || !images.Any())
+                {
+                    TempData["ErrorMessage"] = "No images found in JSON file!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Get all valid image keys from JSON
+                var validImageKeys = images.Select(i => i.ImageKey).ToHashSet();
+
+                // Delete all images not in the JSON file
+                var imagesToDelete = await _context.WebsiteImages
+                    .Where(i => !validImageKeys.Contains(i.ImageKey))
+                    .ToListAsync();
+
+                _context.WebsiteImages.RemoveRange(imagesToDelete);
+
+                int imported = 0;
+                int updated = 0;
+
+                foreach (var image in images)
+                {
+                    // Check if image already exists by ImageKey
+                    var existing = await _context.WebsiteImages
+                        .FirstOrDefaultAsync(i => i.ImageKey == image.ImageKey);
+
+                    if (existing == null)
+                    {
+                        var newImage = new WebsiteImage
+                        {
+                            ImageKey = image.ImageKey,
+                            DisplayName = image.DisplayName,
+                            Description = image.Description,
+                            ImageUrl = image.ImageUrl,
+                            AltText = image.AltText,
+                            Category = image.Category,
+                            CreatedDate = DateTime.UtcNow,
+                            IsDeleted = false
+                        };
+                        _context.WebsiteImages.Add(newImage);
+                        imported++;
+                    }
+                    else
+                    {
+                        // Update existing image
+                        existing.DisplayName = image.DisplayName;
+                        existing.Description = image.Description;
+                        existing.ImageUrl = image.ImageUrl;
+                        existing.AltText = image.AltText;
+                        existing.Category = image.Category;
+                        existing.UpdatedDate = DateTime.UtcNow;
+                        existing.IsDeleted = false;
+                        updated++;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                _imageService.ClearCache();
+
+                TempData["SuccessMessage"] = $"Import complete! Imported: {imported}, Updated: {updated}, Removed: {imagesToDelete.Count}";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error importing from JSON: {ex.Message}";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task SaveImagesToJsonAsync()
+        {
+            try
+            {
+                var images = await _context.WebsiteImages.OrderBy(i => i.Id).ToListAsync();
+                var jsonData = images.Select(i => new
+                {
+                    i.ImageKey,
+                    i.DisplayName,
+                    i.Description,
+                    i.ImageUrl,
+                    i.AltText,
+                    i.Category
+                }).ToList();
+
+                var json = System.Text.Json.JsonSerializer.Serialize(jsonData, new System.Text.Json.JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+
+                var filePath = Path.Combine("JsonData", "ImagesDatabase.json");
+                await System.IO.File.WriteAllTextAsync(filePath, json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving images to JSON: {ex.Message}");
+            }
         }
     }
 }

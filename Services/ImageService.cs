@@ -7,6 +7,7 @@ namespace MarutiTrainingPortal.Services
     {
         Task<string?> GetImageUrlAsync(string imageKey);
         Task<Dictionary<string, string>> GetAllImageUrlsAsync();
+        void ClearCache();
     }
 
     public class ImageService : IImageService
@@ -14,7 +15,7 @@ namespace MarutiTrainingPortal.Services
         private readonly ApplicationDbContext _context;
         private static Dictionary<string, string>? _imageCache;
         private static DateTime _cacheLastUpdated = DateTime.MinValue;
-        private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(5);
+        private static readonly TimeSpan CacheDuration = TimeSpan.FromSeconds(30);
 
         public ImageService(ApplicationDbContext context)
         {
@@ -39,6 +40,11 @@ namespace MarutiTrainingPortal.Services
             // Return default images based on image key
             return imageKey switch
             {
+                "home_profile_photo" => "/images/44.png",
+                "about_profile_image" => "/images/22.png",
+                "about_experience_badge" => "/images/experience-badge.png",
+                "home_professional_profile" => "/images/profiles/344da849-746f-44e9-b6c0-c272850775d7.png",
+                // Legacy keys for backward compatibility
                 "profile_main" => "/images/44.png",
                 "profile_hero" => "/images/22.png",
                 "experience_badge" => "/images/experience-badge.png",
@@ -46,10 +52,22 @@ namespace MarutiTrainingPortal.Services
             };
         }
 
+        public static void ClearStaticCache()
+        {
+            _imageCache = null;
+            _cacheLastUpdated = DateTime.MinValue;
+        }
+
         public async Task<Dictionary<string, string>> GetAllImageUrlsAsync()
         {
             await RefreshCacheIfNeeded();
             return _imageCache ?? new Dictionary<string, string>();
+        }
+
+        public void ClearCache()
+        {
+            _imageCache = null;
+            _cacheLastUpdated = DateTime.MinValue;
         }
 
         private async Task RefreshCacheIfNeeded()

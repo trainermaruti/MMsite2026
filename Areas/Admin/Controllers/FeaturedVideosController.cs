@@ -42,6 +42,7 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 video.CreatedDate = DateTime.UtcNow;
                 _context.FeaturedVideos.Add(video);
                 await _context.SaveChangesAsync();
+                await SaveFeaturedVideosToJsonAsync();
                 TempData["SuccessMessage"] = "Featured video created successfully!";
                 return RedirectToAction(nameof(Index));
             }
@@ -81,6 +82,7 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                     video.UpdatedDate = DateTime.UtcNow;
                     _context.Update(video);
                     await _context.SaveChangesAsync();
+                    await SaveFeaturedVideosToJsonAsync();
                     TempData["SuccessMessage"] = "Featured video updated successfully!";
                 }
                 catch (DbUpdateConcurrencyException)
@@ -128,10 +130,127 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 video.IsDeleted = true;
                 _context.Update(video);
                 await _context.SaveChangesAsync();
+                await SaveFeaturedVideosToJsonAsync();
                 TempData["SuccessMessage"] = "Featured video deleted successfully!";
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        // POST: Admin/FeaturedVideos/SyncToJson
+        [HttpPost]
+        public async Task<IActionResult> SyncToJson()
+        {
+            try
+            {
+                await SaveFeaturedVideosToJsonAsync();
+                TempData["SuccessMessage"] = "Successfully synced all featured videos to JSON file!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error syncing to JSON: {ex.Message}";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportFromJson()
+        {
+            try
+            {
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "FeaturedVideosDatabase.json");
+                
+                if (!System.IO.File.Exists(jsonPath))
+                {
+                    TempData["ErrorMessage"] = "JSON file not found!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var jsonContent = await System.IO.File.ReadAllTextAsync(jsonPath);
+                var videos = System.Text.Json.JsonSerializer.Deserialize<List<FeaturedVideo>>(jsonContent);
+
+                if (videos == null || !videos.Any())
+                {
+                    TempData["ErrorMessage"] = "No featured videos found in JSON file!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var validTitles = videos.Select(v => v.Title).ToHashSet();
+                var videosToDelete = await _context.FeaturedVideos
+                    .Where(v => !validTitles.Contains(v.Title))
+                    .ToListAsync();
+
+                _context.FeaturedVideos.RemoveRange(videosToDelete);
+
+                int imported = 0;
+                int updated = 0;
+
+                foreach (var video in videos)
+                {
+                    var existing = await _context.FeaturedVideos
+                        .FirstOrDefaultAsync(v => v.Title == video.Title);
+
+                    if (existing == null)
+                    {
+                        var newVideo = new FeaturedVideo
+                        {
+                            Title = video.Title,
+                            Description = video.Description,
+                            YouTubeUrl = video.YouTubeUrl,
+                            IsActive = video.IsActive,
+                            DisplayOrder = video.DisplayOrder,
+                            CreatedDate = DateTime.UtcNow,
+                            IsDeleted = false
+                        };
+                        _context.FeaturedVideos.Add(newVideo);
+                        imported++;
+                    }
+                    else
+                    {
+                        existing.Description = video.Description;
+                        existing.YouTubeUrl = video.YouTubeUrl;
+                        existing.IsActive = video.IsActive;
+                        existing.DisplayOrder = video.DisplayOrder;
+                        existing.UpdatedDate = DateTime.UtcNow;
+                        existing.IsDeleted = false;
+                        updated++;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Import complete! Imported: {imported}, Updated: {updated}, Removed: {videosToDelete.Count}";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error importing from JSON: {ex.Message}";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task SaveFeaturedVideosToJsonAsync()
+        {
+            var videos = await _context.FeaturedVideos
+                .Where(v => !v.IsDeleted)
+                .OrderBy(v => v.DisplayOrder)
+                .Select(v => new
+                {
+                    v.Title,
+                    v.Description,
+                    v.YouTubeUrl,
+                    v.IsActive,
+                    v.DisplayOrder,
+                    v.CreatedDate
+                })
+                .ToListAsync();
+
+            var jsonData = System.Text.Json.JsonSerializer.Serialize(videos, new System.Text.Json.JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+
+            var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "FeaturedVideosDatabase.json");
+            Directory.CreateDirectory(Path.GetDirectoryName(jsonPath)!);
+            await System.IO.File.WriteAllTextAsync(jsonPath, jsonData);
         }
 
         private bool VideoExists(int id)

@@ -5,11 +5,19 @@
 }
 
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <h1 class="h3">Website Images</h1>
-        <a asp-action="Create" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add New Image
-        </a>
+        <div class="d-flex gap-2 flex-wrap">
+            <a asp-action="Create" class="btn btn-primary" style="white-space: nowrap;">
+                <i class="fas fa-plus"></i> Add New Image
+            </a>
+            <button type="button" onclick="importFromJson()" class="btn btn-info" style="white-space: nowrap;">
+                <i class="fas fa-file-import me-2"></i>Import from JSON
+            </button>
+            <button type="button" onclick="syncToJson()" class="btn" style="white-space: nowrap; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
+                <i class="fas fa-sync-alt me-2"></i>Sync to JSON
+            </button>
+        </div>
     </div>
 
     @if (TempData["SuccessMessage"] != null)
@@ -83,3 +91,78 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Import from JSON function
+        async function importFromJson() {
+            const btn = event.target.closest('button');
+            const icon = btn.querySelector('i');
+            
+            icon.classList.add('fa-spin');
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('@Url.Action("ImportFromJson", "WebsiteImages", new { area = "Admin" })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                    }
+                });
+                
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    throw new Error('Import failed');
+                }
+            } catch (error) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Error importing from JSON file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+                icon.classList.remove('fa-spin');
+                btn.disabled = false;
+            }
+        }
+
+        // Sync to JSON function
+        async function syncToJson() {
+            const btn = event.target.closest('button');
+            const icon = btn.querySelector('i');
+            
+            icon.classList.add('fa-spin');
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('@Url.Action("SyncToJson", "WebsiteImages", new { area = "Admin" })', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                    }
+                });
+                
+                if (response.ok) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                    alertDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Successfully synced all images to JSON file!<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                    document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+                    
+                    setTimeout(() => {
+                        const bsAlert = new bootstrap.Alert(alertDiv);
+                        bsAlert.close();
+                    }, 3000);
+                } else {
+                    throw new Error('Sync failed');
+                }
+            } catch (error) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Error syncing to JSON file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+            } finally {
+                icon.classList.remove('fa-spin');
+                btn.disabled = false;
+            }
+        }
+    </script>
+}
