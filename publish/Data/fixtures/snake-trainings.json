@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "client": "Tata Consultancy Services (TCS)",
+    "topic": "Azure Cloud Architecture & Migration",
+    "year": "2023",
+    "imageUrl": "/images/trainings/tcs-azure.jpg",
+    "altText": "TCS Azure training session with participants",
+    "excerptHtml": "<p>Comprehensive training on Azure cloud architecture, migration strategies, and best practices for enterprise teams.</p>",
+    "cssClasses": "primary",
+    "isFeatured": true
+  },
+  {
+    "id": 2,
+    "client": "IBM India",
+    "topic": "AI & Machine Learning with Azure",
+    "year": "2023",
+    "imageUrl": "/images/trainings/ibm-ai.jpg",
+    "altText": "IBM AI training workshop",
+    "excerptHtml": "<p>Advanced AI and ML training covering Azure Cognitive Services, ML Studio, and OpenAI integration.</p>",
+    "cssClasses": "secondary",
+    "isFeatured": true
+  },
+  {
+    "id": 3,
+    "client": "Infosys",
+    "topic": "DevOps & Azure DevOps Pipelines",
+    "year": "2024",
+    "imageUrl": "/images/trainings/infosys-devops.jpg",
+    "altText": "Infosys DevOps training program",
+    "excerptHtml": "<p>Hands-on training on CI/CD pipelines, infrastructure as code, and DevOps best practices using Azure DevOps.</p>",
+    "cssClasses": "accent",
+    "isFeatured": true
+  },
+  {
+    "id": 4,
+    "client": "Wipro",
+    "topic": "Azure Security & Compliance",
+    "year": "2024",
+    "imageUrl": "/images/trainings/wipro-security.jpg",
+    "altText": "Wipro security training session",
+    "excerptHtml": "<p>Enterprise-grade security training covering Azure Security Center, Key Vault, and compliance frameworks.</p>",
+    "cssClasses": "primary",
+    "isFeatured": true
+  },
+  {
+    "id": 5,
+    "client": "Accenture",
+    "topic": "Azure Data Engineering & Analytics",
+    "year": "2024",
+    "imageUrl": "/images/trainings/accenture-data.jpg",
+    "altText": "Accenture data engineering workshop",
+    "excerptHtml": "<p>Deep dive into Azure data services, Synapse Analytics, Data Factory, and modern data engineering patterns.</p>",
+    "cssClasses": "secondary",
+    "isFeatured": true
+  }
+]

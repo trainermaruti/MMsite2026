@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 1,
+    "Title": "Azure Cloud Migration Workshop",
+    "Description": "Comprehensive training on migrating on-premise applications to Azure cloud",
+    "Company": "TCS (Tata Consultancy Services)",
+    "DeliveryDate": "2025-10-19T06:46:44.3967321Z",
+    "Duration": "3 Days",
+    "Topics": "Azure Migration, Cloud Architecture, Cost Optimization",
+    "ImageUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/azure-architect-305.webp",
+    "CreatedDate": "2025-12-18T06:46:44.3968542Z",
+    "IsDeleted": false
+  },
+  {
+    "Id": 2,
+    "Title": "AI \u0026 Machine Learning Fundamentals",
+    "Description": "Introduction to AI concepts and Azure AI services for developers",
+    "Company": "Infosys Ltd",
+    "DeliveryDate": "2025-11-03T06:46:44.3969157Z",
+    "Duration": "2 Days",
+    "Topics": "Azure AI, Machine Learning, Cognitive Services, Bot Framework",
+    "ImageUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/azure-ai-900.webp",
+    "CreatedDate": "2025-12-18T06:46:44.3969161Z",
+    "IsDeleted": false
+  },
+  {
+    "Id": 3,
+    "Title": "DevOps Implementation with Azure",
+    "Description": "End-to-end DevOps training covering CI/CD pipelines and automation",
+    "Company": "Wipro Technologies",
+    "DeliveryDate": "2025-11-18T06:46:44.3969164Z",
+    "Duration": "4 Days",
+    "Topics": "Azure DevOps, CI/CD, Infrastructure as Code, Kubernetes",
+    "ImageUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/azure-devops-400.webp",
+    "CreatedDate": "2025-12-18T06:46:44.3969167Z",
+    "IsDeleted": false
+  },
+  {
+    "Id": 4,
+    "Title": "Azure Administrator Bootcamp",
+    "Description": "Intensive training for Azure administration and resource management",
+    "Company": "HCL Technologies",
+    "DeliveryDate": "2025-09-19T06:46:44.3969169Z",
+    "Duration": "5 Days",
+    "Topics": "Azure Administration, Security, Monitoring, Cost Management",
+    "ImageUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/azure-admin-104.webp",
+    "CreatedDate": "2025-12-18T06:46:44.3969171Z",
+    "IsDeleted": false
+  },
+  {
+    "Id": 5,
+    "Title": "Microsoft 365 Copilot for Enterprises",
+    "Description": "Training on implementing and using Microsoft Copilot in enterprise environments",
+    "Company": "Tech Mahindra",
+    "DeliveryDate": "2025-12-03T06:46:44.3969174Z",
+    "Duration": "2 Days",
+    "Topics": "Microsoft Copilot, AI Productivity, Microsoft 365, Enterprise AI",
+    "ImageUrl": "https://stvidstrg25.blob.core.windows.net/skilltechimages/copilot-studio.webp",
+    "CreatedDate": "2025-12-18T06:46:44.3969175Z",
+    "IsDeleted": false
+  }
+]

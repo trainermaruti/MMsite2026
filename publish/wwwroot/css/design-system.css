@@ -1,0 +1,162 @@
+/* =========================================
+   DESIGN SYSTEM VARIABLES
+   ========================================= */
+:root {
+    /* --- Colors (Strict Roles) --- */
+    --bs-primary: #3b82f6;       /* Navy Blue (Actions) */
+    --bs-primary-rgb: 59, 130, 246;
+    --bs-secondary: #9ca3af;     /* Muted Gray (Borders, Text) */
+    --bs-success: #10b981;       /* Status: Success */
+    --bs-info: #a855f7;          /* Accent: Purple (Minor highlights only) */
+    --bs-dark: #0a0a0a;          /* True Black Background */
+    --bs-body-bg: #0a0a0a;
+    --bg-surface: #161616;       /* Elevated Card Background */
+    --bs-body-color: #e5e5e5;    /* Standard Body Text */
+    --text-muted: #737373;       /* Meta Text */
+
+    /* --- Typography (Inter / Plus Jakarta Sans) --- */
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --h1-size: 3.5rem;  /* 56px desktop */
+    --h2-size: 2rem;    /* 32px */
+    --h3-size: 1.5rem;  /* 24px */
+    --body-size: 1rem;  /* 16px */
+    --body-line-height: 1.6;
+
+    /* --- Spacing & Shape --- */
+    --border-radius-lg: 12px; /* Consistent corner radius */
+    --section-padding: 80px;
+
+    /* --- Shadows (No colors!) --- */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Mobile Typography Overrides */
+@media (max-width: 768px) {
+    :root {
+        --h1-size: 2.5rem; /* 40px mobile */
+        --h2-size: 1.75rem;
+        --section-padding: 48px;
+    }
+}
+
+/* =========================================
+   GLOBAL RESET & TYPOGRAPHY
+   ========================================= */
+body {
+    font-family: var(--font-sans);
+    font-size: var(--body-size);
+    line-height: var(--body-line-height);
+    background-color: var(--bs-dark);
+    color: var(--bs-body-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, .h1, .h2, .h3 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+h1 { font-size: var(--h1-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--h3-size); }
+
+/* Letter Spacing utility for small caps */
+.ls-1 { letter-spacing: 1px; }
+
+/* =========================================
+   COMPONENT: BUTTONS
+   ========================================= */
+.btn {
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: var(--border-radius-lg);
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(180deg, #3b82f6, #2563eb);
+    border: none;
+    box-shadow: var(--shadow-md);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(180deg, #2563eb, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-outline-light {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: #ffffff;
+}
+
+/* =========================================
+   COMPONENT: HERO SECTION SPECIFICS
+   ========================================= */
+.hero-section {
+    padding-top: calc(80px + var(--section-padding));
+    padding-bottom: var(--section-padding);
+    overflow: hidden;
+}
+
+.hero-glow-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.text-gradient-primary {
+    background: linear-gradient(135deg, #ffffff 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* responsive tweaks for hero */
+.hero-portrait-container img {
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* =========================================
+   COMPONENT: CARD
+   ========================================= */
+.card-standard {
+    background-color: var(--bg-surface);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+.card-standard .card-body {
+    padding: 1.25rem;
+}
+.badge-ghost {
+    background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* =========================================
+   ACCESSIBILITY UTILITIES
+   ========================================= */
+.sr-only { position: absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }

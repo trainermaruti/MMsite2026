@@ -9,21 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add DbContext - SQLite for development, SQL Server for production
+// Add DbContext - SQL Server for all environments
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    
-    if (builder.Environment.IsProduction())
-    {
-        // Use SQL Server in production (Azure SQL Database)
-        options.UseSqlServer(connectionString);
-    }
-    else
-    {
-        // Use SQLite in development
-        options.UseSqlite(connectionString ?? "Data Source=MarutiTrainingPortal.db");
-    }
+    options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found."));
 });
 
 // Add Identity

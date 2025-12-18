@@ -1,0 +1,19 @@
+[
+  {
+    "Id": 1,
+    "SiteTitle": "Maruti Makwana Training Portal",
+    "MetaDescription": "Professional Azure \u0026 AI Training by Maruti Makwana - Corporate Trainer specializing in Cloud Computing and Artificial Intelligence",
+    "MetaKeywords": "Azure Training, AI Training, Cloud Computing, Corporate Training, Machine Learning, DevOps",
+    "EmailNotificationsEnabled": true,
+    "MaintenanceMode": false,
+    "ShowUpcomingEvents": true,
+    "ShowCoursesSection": true,
+    "ShowProfileSection": true,
+    "SmtpConfigured": false,
+    "SendGridConfigured": false,
+    "AzureOpenAIConfigured": false,
+    "AppVersion": "1.0.0",
+    "CreatedDate": "2025-12-18T06:46:44.3652029Z",
+    "UpdatedDate": "2025-12-18T06:46:44.3652259Z"
+  }
+]

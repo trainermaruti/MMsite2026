@@ -8,7 +8,7 @@
   "AllowedHosts": "*",
   
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=MarutiTrainingPortal.db"
+    "DefaultConnection": "Server=.\\\\SQLEXPRESS;Database=MarutiTrainingPortal;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
   },
 
   "Admin": {
