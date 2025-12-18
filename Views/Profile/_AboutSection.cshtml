@@ -13,24 +13,21 @@
         <div class="row align-items-center" style="gap: 60px 0; overflow: visible;">
             
             @* LEFT COLUMN - PROFILE IMAGE *@
-            <div class="col-lg-5 col-md-12" style="display: flex; justify-content: center; overflow: visible;">
+            <div class="col-lg-5 col-md-12" style="display: flex; justify-content: center; align-items: center; overflow: visible;">
                 
-                <div class="about-image-wrapper" style="position: relative; max-width: 420px; width: 100%; padding: 50px 0 0 50px;">
+                <div class="about-image-wrapper" style="position: relative; max-width: 420px; width: 100%;">
                     
-                    @* Decorative Frame *@
-                    <div style="position: absolute; inset: -12px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border-radius: 24px; z-index: 1;"></div>
-                    
-                    @* Profile Image *@
+                    @* Profile Image Container - POSITIONED RELATIVE FOR BADGE *@
                     <div style="position: relative; z-index: 2;">
                         <img src="@await ImageService.GetImageUrlAsync("profile_hero")" alt="Maruti Makwana - About" 
                              style="width: 100%; height: auto; border-radius: 20px; border: 3px solid rgba(255, 255, 255, 0.1); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); display: block;" />
-                    </div>
-                    
-                    @* Experience Badge *@
-                    <div class="experience-badge-responsive" style="position: absolute; top: 0; left: 0; z-index: 3;">
-                        <img src="@await ImageService.GetImageUrlAsync("experience_badge")" 
-                             alt="19+ years professional experience" 
-                             style="width: 180px; height: auto; display: block;" />
+                        
+                        @* Experience Badge - Positioned in Top-Left Corner *@
+                        <div class="experience-badge-responsive" style="position: absolute; top: -24px; left: -24px; z-index: 3;">
+                            <img src="@await ImageService.GetImageUrlAsync("experience_badge")" 
+                                 alt="19+ years professional experience" 
+                                 style="width: 128px; height: auto; display: block; filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));" />
+                        </div>
                     </div>
                     
                     @* Certifications Badge *@
@@ -157,35 +154,44 @@
 /* Experience Badge Responsive Styles */
 .experience-badge-responsive {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -24px;
+    left: -24px;
     z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .experience-badge-responsive img {
-    width: 180px;
+    width: 128px;
     height: auto;
     display: block;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+    /* Ensure transparent background - no extra backgrounds */
+}
+
+/* Tablet: Adjust badge size */
+@@media (max-width: 991px) {
+    .experience-badge-responsive {
+        top: -20px;
+        left: -20px;
+    }
+    
+    .experience-badge-responsive img {
+        width: 100px;
+    }
 }
 
 /* Mobile: Badge positioned at the top-left corner overlapping frame */
 @@media (max-width: 767px) {
     .about-image-wrapper {
-        padding: 30px 0 0 30px !important;
+        padding: 0 !important;
     }
     
     .experience-badge-responsive {
-        top: -15px !important;
-        left: 0px !important;
-        bottom: auto !important;
+        top: -16px !important;
+        left: -16px !important;
     }
     
     .experience-badge-responsive img {
-        width: 70px !important;
+        width: 80px !important;
     }
 }
 
@@ -203,7 +209,7 @@
     .about-image-wrapper {
         margin-bottom: 40px;
         max-width: 350px !important;
-        padding: 40px 0 0 40px !important;
+        padding: 0 !important;
     }
     
     .about-image-wrapper > div[style*="position: absolute"] {
@@ -224,8 +230,8 @@
     .about-image-wrapper {
         max-width: 300px !important;
         margin-bottom: 32px;
-        padding: 30px 0 0 30px !important;
-    }   margin-bottom: 32px;
+        padding: 0 !important;
+    }
     }
     
     /* Adjust experience badge for mobile */
@@ -360,13 +366,18 @@
     
     .about-image-wrapper {
         max-width: 280px !important;
-        padding: 25px 0 0 25px !important;
+        padding: 0 !important;
+    }
+    
+    .experience-badge-responsive {
+        top: -12px !important;
+        left: -12px !important;
     }
     
     .experience-badge-responsive img {
-        width: 70px;
-    }   max-width: 280px !important;
+        width: 64px !important;
     }
+}
     
     .about-section-modern h2 {
         font-size: 24px !important;
