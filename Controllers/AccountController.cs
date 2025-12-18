@@ -26,7 +26,7 @@ namespace MarutiTrainingPortal.Controllers
         {
             if (User.Identity?.IsAuthenticated == true)
             {
-                return RedirectToAction("Dashboard", "Admin");
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
             }
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -92,7 +92,7 @@ namespace MarutiTrainingPortal.Controllers
             }
             else
             {
-                return RedirectToAction("Dashboard", "Admin");
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
             }
         }
     }

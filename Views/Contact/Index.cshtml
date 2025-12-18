@@ -67,8 +67,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="Phone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="Phone" name="Phone" autocomplete="tel" maxlength="20" aria-describedby="Phone-error">
+                            <label for="Phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="Phone" name="Phone" autocomplete="tel" required maxlength="20" aria-describedby="Phone-error">
                             <span id="Phone-error" class="text-danger" role="alert"></span>
                         </div>
 
@@ -168,7 +168,7 @@
                 // Re-enable submit button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Message';
-            });s
+            });
         });
     </script>
 }

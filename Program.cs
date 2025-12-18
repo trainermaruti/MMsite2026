@@ -162,6 +162,35 @@ app.UseAuthorization();
 
 app.UseSession();
 
+// Ensure admin credentials are correct on startup
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var hasher = new PasswordHasher<IdentityUser>();
+        
+        // Check if the new admin already exists
+        var newAdmin = context.Users.FirstOrDefault(u => u.NormalizedUserName == "MARUTI_MAKWANA@HOTMAIL.COM");
+        
+        if (newAdmin != null)
+        {
+            // Just update password and unlock account
+            newAdmin.PasswordHash = hasher.HashPassword(newAdmin, "Meet@maruti1028");
+            newAdmin.SecurityStamp = Guid.NewGuid().ToString();
+            newAdmin.LockoutEnabled = false;
+            newAdmin.AccessFailedCount = 0;
+            newAdmin.LockoutEnd = null;
+            context.SaveChanges();
+            Console.WriteLine($"✓ Admin credentials verified: {newAdmin.Email}");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"⚠ Error: {ex.Message}");
+    }
+}
+
 // Map Admin area routes
 app.MapControllerRoute(
     name: "admin",

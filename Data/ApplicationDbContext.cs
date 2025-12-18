@@ -120,7 +120,7 @@ namespace MarutiTrainingPortal.Data
                     WhatsAppNumber = "+91 9081908127",
                     Expertise = "Azure Cloud, AI, Machine Learning, DevOps, Cloud Architecture",
                     TotalTrainingsDone = 50,
-                    TotalStudents = 2000,
+                    TotalStudents = 130000,
                     LinkedInUrl = "https://www.linkedin.com/in/marutimakwana/",
                     InstagramUrl = "https://www.instagram.com/marutimakwana?igsh=MWttazg1dGRkbTU3cg==",
                     YouTubeUrl = "https://www.youtube.com/@skilltechclub",
@@ -163,17 +163,17 @@ namespace MarutiTrainingPortal.Data
                 NormalizedName = "ADMIN"
             });
 
-            // Seed Admin User (Default password: Admin@123456 - CHANGE IN PRODUCTION!)
+            // Seed Admin User (Password: Meet@maruti1028)
             var hasher = new PasswordHasher<IdentityUser>();
             modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser
             {
                 Id = ADMIN_USER_ID,
-                UserName = "admin@marutitraining.com",
-                NormalizedUserName = "ADMIN@MARUTITRAINING.COM",
-                Email = "admin@marutitraining.com",
-                NormalizedEmail = "ADMIN@MARUTITRAINING.COM",
+                UserName = "maruti_makwana@hotmail.com",
+                NormalizedUserName = "MARUTI_MAKWANA@HOTMAIL.COM",
+                Email = "maruti_makwana@hotmail.com",
+                NormalizedEmail = "MARUTI_MAKWANA@HOTMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Admin@123456"),
+                PasswordHash = hasher.HashPassword(null, "Meet@maruti1028"),
                 SecurityStamp = Guid.NewGuid().ToString()
             });
 
