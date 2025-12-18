@@ -15,18 +15,18 @@
             @* LEFT COLUMN - PROFILE IMAGE *@
             <div class="col-lg-5 col-md-12" style="display: flex; justify-content: center; align-items: center; overflow: visible;">
                 
-                <div class="about-image-wrapper" style="position: relative; max-width: 420px; width: 100%;">
+                <div class="about-image-wrapper" style="position: relative; max-width: 420px; width: 100%; display: flex; justify-content: center;">
                     
                     @* Profile Image Container - POSITIONED RELATIVE FOR BADGE *@
-                    <div style="position: relative; z-index: 2;">
+                    <div style="position: relative; z-index: 2; width: 100%; max-width: 380px;">
                         <img src="@await ImageService.GetImageUrlAsync("profile_hero")" alt="Maruti Makwana - About" 
-                             style="width: 100%; height: auto; border-radius: 20px; border: 3px solid rgba(255, 255, 255, 0.1); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); display: block;" />
+                             style="width: 100%; height: auto; border-radius: 20px; border: 3px solid rgba(255, 255, 255, 0.1); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); display: block; object-fit: cover;" />
                         
-                        @* Experience Badge - Positioned in Top-Left Corner *@
+                        @* Experience Badge - Positioned in Top-Left Corner with transparent background *@
                         <div class="experience-badge-responsive" style="position: absolute; top: -24px; left: -24px; z-index: 3;">
                             <img src="@await ImageService.GetImageUrlAsync("experience_badge")" 
                                  alt="19+ years professional experience" 
-                                 style="width: 128px; height: auto; display: block; filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));" />
+                                 style="width: 128px; height: auto; display: block; filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4)); background: transparent;" />
                         </div>
                     </div>
                     
@@ -164,7 +164,8 @@
     height: auto;
     display: block;
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
-    /* Ensure transparent background - no extra backgrounds */
+    background: transparent !important;
+    mix-blend-mode: normal;
 }
 
 /* Tablet: Adjust badge size */
@@ -176,6 +177,11 @@
     
     .experience-badge-responsive img {
         width: 100px;
+        background: transparent !important;
+    }
+    
+    .about-image-wrapper {
+        justify-content: center;
     }
 }
 
@@ -183,6 +189,7 @@
 @@media (max-width: 767px) {
     .about-image-wrapper {
         padding: 0 !important;
+        justify-content: center;
     }
     
     .experience-badge-responsive {
@@ -192,6 +199,7 @@
     
     .experience-badge-responsive img {
         width: 80px !important;
+        background: transparent !important;
     }
 }
 
@@ -367,6 +375,7 @@
     .about-image-wrapper {
         max-width: 280px !important;
         padding: 0 !important;
+        justify-content: center;
     }
     
     .experience-badge-responsive {
@@ -376,6 +385,7 @@
     
     .experience-badge-responsive img {
         width: 64px !important;
+        background: transparent !important;
     }
 }
     
