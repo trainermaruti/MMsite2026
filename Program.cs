@@ -317,6 +317,80 @@ static bool IsFileReadable(string filePath)
     }
 }
 
+// MANUAL IMPORT ENDPOINT - Trigger data import manually to see errors
+// Visit: https://marutimakwana.azurewebsites.net/admin/force-import-data
+app.MapGet("/admin/force-import-data", async (ApplicationDbContext dbContext) =>
+{
+    var html = "<html><head><style>body{font-family:monospace;padding:20px;background:#000;color:#0f0;}h1{color:#0ff;}.error{color:#f00;}.success{color:#0f0;}.warning{color:#ff0;}</style></head><body>";
+    html += "<h1>🔄 Manual JSON Data Import</h1>";
+    
+    try
+    {
+        html += $"<p>📍 Base directory: {AppDomain.CurrentDomain.BaseDirectory}</p>";
+        var jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JsonData");
+        html += $"<p>📂 JsonData path: {jsonPath}</p>";
+        html += $"<p>📂 JsonData exists: {Directory.Exists(jsonPath)}</p>";
+        
+        if (Directory.Exists(jsonPath))
+        {
+            html += "<h3>Files in JsonData:</h3><ul>";
+            foreach (var file in Directory.GetFiles(jsonPath, "*.json"))
+            {
+                var fi = new FileInfo(file);
+                html += $"<li>{Path.GetFileName(file)} - {fi.Length:N0} bytes</li>";
+            }
+            html += "</ul>";
+        }
+        
+        // Clear existing data
+        html += "<h3>🗑️  Clearing existing data...</h3>";
+        dbContext.Courses.RemoveRange(dbContext.Courses);
+        dbContext.TrainingEvents.RemoveRange(dbContext.TrainingEvents);
+        dbContext.Profiles.RemoveRange(dbContext.Profiles);
+        dbContext.WebsiteImages.RemoveRange(dbContext.WebsiteImages);
+        dbContext.Trainings.RemoveRange(dbContext.Trainings);
+        await dbContext.SaveChangesAsync();
+        html += "<p class='success'>✅ Cleared!</p>";
+        
+        html += "<h3>📥 Starting import...</h3>";
+        try
+        {
+            await MarutiTrainingPortal.Helpers.JsonDataImporter.ImportAllData(dbContext);
+            html += "<p class='success'>✅ Import completed!</p>";
+        }
+        catch (Exception importEx)
+        {
+            html += $"<p class='error'>❌ Import failed: {importEx.GetType().Name}</p>";
+            html += $"<p class='error'>Error: {importEx.Message}</p>";
+            html += $"<pre class='error'>{importEx.StackTrace}</pre>";
+            if (importEx.InnerException != null)
+            {
+                html += $"<p class='error'>Inner: {importEx.InnerException.Message}</p>";
+            }
+        }
+        
+        // Check counts
+        html += "<h3>📊 Database Counts:</h3><ul>";
+        html += $"<li>Courses: {await dbContext.Courses.CountAsync()}</li>";
+        html += $"<li>Events: {await dbContext.TrainingEvents.CountAsync()}</li>";
+        html += $"<li>Trainings: {await dbContext.Trainings.CountAsync()}</li>";
+        html += $"<li>Profiles: {await dbContext.Profiles.CountAsync()}</li>";
+        html += $"<li>Images: {await dbContext.WebsiteImages.CountAsync()}</li>";
+        html += "</ul>";
+        
+        html += "<p><a href='/health' style='color:#0ff;'>Check /health endpoint</a></p>";
+        html += "<p><a href='/' style='color:#0ff;'>Go to homepage</a></p>";
+    }
+    catch (Exception ex)
+    {
+        html += $"<p class='error'>Fatal error: {ex.Message}</p>";
+        html += $"<pre class='error'>{ex.StackTrace}</pre>";
+    }
+    
+    html += "</body></html>";
+    return Results.Content(html, "text/html");
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
