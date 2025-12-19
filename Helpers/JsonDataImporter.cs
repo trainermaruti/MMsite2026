@@ -12,16 +12,108 @@ namespace MarutiTrainingPortal.Helpers;
 
 public class JsonDataImporter
 {
+    /// <summary>
+    /// Resolves the absolute path to a JSON file using multiple fallback strategies.
+    /// This ensures the file is found in both local development and Azure production environments.
+    /// </summary>
+    /// <param name="fileName">The name of the JSON file (e.g., "CoursesDatabase.json")</param>
+    /// <returns>Absolute path to the JSON file</returns>
+    /// <exception cref="FileNotFoundException">Thrown when file cannot be found in any location</exception>
     private static string GetJsonFilePath(string fileName)
     {
-        // Use absolute path based on application base directory
-        var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        var jsonPath = Path.Combine(basePath, "JsonData", fileName);
+        Console.WriteLine($"\n🔍 RESOLVING PATH FOR: {fileName}");
+        Console.WriteLine("─".PadRight(80, '─'));
         
-        Console.WriteLine($"📁 Looking for: {jsonPath}");
-        Console.WriteLine($"   Exists: {File.Exists(jsonPath)}");
+        // Strategy 1: AppDomain.CurrentDomain.BaseDirectory (Works on Azure)
+        // Azure: C:\home\site\wwwroot\
+        // Local: bin\Debug\net8.0\
+        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        var path1 = Path.Combine(baseDir, "JsonData", fileName);
+        Console.WriteLine($"Strategy 1 (BaseDirectory): {baseDir}");
+        Console.WriteLine($"   → Full path: {path1}");
+        Console.WriteLine($"   → Exists: {File.Exists(path1)}");
         
-        return jsonPath;
+        if (File.Exists(path1))
+        {
+            Console.WriteLine("   ✅ FOUND via BaseDirectory");
+            return path1;
+        }
+        
+        // Strategy 2: Current Working Directory (Fallback for some hosting scenarios)
+        var currentDir = Directory.GetCurrentDirectory();
+        var path2 = Path.Combine(currentDir, "JsonData", fileName);
+        Console.WriteLine($"\nStrategy 2 (CurrentDirectory): {currentDir}");
+        Console.WriteLine($"   → Full path: {path2}");
+        Console.WriteLine($"   → Exists: {File.Exists(path2)}");
+        
+        if (File.Exists(path2))
+        {
+            Console.WriteLine("   ✅ FOUND via CurrentDirectory");
+            return path2;
+        }
+        
+        // Strategy 3: Search parent directories (for development scenarios)
+        var searchDir = baseDir;
+        for (int i = 0; i < 5; i++) // Search up to 5 levels
+        {
+            var parentPath = Path.Combine(searchDir, "JsonData", fileName);
+            if (File.Exists(parentPath))
+            {
+                Console.WriteLine($"\nStrategy 3 (Parent Search): Found at level {i}");
+                Console.WriteLine($"   → Full path: {parentPath}");
+                Console.WriteLine("   ✅ FOUND via Parent Directory Search");
+                return parentPath;
+            }
+            
+            var parent = Directory.GetParent(searchDir);
+            if (parent == null) break;
+            searchDir = parent.FullName;
+        }
+        
+        // File not found - provide detailed diagnostics
+        Console.WriteLine("\n❌ FILE NOT FOUND - DIAGNOSTICS:");
+        Console.WriteLine($"   File Name: {fileName}");
+        Console.WriteLine($"   BaseDirectory: {baseDir}");
+        Console.WriteLine($"   CurrentDirectory: {currentDir}");
+        
+        // List what's actually in the JsonData folder (if it exists)
+        var jsonDataDir1 = Path.Combine(baseDir, "JsonData");
+        var jsonDataDir2 = Path.Combine(currentDir, "JsonData");
+        
+        if (Directory.Exists(jsonDataDir1))
+        {
+            Console.WriteLine($"\n   JsonData folder exists at: {jsonDataDir1}");
+            Console.WriteLine("   Files found:");
+            foreach (var file in Directory.GetFiles(jsonDataDir1))
+            {
+                Console.WriteLine($"      - {Path.GetFileName(file)}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"   ⚠️  JsonData folder NOT found at: {jsonDataDir1}");
+        }
+        
+        if (jsonDataDir1 != jsonDataDir2 && Directory.Exists(jsonDataDir2))
+        {
+            Console.WriteLine($"\n   JsonData folder exists at: {jsonDataDir2}");
+            Console.WriteLine("   Files found:");
+            foreach (var file in Directory.GetFiles(jsonDataDir2))
+            {
+                Console.WriteLine($"      - {Path.GetFileName(file)}");
+            }
+        }
+        
+        Console.WriteLine("\n   🔧 TROUBLESHOOTING STEPS:");
+        Console.WriteLine("   1. Check if JsonData folder exists in deployment");
+        Console.WriteLine("   2. Verify .csproj has <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>");
+        Console.WriteLine("   3. Check Azure Kudu Console: site/wwwroot/JsonData/");
+        Console.WriteLine("   4. Ensure file names match exactly (case-sensitive on Linux)");
+        
+        throw new FileNotFoundException(
+            $"Could not find '{fileName}' in any of the expected locations. " +
+            $"Checked: {path1}, {path2}, and parent directories. " +
+            $"See console logs above for detailed diagnostics.");
     }
 
     private static async Task SafeImport(
