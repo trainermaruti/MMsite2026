@@ -248,16 +248,20 @@ html.light-theme .hero-portrait-shadow {
                     Master Azure cloud services with hands-on workshops covering architecture, deployment, security, and best practices for enterprise solutions.
                 </p>
 
-                <div class="d-flex gap-3 mb-5 fade-up flex-wrap">
-                    <a asp-controller="Contact" asp-action="Index" class="btn btn-lg px-4 py-3 fw-semibold" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; color: #ffffff !important; border-radius: 12px; font-size: 16px; transition: all 0.3s;">
-                        <i class="fas fa-calendar-check me-2" style="color: #ffffff !important;"></i><span style="color: #ffffff !important;">Book a Workshop</span>
-                    </a>
-                    <a asp-controller="Courses" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 py-3 fw-semibold" style="border-radius: 12px; font-size: 16px; transition: all 0.3s;">
-                        <i class="fas fa-play-circle me-2" style="color: #ffffff !important;"></i><span style="color: #ffffff !important;">See Courses</span>
-                    </a>
-                    <a href="/profile.pdf" id="profileDownloadBtn" class="btn btn-warning btn-lg px-4 py-3 fw-semibold" style="border-radius: 12px; font-size: 16px; transition: all 0.3s; display: none;">
-                        <i class="fas fa-download me-2"></i><span>Download Profile</span>
-                    </a>
+                <div class="mb-5 fade-up d-flex flex-column align-items-center">
+                    <div class="d-flex gap-3 mb-3 flex-wrap justify-content-center">
+                        <a asp-controller="Contact" asp-action="Index" class="btn btn-lg px-4 py-3 fw-semibold" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; color: #ffffff !important; border-radius: 12px; font-size: 16px; transition: all 0.3s;">
+                            <i class="fas fa-calendar-check me-2" style="color: #ffffff !important;"></i><span style="color: #ffffff !important;">Book a Workshop</span>
+                        </a>
+                        <a asp-controller="Courses" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 py-3 fw-semibold" style="border-radius: 12px; font-size: 16px; transition: all 0.3s;">
+                            <i class="fas fa-play-circle me-2" style="color: #ffffff !important;"></i><span style="color: #ffffff !important;">See Courses</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/profile.pdf" id="profileDownloadBtn" class="btn btn-warning btn-lg px-5 py-3 fw-semibold" style="border-radius: 12px; font-size: 17px; transition: all 0.3s; display: none; color: #ffffff !important;">
+                            <i class="fas fa-download me-2" style="color: #ffffff !important;"></i><span style="color: #ffffff !important;">Download Profile</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
