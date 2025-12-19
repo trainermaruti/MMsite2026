@@ -20,9 +20,13 @@
     - CopyToOutputDirectory: Copies to bin/Debug or bin/Release during build
     - CopyToPublishDirectory: Copies to publish folder during dotnet publish
     - Always: Ensures files are copied even if not modified (safer than PreserveNewest)
+    
+    IMPORTANT: Using 'Update' instead of 'Include' to avoid NETSDK1022 duplicate error
+    - .NET SDK automatically includes content files
+    - 'Update' modifies already-included files instead of re-including them
   -->
   <ItemGroup>
-    <Content Include="JsonData\**\*.json">
+    <Content Update="JsonData\**\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
@@ -30,7 +34,7 @@
 
   <!-- Ensure wwwroot/images folder is published -->
   <ItemGroup>
-    <Content Include="wwwroot\images\**\*.*">
+    <Content Update="wwwroot\images\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
