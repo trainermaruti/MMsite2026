@@ -168,32 +168,42 @@ app.UseAuthorization();
 
 app.UseSession();
 
-// Ensure admin credentials are correct on startup
+// Ensure admin credentials are correct on startup (only if database is available)
 using (var scope = app.Services.CreateScope())
 {
     try
     {
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        var hasher = new PasswordHasher<IdentityUser>();
         
-        // Check if the new admin already exists
-        var newAdmin = context.Users.FirstOrDefault(u => u.NormalizedUserName == "MARUTI_MAKWANA@HOTMAIL.COM");
-        
-        if (newAdmin != null)
+        // Check if database is accessible
+        if (await context.Database.CanConnectAsync())
         {
-            // Just update password and unlock account
-            newAdmin.PasswordHash = hasher.HashPassword(newAdmin, "Meet@maruti1028");
-            newAdmin.SecurityStamp = Guid.NewGuid().ToString();
-            newAdmin.LockoutEnabled = false;
-            newAdmin.AccessFailedCount = 0;
-            newAdmin.LockoutEnd = null;
-            context.SaveChanges();
-            Console.WriteLine($"✓ Admin credentials verified: {newAdmin.Email}");
+            var hasher = new PasswordHasher<IdentityUser>();
+            
+            // Check if the new admin already exists
+            var newAdmin = context.Users.FirstOrDefault(u => u.NormalizedUserName == "MARUTI_MAKWANA@HOTMAIL.COM");
+            
+            if (newAdmin != null)
+            {
+                // Just update password and unlock account
+                newAdmin.PasswordHash = hasher.HashPassword(newAdmin, "Meet@maruti1028");
+                newAdmin.SecurityStamp = Guid.NewGuid().ToString();
+                newAdmin.LockoutEnabled = false;
+                newAdmin.AccessFailedCount = 0;
+                newAdmin.LockoutEnd = null;
+                await context.SaveChangesAsync();
+                Console.WriteLine($"✓ Admin credentials verified: {newAdmin.Email}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("⚠ Database not accessible, skipping admin verification");
         }
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"⚠ Error: {ex.Message}");
+        Console.WriteLine($"⚠ Admin verification error: {ex.Message}");
+        Console.WriteLine("Application will continue without admin verification.");
     }
 }
 
