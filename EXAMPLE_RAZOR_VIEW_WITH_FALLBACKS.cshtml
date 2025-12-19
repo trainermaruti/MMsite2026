@@ -1,0 +1,183 @@
+@* 
+    EXAMPLE: PRODUCTION-SAFE RAZOR VIEW WITH FALLBACK HANDLING
+    
+    WHY THIS MATTERS:
+    - Prevents blank pages if data loading fails
+    - Provides user-friendly messaging
+    - Helps diagnose issues in production
+    
+    APPLY THIS PATTERN TO ALL VIEWS THAT DISPLAY JSON DATA
+*@
+
+@model List<MarutiTrainingPortal.Models.TrainingEvent>
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Training Events</h1>
+
+    @* DEFENSIVE CHECK 1: Model null check *@
+    @if (Model == null)
+    {
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+            <p class="font-bold">⚠️ Warning</p>
+            <p>Unable to load events data. Model is null.</p>
+            <p class="text-sm mt-2">This may indicate a configuration issue.</p>
+        </div>
+        
+        @* Show link to diagnostics in non-production *@
+        @if (!Context.Request.Host.Host.Contains("production"))
+        {
+            <div class="mt-4">
+                <a href="/json-diagnostics" class="text-blue-600 hover:underline">
+                    🔍 View JSON Diagnostics
+                </a>
+            </div>
+        }
+    }
+    @* DEFENSIVE CHECK 2: Empty collection *@
+    else if (!Model.Any())
+    {
+        <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4">
+            <p class="font-bold">ℹ️ No Events Found</p>
+            <p>There are currently no training events scheduled.</p>
+            <p class="text-sm mt-2">Check back soon for upcoming events!</p>
+        </div>
+        
+        @* Admin users see additional info *@
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="bg-gray-100 border-l-4 border-gray-500 text-gray-700 p-4 mb-4">
+                <p class="font-bold">🔧 Admin Info</p>
+                <p class="text-sm">
+                    Events list is empty. Possible causes:
+                </p>
+                <ul class="list-disc list-inside text-sm mt-2">
+                    <li>EventsDatabase.json is empty or missing</li>
+                    <li>JSON deserialization failed</li>
+                    <li>Database not seeded on startup</li>
+                </ul>
+                <a href="/json-diagnostics" class="text-blue-600 hover:underline text-sm mt-2 inline-block">
+                    🔍 View Diagnostics
+                </a>
+            </div>
+        }
+    }
+    @* SUCCESS: Display actual data *@
+    else
+    {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach (var evt in Model)
+            {
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    @* Image with fallback *@
+                    @if (!string.IsNullOrEmpty(evt.BannerUrl))
+                    {
+                        <img src="@evt.BannerUrl" 
+                             alt="@evt.Title" 
+                             class="w-full h-48 object-cover"
+                             onerror="this.src='/images/default-event.png'; this.onerror=null;" />
+                    }
+                    else
+                    {
+                        <div class="w-full h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                            <span class="text-white text-4xl">📅</span>
+                        </div>
+                    }
+                    
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">@evt.Title</h3>
+                        
+                        @if (!string.IsNullOrEmpty(evt.Summary))
+                        {
+                            <p class="text-gray-600 text-sm mb-3">@evt.Summary</p>
+                        }
+                        
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                            </svg>
+                            @evt.StartDate.ToString("MMM dd, yyyy")
+                        </div>
+                        
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            @evt.StartDate.ToString("h:mm tt") - @evt.EndDate.ToString("h:mm tt")
+                        </div>
+                        
+                        @if (evt.Status == "Open")
+                        {
+                            <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mb-3">
+                                ✅ Open for Registration
+                            </span>
+                        }
+                        else if (evt.Status == "Closed")
+                        {
+                            <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full mb-3">
+                                🔒 Registration Closed
+                            </span>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(evt.RegistrationLink))
+                        {
+                            <a href="@evt.RegistrationLink" 
+                               target="_blank"
+                               class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded transition-colors">
+                                View Details →
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", new { id = evt.Id })" 
+                               class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded transition-colors">
+                                View Details →
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        
+        @* Display count for admins *@
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="mt-6 text-sm text-gray-500">
+                ℹ️ Displaying @Model.Count event(s)
+            </div>
+        }
+    }
+</div>
+
+@* 
+    KEY PATTERNS DEMONSTRATED:
+    
+    1. NULL CHECK: @if (Model == null)
+       - Prevents NullReferenceException crashes
+       - Shows meaningful error message
+    
+    2. EMPTY CHECK: @if (!Model.Any())
+       - Distinguishes between "no data" and "error loading data"
+       - Provides user-friendly empty state
+    
+    3. ADMIN-SPECIFIC DIAGNOSTICS:
+       - Show technical details only to admins
+       - Link to diagnostic endpoints
+    
+    4. IMAGE FALLBACKS:
+       - onerror="this.src='/images/default.png'"
+       - Prevents broken image icons
+    
+    5. SAFE PROPERTY ACCESS:
+       - @if (!string.IsNullOrEmpty(evt.Property))
+       - Never assume properties have values
+    
+    APPLY TO:
+    - Views/Events/Index.cshtml
+    - Views/Courses/Index.cshtml
+    - Views/Trainings/Index.cshtml
+    - Views/Home/Index.cshtml (if showing data)
+*@

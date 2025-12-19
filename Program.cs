@@ -224,6 +224,99 @@ app.MapGet("/health", async (ApplicationDbContext dbContext) =>
     }
 });
 
+// PRODUCTION DIAGNOSTIC ENDPOINT
+// Access via: /json-diagnostics
+// Shows detailed JSON file loading status for troubleshooting
+app.MapGet("/json-diagnostics", (IWebHostEnvironment env) =>
+{
+    var diagnostics = new Dictionary<string, object>();
+    
+    try
+    {
+        // Path information
+        diagnostics["Environment"] = env.EnvironmentName;
+        diagnostics["ContentRootPath"] = env.ContentRootPath;
+        diagnostics["WebRootPath"] = env.WebRootPath;
+        diagnostics["BaseDirectory"] = AppDomain.CurrentDomain.BaseDirectory;
+        diagnostics["CurrentDirectory"] = Directory.GetCurrentDirectory();
+        
+        var jsonDataPath = Path.Combine(env.ContentRootPath, "JsonData");
+        diagnostics["JsonDataPath"] = jsonDataPath;
+        diagnostics["JsonDataExists"] = Directory.Exists(jsonDataPath);
+        
+        // List JSON files
+        if (Directory.Exists(jsonDataPath))
+        {
+            var files = Directory.GetFiles(jsonDataPath, "*.json")
+                .Select(f =>
+                {
+                    var info = new FileInfo(f);
+                    return new
+                    {
+                        Name = Path.GetFileName(f),
+                        Size = info.Length,
+                        SizeFormatted = $"{info.Length:N0} bytes",
+                        LastModified = info.LastWriteTimeUtc,
+                        FullPath = f,
+                        Readable = IsFileReadable(f)
+                    };
+                })
+                .ToList();
+            
+            diagnostics["JsonFiles"] = files;
+            diagnostics["JsonFileCount"] = files.Count;
+        }
+        else
+        {
+            diagnostics["Error"] = "JsonData folder does not exist!";
+            diagnostics["ExpectedPath"] = jsonDataPath;
+            diagnostics["Suggestion"] = "Ensure .csproj has <CopyToOutputDirectory>Always</CopyToOutputDirectory> for JsonData files";
+        }
+        
+        // Check parent directories
+        var parentSearch = new List<object>();
+        var searchDir = env.ContentRootPath;
+        for (int i = 0; i < 3; i++)
+        {
+            var parent = Directory.GetParent(searchDir);
+            if (parent == null) break;
+            
+            var parentJsonPath = Path.Combine(parent.FullName, "JsonData");
+            parentSearch.Add(new
+            {
+                Level = i + 1,
+                Path = parentJsonPath,
+                Exists = Directory.Exists(parentJsonPath)
+            });
+            
+            searchDir = parent.FullName;
+        }
+        diagnostics["ParentDirectorySearch"] = parentSearch;
+        
+        return Results.Ok(diagnostics);
+    }
+    catch (Exception ex)
+    {
+        diagnostics["FatalError"] = ex.Message;
+        diagnostics["StackTrace"] = ex.StackTrace;
+        return Results.Ok(diagnostics);
+    }
+});
+
+// Helper function to check if file is readable
+static bool IsFileReadable(string filePath)
+{
+    try
+    {
+        using var fs = File.OpenRead(filePath);
+        return true;
+    }
+    catch
+    {
+        return false;
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
