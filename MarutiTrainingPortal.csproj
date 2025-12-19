@@ -12,29 +12,43 @@
   </ItemGroup>
 
   <!-- 
-    CRITICAL: Ensure JsonData folder is ALWAYS deployed to production
+    CRITICAL: Ensure ALL data files are ALWAYS deployed to production
     
     WHY THIS FIX IS NEEDED:
-    - Without this, JSON files exist locally but NOT in published output
-    - Production deployment will have empty JsonData folder or no folder at all
+    - Without this, JSON/data files exist locally but NOT in published output
+    - Production deployment will have empty folders or missing data
     - CopyToOutputDirectory: Copies to bin/Debug or bin/Release during build
     - CopyToPublishDirectory: Copies to publish folder during dotnet publish
     - Always: Ensures files are copied even if not modified (safer than PreserveNewest)
     
-    IMPORTANT: Using 'Update' instead of 'Include' to avoid NETSDK1022 duplicate error
-    - .NET SDK automatically includes content files
-    - 'Update' modifies already-included files instead of re-including them
+    FIX FOR NETSDK1022: Remove default content items first, then explicitly include
   -->
   <ItemGroup>
-    <Content Update="JsonData\**\*.json">
+    <!-- Remove any auto-included items first to prevent duplicates -->
+    <Content Remove="JsonData\**\*.json" />
+    <Content Remove="Data\**\*.json" />
+    <Content Remove="wwwroot\images\**\*.*" />
+    <Content Remove="wwwroot\uploads\**\*.*" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Now explicitly include ALL data files with copy settings -->
+    <Content Include="JsonData\**\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <!-- Ensure wwwroot/images folder is published -->
-  <ItemGroup>
-    <Content Update="wwwroot\images\**\*.*">
+    
+    <Content Include="Data\**\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    
+    <Content Include="wwwroot\images\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    
+    <Content Include="wwwroot\uploads\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
