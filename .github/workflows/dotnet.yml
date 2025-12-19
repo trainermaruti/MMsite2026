@@ -20,7 +20,8 @@ jobs:
         
     - name: Set dummy connection string for build
       run: |
-        echo '{"ConnectionStrings":{"DefaultConnection":"Server=localhost;Database=MarutiTrainingPortal;User Id=sa;Password=DummyPassword123!;TrustServerCertificate=True"}}' > appsettings.json
+        sudo apt-get install -y jq
+        jq '.ConnectionStrings.DefaultConnection = "Server=localhost;Database=MarutiTrainingPortal;User Id=sa;Password=DummyPassword123!;TrustServerCertificate=True"' appsettings.json > appsettings.tmp.json && mv appsettings.tmp.json appsettings.json
         
     - name: Restore dependencies
       run: dotnet restore
