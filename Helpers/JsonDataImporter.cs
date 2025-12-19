@@ -12,11 +12,24 @@ namespace MarutiTrainingPortal.Helpers;
 
 public class JsonDataImporter
 {
+    private static string GetJsonFilePath(string fileName)
+    {
+        // Use absolute path based on application base directory
+        var basePath = AppDomain.CurrentDomain.BaseDirectory;
+        var jsonPath = Path.Combine(basePath, "JsonData", fileName);
+        
+        Console.WriteLine($"Looking for JSON file: {jsonPath}");
+        Console.WriteLine($"File exists: {File.Exists(jsonPath)}");
+        
+        return jsonPath;
+    }
+
     public static async Task ImportAllData(ApplicationDbContext context)
     {
         try
         {
             Console.WriteLine("🔄 Starting JSON data import...");
+            Console.WriteLine($"Base directory: {AppDomain.CurrentDomain.BaseDirectory}");
             
             // Import in order of dependencies
             await ImportCourses(context);
@@ -48,7 +61,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "CoursesDatabase.json");
+        var jsonPath = GetJsonFilePath("CoursesDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -94,7 +107,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "TrainingsDatabase.json");
+        var jsonPath = GetJsonFilePath("TrainingsDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -120,7 +133,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "EventsDatabase.json");
+        var jsonPath = GetJsonFilePath("EventsDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -146,7 +159,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "CertificatesDatabase.json");
+        var jsonPath = GetJsonFilePath("CertificatesDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -172,7 +185,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "ImagesDatabase.json");
+        var jsonPath = GetJsonFilePath("ImagesDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -198,7 +211,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "FeaturedVideosDatabase.json");
+        var jsonPath = GetJsonFilePath("FeaturedVideosDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -224,7 +237,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "ProfilesDatabase.json");
+        var jsonPath = GetJsonFilePath("ProfilesDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -250,7 +263,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "SystemSettingsDatabase.json");
+        var jsonPath = GetJsonFilePath("SystemSettingsDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -276,7 +289,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "ContactMessagesDatabase.json");
+        var jsonPath = GetJsonFilePath("ContactMessagesDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -302,7 +315,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "EventRegistrationsDatabase.json");
+        var jsonPath = GetJsonFilePath("EventRegistrationsDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");
@@ -328,7 +341,7 @@ public class JsonDataImporter
             return;
         }
 
-        var jsonPath = Path.Combine("JsonData", "LeadAuditLogsDatabase.json");
+        var jsonPath = GetJsonFilePath("LeadAuditLogsDatabase.json");
         if (!File.Exists(jsonPath))
         {
             Console.WriteLine($"⚠️ File not found: {jsonPath}");

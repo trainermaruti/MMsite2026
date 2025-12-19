@@ -23,7 +23,29 @@ namespace MarutiTrainingPortal.Controllers
         {
             var profile = await _context.Profiles.FirstOrDefaultAsync();
             if (profile == null)
-                return NotFound();
+            {
+                // Return a default profile if none exists
+                profile = new Profile
+                {
+                    FullName = "Maruti Makwana",
+                    Title = "Azure Expert & Trainer",
+                    Bio = "Welcome! Profile information is being set up.",
+                    Email = "info@example.com",
+                    PhoneNumber = "+91-0000000000",
+                    WhatsAppNumber = "+91-0000000000",
+                    ProfileImageUrl = "/images/logo.jpg",
+                    Expertise = "Azure, Cloud Computing",
+                    TotalTrainingsDone = 0,
+                    TotalStudents = 0,
+                    LinkedInUrl = "#",
+                    InstagramUrl = "#",
+                    YouTubeUrl = "#",
+                    SkillTechUrl = "#",
+                    TwitterUrl = "#",
+                    GitHubUrl = "#",
+                    CertificationsAndAchievements = "Setting up..."
+                };
+            }
 
             return View(profile);
         }
@@ -33,7 +55,29 @@ namespace MarutiTrainingPortal.Controllers
         {
             var profile = await _context.Profiles.FirstOrDefaultAsync();
             if (profile == null)
-                return NotFound();
+            {
+                // Return a default profile if none exists
+                profile = new Profile
+                {
+                    FullName = "Maruti Makwana",
+                    Title = "Azure Expert & Trainer",
+                    Bio = "Welcome! Profile information is being set up.",
+                    Email = "info@example.com",
+                    PhoneNumber = "+91-0000000000",
+                    WhatsAppNumber = "+91-0000000000",
+                    ProfileImageUrl = "/images/logo.jpg",
+                    Expertise = "Azure, Cloud Computing",
+                    TotalTrainingsDone = 0,
+                    TotalStudents = 0,
+                    LinkedInUrl = "#",
+                    InstagramUrl = "#",
+                    YouTubeUrl = "#",
+                    SkillTechUrl = "#",
+                    TwitterUrl = "#",
+                    GitHubUrl = "#",
+                    CertificationsAndAchievements = "Setting up..."
+                };
+            }
 
             return View(profile);
         }
