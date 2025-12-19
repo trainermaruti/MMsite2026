@@ -26,6 +26,10 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
+    - name: Set dummy connection string for build
+      run: |
+        echo '{"ConnectionStrings":{"DefaultConnection":"Server=localhost;Database=MarutiTrainingPortal;User Id=sa;Password=DummyPassword123!;TrustServerCertificate=True"}}' > appsettings.json
+        
     - name: Restore dependencies
       run: dotnet restore ${{ env.PROJECT_PATH }}
       

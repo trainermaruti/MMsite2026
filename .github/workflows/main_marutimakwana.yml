@@ -23,6 +23,11 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Set dummy connection string for build
+        run: |
+          echo '{"ConnectionStrings":{"DefaultConnection":"Server=localhost;Database=MarutiTrainingPortal;User Id=sa;Password=DummyPassword123!;TrustServerCertificate=True"}}' > appsettings.json
+        shell: pwsh
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
@@ -47,6 +52,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+      
+      - name: Configure production connection string
+        run: |
+          $config = Get-Content appsettings.json | ConvertFrom-Json
+          $config.ConnectionStrings.DefaultConnection = "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
+          $config | ConvertTo-Json -Depth 10 | Set-Content appsettings.json
+        shell: pwsh
+        if: env.AZURE_SQL_CONNECTION_STRING != ''
       
       - name: Login to Azure
         uses: azure/login@v2
