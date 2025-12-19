@@ -62,7 +62,8 @@ jobs:
             Write-Host "✓ Connection string configured from secrets"
           } else {
             Write-Host "⚠ WARNING: AZURE_SQL_CONNECTION_STRING secret is not set!"
-            Write-Host "App will deploy but database features will not work."
+            Write-Host "⚠ App will use connection string from Azure App Service Configuration"
+            Write-Host "⚠ Make sure to configure DefaultConnection in Azure Portal > Configuration > Connection strings"
           }
         shell: pwsh
       

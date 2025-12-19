@@ -134,10 +134,15 @@ using (var scope = app.Services.CreateScope())
         
         await AdminSeeder.SeedAdminUserAsync(scope.ServiceProvider, app.Configuration);
         
-        // Import courses from JSON file if database is empty
+        // Import all data from JSON files if database is empty
         if (!await dbContext.Courses.AnyAsync())
         {
-            await CourseImporter.ImportCourses(dbContext);
+            Console.WriteLine("📦 Database is empty, importing data from JSON files...");
+            await MarutiTrainingPortal.Helpers.JsonDataImporter.ImportAllData(dbContext);
+        }
+        else
+        {
+            Console.WriteLine("✓ Database already contains data, skipping JSON import");
         }
     }
     catch (Exception ex)
