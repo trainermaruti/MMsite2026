@@ -127,16 +127,20 @@ using (var scope = app.Services.CreateScope())
         
         await AdminSeeder.SeedAdminUserAsync(scope.ServiceProvider, app.Configuration);
         
-        // Import all data from JSON files if database is empty
-        // Note: For In-Memory DB, this will likely run every time the app restarts.
-        if (!await dbContext.Courses.AnyAsync())
+        // ALWAYS import JSON data for In-Memory database (it's empty on every restart)
+        Console.WriteLine("📦 In-Memory Database detected - importing all data from JSON files...");
+        Console.WriteLine($"Current Directory: {Directory.GetCurrentDirectory()}");
+        Console.WriteLine($"JsonData folder exists: {Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "JsonData"))}");
+        
+        try
         {
-            Console.WriteLine("📦 Database is empty, importing data from JSON files...");
             await MarutiTrainingPortal.Helpers.JsonDataImporter.ImportAllData(dbContext);
+            Console.WriteLine("✅ JSON data import completed successfully!");
         }
-        else
+        catch (Exception importEx)
         {
-            Console.WriteLine("✓ Database already contains data, skipping JSON import");
+            Console.WriteLine($"❌ JSON import failed: {importEx.Message}");
+            Console.WriteLine($"Stack trace: {importEx.StackTrace}");
         }
     }
     catch (Exception ex)
