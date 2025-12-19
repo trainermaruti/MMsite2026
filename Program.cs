@@ -317,6 +317,71 @@ static bool IsFileReadable(string filePath)
     }
 }
 
+// ADMIN DIAGNOSTICS - Check if admin user exists and credentials are configured
+app.MapGet("/admin/check-admin", async (UserManager<IdentityUser> userManager, IConfiguration config) =>
+{
+    var html = "<html><head><style>body{font-family:monospace;padding:20px;background:#000;color:#0f0;}h1{color:#0ff;}.error{color:#f00;}.success{color:#0f0;}.warning{color:#ff0;}</style></head><body>";
+    html += "<h1>🔐 Admin User Diagnostics</h1>";
+    
+    try
+    {
+        var adminEmail = config["Admin:Email"];
+        var hasPassword = !string.IsNullOrEmpty(config["Admin:Password"]);
+        
+        html += "<h3>Configuration:</h3>";
+        html += $"<p>Admin Email from config: {adminEmail ?? "<span class='error'>NOT SET</span>"}</p>";
+        html += $"<p>Admin Password configured: {(hasPassword ? "<span class='success'>YES</span>" : "<span class='error'>NO</span>")}</p>";
+        
+        if (string.IsNullOrEmpty(adminEmail))
+        {
+            html += "<p class='error'>❌ Admin:Email is not configured!</p>";
+            html += "<p class='warning'>Default credentials: admin@marutitraining.com / Admin@123</p>";
+        }
+        else
+        {
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            
+            if (adminUser == null)
+            {
+                html += $"<p class='error'>❌ Admin user '{adminEmail}' does NOT exist in database</p>";
+                html += "<p class='warning'>Admin seeding may have failed during startup</p>";
+            }
+            else
+            {
+                html += $"<p class='success'>✅ Admin user '{adminEmail}' exists</p>";
+                html += $"<p>User ID: {adminUser.Id}</p>";
+                html += $"<p>Email Confirmed: {adminUser.EmailConfirmed}</p>";
+                
+                var roles = await userManager.GetRolesAsync(adminUser);
+                html += $"<p>Roles: {string.Join(", ", roles)}</p>";
+                
+                if (!roles.Contains("Admin"))
+                {
+                    html += "<p class='error'>⚠️  User does not have Admin role!</p>";
+                }
+            }
+        }
+        
+        html += "<h3>All Users:</h3><ul>";
+        var allUsers = userManager.Users.ToList();
+        foreach (var user in allUsers)
+        {
+            var userRoles = await userManager.GetRolesAsync(user);
+            html += $"<li>{user.Email} - Roles: {string.Join(", ", userRoles)}</li>";
+        }
+        html += "</ul>";
+        
+        html += "<p><a href='/Account/Login' style='color:#0ff;'>Go to Login Page</a></p>";
+    }
+    catch (Exception ex)
+    {
+        html += $"<p class='error'>Error: {ex.Message}</p>";
+    }
+    
+    html += "</body></html>";
+    return Results.Content(html, "text/html");
+});
+
 // MANUAL IMPORT ENDPOINT - Trigger data import manually to see errors
 // Visit: https://marutimakwana.azurewebsites.net/admin/force-import-data
 app.MapGet("/admin/force-import-data", async (ApplicationDbContext dbContext) =>

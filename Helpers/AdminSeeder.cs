@@ -20,14 +20,18 @@ namespace MarutiTrainingPortal.Helpers
             var adminEmail = configuration["Admin:Email"];
             var adminPassword = configuration["Admin:Password"];
 
+            // Use default credentials if not configured (for development/demo purposes)
             if (string.IsNullOrWhiteSpace(adminEmail) || string.IsNullOrWhiteSpace(adminPassword))
             {
-                throw new InvalidOperationException(
-                    "Admin credentials not configured! " +
-                    "Set 'Admin:Email' and 'Admin:Password' via User Secrets (dev) or Environment Variables (prod). " +
-                    "Run: dotnet user-secrets set \"Admin:Email\" \"your-email@example.com\" " +
-                    "and: dotnet user-secrets set \"Admin:Password\" \"YourSecurePassword123!\""
-                );
+                Console.WriteLine("⚠️  WARNING: Admin credentials not configured in secrets/environment variables");
+                Console.WriteLine("⚠️  Using DEFAULT credentials: admin@marutitraining.com / Admin@123");
+                Console.WriteLine("⚠️  CHANGE THESE IMMEDIATELY in production!");
+                adminEmail = "admin@marutitraining.com";
+                adminPassword = "Admin@123";
+            }
+            else
+            {
+                Console.WriteLine($"✅ Using configured admin email: {adminEmail}");
             }
 
             // Ensure Admin role exists
