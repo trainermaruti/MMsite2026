@@ -150,6 +150,32 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+// Health check endpoint for Azure monitoring and diagnostics
+app.MapGet("/health", async (ApplicationDbContext dbContext) =>
+{
+    try
+    {
+        var hasData = await dbContext.Courses.AnyAsync() || 
+                     await dbContext.Profiles.AnyAsync();
+        
+        return Results.Ok(new 
+        { 
+            status = "healthy", 
+            timestamp = DateTime.UtcNow,
+            database = "in-memory",
+            dataLoaded = hasData,
+            environment = app.Environment.EnvironmentName
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(
+            detail: ex.Message,
+            statusCode: 500
+        );
+    }
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
