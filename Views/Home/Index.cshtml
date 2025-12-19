@@ -255,6 +255,9 @@ html.light-theme .hero-portrait-shadow {
                     <a asp-controller="Courses" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 py-3 fw-semibold" style="border-radius: 12px; font-size: 16px; transition: all 0.3s;">
                         <i class="fas fa-play-circle me-2" style="color: #ffffff !important;"></i><span style="color: #ffffff !important;">See Courses</span>
                     </a>
+                    <a href="/profile.pdf" id="profileDownloadBtn" class="btn btn-warning btn-lg px-4 py-3 fw-semibold" style="border-radius: 12px; font-size: 16px; transition: all 0.3s; display: none;">
+                        <i class="fas fa-download me-2"></i><span>Download Profile</span>
+                    </a>
                 </div>
             </div>
 
@@ -996,6 +999,26 @@ html.light-theme .hero-portrait-shadow {
         </div>
     </div>
 </div>
+
+<script>
+// Check if profile document is available and show download button
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const response = await fetch('/api/profile-document/status');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.available) {
+                const btn = document.getElementById('profileDownloadBtn');
+                if (btn) {
+                    btn.style.display = 'inline-block';
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error checking profile document status:', error);
+    }
+});
+</script>
 
 <style>
 .hero-section {

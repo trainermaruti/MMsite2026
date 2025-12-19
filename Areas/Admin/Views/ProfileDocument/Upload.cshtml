@@ -1,0 +1,139 @@
+@model MarutiTrainingPortal.Models.ProfileDocument
+
+@{
+    ViewData["Title"] = "Upload Profile Document";
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mt-4">📤 Upload Profile Document</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to List
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-file-upload me-2"></i>Document Information
+                </div>
+                <div class="card-body">
+                    <form asp-action="Upload" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">
+                                Document Title <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Title" class="form-control" placeholder="e.g., Professional Profile" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" 
+                                      placeholder="Brief description of this document (optional)"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fileUpload" class="form-label">
+                                PDF Document <span class="text-danger">*</span>
+                            </label>
+                            <input type="file" class="form-control" id="fileUpload" name="file" 
+                                   accept=".pdf" required />
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Only PDF files are accepted. Maximum size: 10 MB
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="IsEnabled" class="form-check-input" type="checkbox" checked />
+                            <label asp-for="IsEnabled" class="form-check-label">
+                                Enable this document immediately after upload
+                            </label>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-upload me-2"></i>Upload Document
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-lightbulb me-2"></i>Tips
+                </div>
+                <div class="card-body">
+                    <h6>Best Practices:</h6>
+                    <ul class="small">
+                        <li>Use a professional, up-to-date PDF</li>
+                        <li>Keep file size under 5 MB for faster downloads</li>
+                        <li>Include contact information in the PDF</li>
+                        <li>Use a clear, descriptive title</li>
+                    </ul>
+
+                    <hr>
+
+                    <h6>How It Works:</h6>
+                    <ol class="small">
+                        <li>Upload your profile PDF here</li>
+                        <li>Enable it to make it public</li>
+                        <li>Visitors can download from <code>/profile.pdf</code></li>
+                        <li>Download count is tracked automatically</li>
+                    </ol>
+
+                    <hr>
+
+                    <div class="alert alert-warning mb-0 small">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Note:</strong> Only the most recent enabled document will be available for download.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mt-3">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-link me-2"></i>Public URL
+                </div>
+                <div class="card-body">
+                    <p class="small mb-2">After upload, your document will be available at:</p>
+                    <div class="bg-dark text-light p-2 rounded">
+                        <code class="text-warning small">@Url.Action("DownloadProfile", "Document", null, Context.Request.Scheme)</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        document.getElementById('fileUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.type !== 'application/pdf') {
+                    alert('Please select a PDF file.');
+                    e.target.value = '';
+                    return;
+                }
+                
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size must be less than 10 MB.');
+                    e.target.value = '';
+                    return;
+                }
+            }
+        });
+    </script>
+}

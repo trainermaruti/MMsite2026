@@ -22,6 +22,7 @@ namespace MarutiTrainingPortal.Data
         public DbSet<SystemSettings> SystemSettings { get; set; }
         public DbSet<FeaturedVideo> FeaturedVideos { get; set; }
         public DbSet<WebsiteImage> WebsiteImages { get; set; }
+        public DbSet<ProfileDocument> ProfileDocuments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

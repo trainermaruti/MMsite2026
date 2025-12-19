@@ -353,6 +353,11 @@
                     <span>Website Images</span>
                 </a>
                 
+                <a href="/Admin/ProfileDocument" class="modern-sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "ProfileDocument" ? "active" : "")">
+                    <div class="modern-sidebar-icon"><i class="fas fa-file-pdf"></i></div>
+                    <span>Profile PDF</span>
+                </a>
+                
                 <a href="/Admin/Messages" class="modern-sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Messages" ? "active" : "")">
                     <div class="modern-sidebar-icon"><i class="fas fa-inbox"></i></div>
                     <span>Messages</span>

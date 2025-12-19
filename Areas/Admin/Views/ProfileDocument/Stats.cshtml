@@ -1,0 +1,198 @@
+@model List<MarutiTrainingPortal.Models.ProfileDocument>
+
+@{
+    ViewData["Title"] = "Document Statistics";
+    var totalDownloads = Model?.Sum(d => d.DownloadCount) ?? 0;
+    var activeDocuments = Model?.Count(d => d.IsEnabled && !d.IsDeleted) ?? 0;
+    var mostDownloaded = Model?.OrderByDescending(d => d.DownloadCount).FirstOrDefault();
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mt-4">📊 Download Statistics</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to List
+        </a>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Downloads</div>
+                            <div class="h3 mb-0 font-weight-bold">@totalDownloads</div>
+                        </div>
+                        <div class="fa-3x opacity-25">
+                            <i class="fas fa-download"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Active Documents</div>
+                            <div class="h3 mb-0 font-weight-bold">@activeDocuments</div>
+                        </div>
+                        <div class="fa-3x opacity-25">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Documents</div>
+                            <div class="h3 mb-0 font-weight-bold">@(Model?.Count ?? 0)</div>
+                        </div>
+                        <div class="fa-3x opacity-25">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-info text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Avg. Downloads</div>
+                            <div class="h3 mb-0 font-weight-bold">
+                                @(Model != null && Model.Any() ? (totalDownloads / Model.Count).ToString("F1") : "0")
+                            </div>
+                        </div>
+                        <div class="fa-3x opacity-25">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Details -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="fas fa-chart-bar me-2"></i>Document Performance
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Downloads</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Download Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var doc in Model.OrderByDescending(d => d.DownloadCount))
+                            {
+                                var daysSinceCreation = (DateTime.Now - doc.CreatedDate).Days + 1;
+                                var downloadsPerDay = doc.DownloadCount / (double)daysSinceCreation;
+                                
+                                <tr>
+                                    <td>
+                                        <strong>@doc.Title</strong>
+                                        @if (doc.Id == mostDownloaded?.Id)
+                                        {
+                                            <span class="badge bg-success ms-2">
+                                                <i class="fas fa-star me-1"></i>Most Popular
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-primary me-2">@doc.DownloadCount</span>
+                                            <div class="progress flex-grow-1" style="height: 20px; min-width: 100px;">
+                                                <div class="progress-bar" role="progressbar" 
+                                                     style="width: @((doc.DownloadCount / (double)(totalDownloads > 0 ? totalDownloads : 1)) * 100)%"
+                                                     aria-valuenow="@doc.DownloadCount" aria-valuemin="0" aria-valuemax="@totalDownloads">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (doc.IsEnabled && !doc.IsDeleted)
+                                        {
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check-circle me-1"></i>Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-times-circle me-1"></i>Inactive
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>@doc.CreatedDate.ToString("MMM dd, yyyy")</td>
+                                    <td>
+                                        <span class="text-muted">
+                                            @downloadsPerDay.ToString("F1") / day
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @if (mostDownloaded != null)
+        {
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-trophy me-2"></i>Top Performer
+                </div>
+                <div class="card-body">
+                    <h5>@mostDownloaded.Title</h5>
+                    <p class="mb-2">
+                        <strong>@mostDownloaded.DownloadCount downloads</strong> since 
+                        @mostDownloaded.CreatedDate.ToString("MMMM dd, yyyy")
+                    </p>
+                    @if (!string.IsNullOrEmpty(mostDownloaded.Description))
+                    {
+                        <p class="text-muted mb-0">@mostDownloaded.Description</p>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card shadow">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                <h5>No Statistics Available</h5>
+                <p class="text-muted">Upload a document to start tracking downloads.</p>
+                <a asp-action="Upload" class="btn btn-primary">
+                    <i class="fas fa-upload me-2"></i>Upload Document
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+}

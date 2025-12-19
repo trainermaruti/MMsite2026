@@ -29,6 +29,7 @@
     <Content Remove="Data\**\*.json" />
     <Content Remove="wwwroot\images\**\*.*" />
     <Content Remove="wwwroot\uploads\**\*.*" />
+    <Content Remove="wwwroot\documents\**\*.*" />
   </ItemGroup>
   
   <ItemGroup>
@@ -49,6 +50,11 @@
     </Content>
     
     <Content Include="wwwroot\uploads\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    
+    <Content Include="wwwroot\documents\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

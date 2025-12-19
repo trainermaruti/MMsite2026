@@ -181,6 +181,7 @@ public class JsonDataImporter
             await SafeImport("Images", () => ImportImages(context), importStats);
             await SafeImport("FeaturedVideos", () => ImportFeaturedVideos(context), importStats);
             await SafeImport("Profiles", () => ImportProfiles(context), importStats);
+            await SafeImport("ProfileDocuments", () => ImportProfileDocuments(context), importStats);
             await SafeImport("SystemSettings", () => ImportSystemSettings(context), importStats);
             await SafeImport("ContactMessages", () => ImportContactMessages(context), importStats);
             await SafeImport("LeadAuditLogs", () => ImportLeadAuditLogs(context), importStats);
@@ -476,6 +477,31 @@ public class JsonDataImporter
         context.LeadAuditLogs.AddRange(logs);
         await context.SaveChangesAsync();
         return logs.Count;
+    }
+
+    /// <summary>
+    /// Import profile documents (downloadable PDFs) from ProfileDocumentDatabase.json
+    /// </summary>
+    private static async Task<int> ImportProfileDocuments(ApplicationDbContext context)
+    {
+        var jsonPath = GetJsonFilePath("ProfileDocumentDatabase.json");
+        if (!File.Exists(jsonPath)) return 0;
+
+        var jsonData = await File.ReadAllTextAsync(jsonPath);
+        var documents = JsonSerializer.Deserialize<List<ProfileDocument>>(jsonData, JsonOptions);
+
+        if (documents == null || !documents.Any()) return 0;
+
+        foreach (var doc in documents)
+        {
+            if (!context.ProfileDocuments.Any(d => d.Id == doc.Id))
+            {
+                context.ProfileDocuments.Add(doc);
+            }
+        }
+
+        await context.SaveChangesAsync();
+        return documents.Count;
     }
 }
 
