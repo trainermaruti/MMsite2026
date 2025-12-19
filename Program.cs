@@ -9,18 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add DbContext - SQL Server for all environments
+// --- FIX 1: Use In-Memory Database instead of SQL Server ---
+// This allows the app to run without a real SQL server connection.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        Console.WriteLine("⚠ WARNING: DefaultConnection string is missing! Check Azure Configuration.");
-        // Provide a fallback to prevent startup failure
-        connectionString = "Server=localhost;Database=MarutiTrainingPortal;Integrated Security=true;TrustServerCertificate=True";
-    }
-    options.UseSqlServer(connectionString);
-});
+    options.UseInMemoryDatabase("MarutiTrainingPortalDb"));
 
 // Add Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -124,17 +116,19 @@ using (var scope = app.Services.CreateScope())
     {
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         
-        // Apply migrations automatically (for production deployment)
+        // --- FIX 2: Disable SQL Migrations ---
+        // Migrations fail on In-Memory databases, so we skip this step.
         if (app.Environment.IsProduction())
         {
-            Console.WriteLine("🔄 Running database migrations...");
-            await dbContext.Database.MigrateAsync();
-            Console.WriteLine("✓ Database migrations completed");
+            Console.WriteLine("🔄 Running database migrations (SKIPPED for In-Memory)...");
+            // await dbContext.Database.MigrateAsync(); 
+            Console.WriteLine("✓ Database migrations skipped");
         }
         
         await AdminSeeder.SeedAdminUserAsync(scope.ServiceProvider, app.Configuration);
         
         // Import all data from JSON files if database is empty
+        // Note: For In-Memory DB, this will likely run every time the app restarts.
         if (!await dbContext.Courses.AnyAsync())
         {
             Console.WriteLine("📦 Database is empty, importing data from JSON files...");
