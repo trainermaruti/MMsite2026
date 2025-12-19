@@ -22,11 +22,14 @@ public class JsonDataImporter
             await ImportCourses(context);
             await ImportTrainings(context);
             await ImportEvents(context);
+            await ImportEventRegistrations(context);
             await ImportCertificates(context);
             await ImportImages(context);
             await ImportFeaturedVideos(context);
             await ImportProfiles(context);
             await ImportSystemSettings(context);
+            await ImportContactMessages(context);
+            await ImportLeadAuditLogs(context);
             
             Console.WriteLine("✅ JSON data import completed successfully!");
         }
@@ -262,6 +265,84 @@ public class JsonDataImporter
             context.SystemSettings.AddRange(settings);
             await context.SaveChangesAsync();
             Console.WriteLine($"✓ Imported {settings.Count} system settings");
+        }
+    }
+
+    private static async Task ImportContactMessages(ApplicationDbContext context)
+    {
+        if (await context.ContactMessages.AnyAsync())
+        {
+            Console.WriteLine("Contact messages already exist, skipping import.");
+            return;
+        }
+
+        var jsonPath = Path.Combine("JsonData", "ContactMessagesDatabase.json");
+        if (!File.Exists(jsonPath))
+        {
+            Console.WriteLine($"⚠️ File not found: {jsonPath}");
+            return;
+        }
+
+        var jsonData = await File.ReadAllTextAsync(jsonPath);
+        var messages = JsonSerializer.Deserialize<List<ContactMessage>>(jsonData);
+
+        if (messages != null && messages.Any())
+        {
+            context.ContactMessages.AddRange(messages);
+            await context.SaveChangesAsync();
+            Console.WriteLine($"✓ Imported {messages.Count} contact messages");
+        }
+    }
+
+    private static async Task ImportEventRegistrations(ApplicationDbContext context)
+    {
+        if (await context.TrainingEventRegistrations.AnyAsync())
+        {
+            Console.WriteLine("Event registrations already exist, skipping import.");
+            return;
+        }
+
+        var jsonPath = Path.Combine("JsonData", "EventRegistrationsDatabase.json");
+        if (!File.Exists(jsonPath))
+        {
+            Console.WriteLine($"⚠️ File not found: {jsonPath}");
+            return;
+        }
+
+        var jsonData = await File.ReadAllTextAsync(jsonPath);
+        var registrations = JsonSerializer.Deserialize<List<TrainingEventRegistration>>(jsonData);
+
+        if (registrations != null && registrations.Any())
+        {
+            context.TrainingEventRegistrations.AddRange(registrations);
+            await context.SaveChangesAsync();
+            Console.WriteLine($"✓ Imported {registrations.Count} event registrations");
+        }
+    }
+
+    private static async Task ImportLeadAuditLogs(ApplicationDbContext context)
+    {
+        if (await context.LeadAuditLogs.AnyAsync())
+        {
+            Console.WriteLine("Lead audit logs already exist, skipping import.");
+            return;
+        }
+
+        var jsonPath = Path.Combine("JsonData", "LeadAuditLogsDatabase.json");
+        if (!File.Exists(jsonPath))
+        {
+            Console.WriteLine($"⚠️ File not found: {jsonPath}");
+            return;
+        }
+
+        var jsonData = await File.ReadAllTextAsync(jsonPath);
+        var logs = JsonSerializer.Deserialize<List<LeadAuditLog>>(jsonData);
+
+        if (logs != null && logs.Any())
+        {
+            context.LeadAuditLogs.AddRange(logs);
+            await context.SaveChangesAsync();
+            Console.WriteLine($"✓ Imported {logs.Count} lead audit logs");
         }
     }
 }
