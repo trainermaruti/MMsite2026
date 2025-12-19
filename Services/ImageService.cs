@@ -40,15 +40,15 @@ namespace MarutiTrainingPortal.Services
             // Return default images based on image key
             return imageKey switch
             {
-                "home_profile_photo" => "/images/44.png",
-                "about_profile_image" => "/images/22.png",
+                "home_profile_photo" => "/images/41258b2e-84fd-413e-a335-009a905a8742_44.png",
+                "about_profile_image" => "/images/9c7ba55e-b08a-47d0-a04f-8e0e75c08bd9_22.png",
                 "about_experience_badge" => "/images/experience-badge.png",
                 "home_professional_profile" => "/images/profiles/344da849-746f-44e9-b6c0-c272850775d7.png",
                 // Legacy keys for backward compatibility
-                "profile_main" => "/images/44.png",
-                "profile_hero" => "/images/22.png",
+                "profile_main" => "/images/41258b2e-84fd-413e-a335-009a905a8742_44.png",
+                "profile_hero" => "/images/9c7ba55e-b08a-47d0-a04f-8e0e75c08bd9_22.png",
                 "experience_badge" => "/images/experience-badge.png",
-                _ => "/images/44.png" // Default fallback
+                _ => "/images/41258b2e-84fd-413e-a335-009a905a8742_44.png" // Default fallback
             };
         }
 
