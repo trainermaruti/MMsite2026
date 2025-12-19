@@ -24,10 +24,10 @@ namespace MarutiTrainingPortal.Helpers
             if (string.IsNullOrWhiteSpace(adminEmail) || string.IsNullOrWhiteSpace(adminPassword))
             {
                 Console.WriteLine("⚠️  WARNING: Admin credentials not configured in secrets/environment variables");
-                Console.WriteLine("⚠️  Using DEFAULT credentials: admin@marutitraining.com / Admin@123");
+                Console.WriteLine("⚠️  Using DEFAULT credentials: maruti_makwana@hotmail.com / Meet@maruti1028");
                 Console.WriteLine("⚠️  CHANGE THESE IMMEDIATELY in production!");
-                adminEmail = "admin@marutitraining.com";
-                adminPassword = "Admin@123";
+                adminEmail = "maruti_makwana@hotmail.com";
+                adminPassword = "Meet@maruti1028";
             }
             else
             {

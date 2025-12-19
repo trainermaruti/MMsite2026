@@ -1,9 +1,13 @@
 # Admin Portal Login Credentials
 
-## Default Credentials (Development/Demo)
+## 🔒 Confidential
 
-**Email:** `admin@marutitraining.com`  
-**Password:** `Admin@123`
+Admin credentials are configured via environment variables for security.
+
+**Email:** *(Configured in Azure App Service)*  
+**Password:** *(Configured in Azure App Service)*
+
+> **Note:** Default credentials are set internally. Contact system administrator for access.
 
 ## Login URL
 
