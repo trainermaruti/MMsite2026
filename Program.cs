@@ -13,7 +13,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found."));
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        Console.WriteLine("⚠ WARNING: DefaultConnection string is missing! Check Azure Configuration.");
+        // Provide a fallback to prevent startup failure
+        connectionString = "Server=localhost;Database=MarutiTrainingPortal;Integrated Security=true;TrustServerCertificate=True";
+    }
+    options.UseSqlServer(connectionString);
 });
 
 // Add Identity
@@ -114,20 +120,30 @@ var app = builder.Build();
 // Seed admin user from configuration (User Secrets in dev, Environment Variables in prod)
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    
-    // Apply migrations automatically (for production deployment)
-    if (app.Environment.IsProduction())
+    try
     {
-        await dbContext.Database.MigrateAsync();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        
+        // Apply migrations automatically (for production deployment)
+        if (app.Environment.IsProduction())
+        {
+            Console.WriteLine("🔄 Running database migrations...");
+            await dbContext.Database.MigrateAsync();
+            Console.WriteLine("✓ Database migrations completed");
+        }
+        
+        await AdminSeeder.SeedAdminUserAsync(scope.ServiceProvider, app.Configuration);
+        
+        // Import courses from JSON file if database is empty
+        if (!await dbContext.Courses.AnyAsync())
+        {
+            await CourseImporter.ImportCourses(dbContext);
+        }
     }
-    
-    await AdminSeeder.SeedAdminUserAsync(scope.ServiceProvider, app.Configuration);
-    
-    // Import courses from JSON file if database is empty
-    if (!await dbContext.Courses.AnyAsync())
+    catch (Exception ex)
     {
-        await CourseImporter.ImportCourses(dbContext);
+        Console.WriteLine($"⚠ Database initialization error: {ex.Message}");
+        Console.WriteLine("Application will continue but database features may not work.");
     }
 }
 

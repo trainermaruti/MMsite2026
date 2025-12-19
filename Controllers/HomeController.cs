@@ -19,10 +19,18 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        ViewBag.FeaturedVideo = await _context.FeaturedVideos
-            .Where(v => v.IsActive)
-            .OrderBy(v => v.DisplayOrder)
-            .FirstOrDefaultAsync();
+        try
+        {
+            ViewBag.FeaturedVideo = await _context.FeaturedVideos
+                .Where(v => v.IsActive)
+                .OrderBy(v => v.DisplayOrder)
+                .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error loading featured video");
+            ViewBag.FeaturedVideo = null;
+        }
             
         return View();
     }
