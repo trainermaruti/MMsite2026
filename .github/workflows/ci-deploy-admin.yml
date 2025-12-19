@@ -37,8 +37,11 @@ jobs:
     - name: Build project
       run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore
       
+    - name: Clean publish directory
+      run: rm -rf ${{ env.PUBLISH_PATH }}
+      
     - name: Publish application
-      run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --output ${{ env.PUBLISH_PATH }}
+      run: dotnet publish ${{ env.PROJECT_PATH }} --configuration Release --output ${{ env.PUBLISH_PATH }} --no-build
       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4

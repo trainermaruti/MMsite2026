@@ -29,8 +29,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
       
+    - name: Clean publish directory
+      run: rm -rf ./publish
+      
     - name: Publish
-      run: dotnet publish -c Release -o ./publish
+      run: dotnet publish -c Release -o ./publish --no-build
       
     - name: Upload artifact
       uses: actions/upload-artifact@v4
