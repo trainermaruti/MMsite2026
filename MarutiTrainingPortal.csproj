@@ -13,7 +13,7 @@
 
   <!-- Ensure JsonData folder is published -->
   <ItemGroup>
-    <Content Update="JsonData\**\*.json">
+    <Content Include="JsonData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -21,7 +21,7 @@
 
   <!-- Ensure wwwroot/images folder is published -->
   <ItemGroup>
-    <Content Update="wwwroot\images\**\*.*">
+    <Content Include="wwwroot\images\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

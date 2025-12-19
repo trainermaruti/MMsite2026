@@ -130,7 +130,32 @@ using (var scope = app.Services.CreateScope())
         // ALWAYS import JSON data for In-Memory database (it's empty on every restart)
         Console.WriteLine("📦 In-Memory Database detected - importing all data from JSON files...");
         Console.WriteLine($"Current Directory: {Directory.GetCurrentDirectory()}");
-        Console.WriteLine($"JsonData folder exists: {Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "JsonData"))}");
+        Console.WriteLine($"Base Directory: {AppDomain.CurrentDomain.BaseDirectory}");
+        
+        var jsonPath1 = Path.Combine(Directory.GetCurrentDirectory(), "JsonData");
+        var jsonPath2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JsonData");
+        Console.WriteLine($"JsonData path 1 (CurrentDir): {jsonPath1}");
+        Console.WriteLine($"   Exists: {Directory.Exists(jsonPath1)}");
+        Console.WriteLine($"JsonData path 2 (BaseDir): {jsonPath2}");
+        Console.WriteLine($"   Exists: {Directory.Exists(jsonPath2)}");
+        
+        if (Directory.Exists(jsonPath1))
+        {
+            Console.WriteLine($"Files in CurrentDir/JsonData:");
+            foreach (var file in Directory.GetFiles(jsonPath1, "*.json"))
+            {
+                Console.WriteLine($"   - {Path.GetFileName(file)}");
+            }
+        }
+        
+        if (Directory.Exists(jsonPath2))
+        {
+            Console.WriteLine($"Files in BaseDir/JsonData:");
+            foreach (var file in Directory.GetFiles(jsonPath2, "*.json"))
+            {
+                Console.WriteLine($"   - {Path.GetFileName(file)}");
+            }
+        }
         
         try
         {
@@ -139,8 +164,14 @@ using (var scope = app.Services.CreateScope())
         }
         catch (Exception importEx)
         {
-            Console.WriteLine($"❌ JSON import failed: {importEx.Message}");
-            Console.WriteLine($"Stack trace: {importEx.StackTrace}");
+            Console.WriteLine($"❌ JSON import FAILED!");
+            Console.WriteLine($"Error Type: {importEx.GetType().Name}");
+            Console.WriteLine($"Error Message: {importEx.Message}");
+            Console.WriteLine($"Stack Trace: {importEx.StackTrace}");
+            if (importEx.InnerException != null)
+            {
+                Console.WriteLine($"Inner Exception: {importEx.InnerException.Message}");
+            }
         }
     }
     catch (Exception ex)
@@ -155,8 +186,12 @@ app.MapGet("/health", async (ApplicationDbContext dbContext) =>
 {
     try
     {
-        var hasData = await dbContext.Courses.AnyAsync() || 
-                     await dbContext.Profiles.AnyAsync();
+        var coursesCount = await dbContext.Courses.CountAsync();
+        var eventsCount = await dbContext.TrainingEvents.CountAsync();
+        var profilesCount = await dbContext.Profiles.CountAsync();
+        var imagesCount = await dbContext.WebsiteImages.CountAsync();
+        
+        var hasData = coursesCount > 0 || profilesCount > 0;
         
         return Results.Ok(new 
         { 
@@ -164,6 +199,19 @@ app.MapGet("/health", async (ApplicationDbContext dbContext) =>
             timestamp = DateTime.UtcNow,
             database = "in-memory",
             dataLoaded = hasData,
+            counts = new 
+            {
+                courses = coursesCount,
+                events = eventsCount,
+                profiles = profilesCount,
+                images = imagesCount
+            },
+            paths = new
+            {
+                currentDir = Directory.GetCurrentDirectory(),
+                baseDir = AppDomain.CurrentDomain.BaseDirectory,
+                jsonDataExists = Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JsonData"))
+            },
             environment = app.Environment.EnvironmentName
         });
     }
