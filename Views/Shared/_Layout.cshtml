@@ -4,7 +4,70 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
-    <title>@ViewData["Title"] - Maruti Makwana Training Portal</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>@(ViewData["Title"] ?? "Professional Technical Training") - Maruti Makwana Training Portal</title>
+    <meta name="description" content="@(ViewData["Description"] ?? "Expert technical training in Automation, PLC Programming, SCADA, HMI, Robotics, and Industrial IoT. Over 130,000+ professionals trained by industry expert Maruti Makwana with 19+ years of experience.")" />
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "PLC training, SCADA training, HMI programming, industrial automation, robotics training, Maruti Makwana, technical training, automation engineer, PLC programming course, industrial IoT, Siemens training, Allen Bradley training, Rockwell automation, automation testing, control systems, electrical engineering training, industrial training institute, professional development, corporate training, online technical courses")" />
+    <meta name="author" content="Maruti Makwana" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="@(ViewData["CanonicalUrl"] ?? $"https://marutimakwana.com{Context.Request.Path}")" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@($"https://marutimakwana.com{Context.Request.Path}")" />
+    <meta property="og:title" content="@(ViewData["Title"] ?? "Professional Technical Training") - Maruti Makwana" />
+    <meta property="og:description" content="@(ViewData["Description"] ?? "Expert training in Automation, PLC, SCADA, HMI, Robotics. 130K+ professionals trained.")" />
+    <meta property="og:image" content="https://marutimakwana.com/images/logo.jpg" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Maruti Makwana Training Portal" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="@($"https://marutimakwana.com{Context.Request.Path}")" />
+    <meta name="twitter:title" content="@(ViewData["Title"] ?? "Professional Technical Training") - Maruti Makwana" />
+    <meta name="twitter:description" content="@(ViewData["Description"] ?? "Expert training in Automation, PLC, SCADA, HMI, Robotics. 130K+ professionals trained.")" />
+    <meta name="twitter:image" content="https://marutimakwana.com/images/logo.jpg" />
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "EducationalOrganization",
+      "name": "Maruti Makwana Training Portal",
+      "alternateName": "SkillTech Training Institute",
+      "url": "https://marutimakwana.com",
+      "logo": "https://marutimakwana.com/images/logo.jpg",
+      "description": "Professional technical training in Industrial Automation, PLC Programming, SCADA, HMI, Robotics, and IoT by expert trainer Maruti Makwana",
+      "founder": {
+        "@@type": "Person",
+        "name": "Maruti Makwana",
+        "jobTitle": "Expert Trainer & Industry Professional",
+        "description": "19+ years of experience in industrial automation and technical training"
+      },
+      "aggregateRating": {
+        "@@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1200",
+        "bestRating": "5"
+      },
+      "address": {
+        "@@type": "PostalAddress",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "availableLanguage": ["English", "Hindi", "Gujarati"]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/marutimakwana",
+        "https://twitter.com/marutimakwana",
+        "https://www.facebook.com/marutimakwana"
+      ]
+    }
+    </script>
+    
     <link rel="icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" type="image/jpeg" />
     <link rel="shortcut icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" type="image/jpeg" />
     <link rel="apple-touch-icon" href="~/images/logo.jpg?v=@DateTime.Now.Ticks" />

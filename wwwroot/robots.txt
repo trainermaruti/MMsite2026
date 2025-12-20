@@ -1,0 +1,30 @@
+# Robots.txt for Maruti Makwana Training Portal
+# https://marutimakwana.com
+
+User-agent: *
+Allow: /
+Disallow: /Admin/
+Disallow: /api/
+Disallow: /Profile/
+Disallow: /Messages/
+Disallow: /uploads/private/
+Disallow: /*.json$
+
+# Allow crawling of public resources
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /lib/
+
+# Sitemap location
+Sitemap: https://marutimakwana.com/sitemap.xml
+
+# Crawl delay (optional, helps prevent server overload)
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
