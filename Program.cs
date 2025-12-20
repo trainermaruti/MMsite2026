@@ -82,6 +82,9 @@ builder.Services.AddScoped<IImageService, ImageService>();
 // Add Chatbot Service (free LocalMock by default, optional OpenAI)
 builder.Services.AddScoped<ChatbotService>();
 
+// Add SkillTech Review Service (dynamic reviews from SkillTech.club)
+builder.Services.AddScoped<MarutiTrainingPortal.Services.ISkillTechReviewService, MarutiTrainingPortal.Services.SkillTechReviewService>();
+
 // Add Contact Message Repository and Service
 builder.Services.AddScoped<MarutiTrainingPortal.Repositories.IContactMessageRepository, MarutiTrainingPortal.Repositories.ContactMessageRepository>();
 builder.Services.AddScoped<MarutiTrainingPortal.Services.IContactMessageService, MarutiTrainingPortal.Services.ContactMessageService>();

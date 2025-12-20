@@ -29,6 +29,8 @@ function initScrollAnimations() {
     // Counter animation for stats
     document.querySelectorAll('.stat-number').forEach(stat => {
         const target = parseInt(stat.getAttribute('data-count'));
+        const suffix = stat.textContent.replace(/[\d,]+/g, '').trim(); // Extract suffix like "K+" or "+"
+        
         if (!isNaN(target)) {
             gsap.from(stat, {
                 scrollTrigger: {
@@ -41,7 +43,9 @@ function initScrollAnimations() {
                 ease: 'power2.out',
                 snap: { textContent: 1 },
                 onUpdate: function() {
-                    stat.textContent = Math.ceil(stat.textContent) + '+';
+                    const currentValue = Math.ceil(stat.textContent);
+                    // Preserve K+ or other suffixes from original text
+                    stat.textContent = currentValue.toLocaleString() + suffix;
                 }
             });
         }

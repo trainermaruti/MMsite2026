@@ -1,0 +1,83 @@
+@model List<MarutiTrainingPortal.Models.StudentReview>
+
+@*
+    Student Reviews View Component
+    Displays reviews dynamically fetched from SkillTech.club or fallback data
+    Reviews are automatically rotated on each page load for variety
+*@
+
+<!-- Student Testimonials Section (Dynamic from SkillTech.club) -->
+<div class="container" style="max-width: 1200px; padding: 60px 20px; margin: 0 auto;">
+    <h2 class="fade-up" style="text-align: center; font-size: clamp(28px, 5vw, 40px); font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">
+        What Students Say
+    </h2>
+    <p class="fade-up" style="text-align: center; color: var(--text-secondary); margin-bottom: 48px; font-size: 18px;">
+        Real feedback from professionals who transformed their careers
+    </p>
+    
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center text-muted">
+            <p>Loading reviews...</p>
+        </div>
+    }
+    else
+    {
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            @foreach (var review in Model)
+            {
+                <!-- Testimonial Card -->
+                <div class="hover-lift-card fade-up" style="padding: 32px; background: var(--card-bg); border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                        @if (!string.IsNullOrEmpty(review.AvatarUrl))
+                        {
+                            <img src="@review.AvatarUrl" 
+                                 alt="@review.StudentName" 
+                                 style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        }
+                        <div class="testimonial-avatar" 
+                             style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #001f3f 0%, #003366 100%); display: @(string.IsNullOrEmpty(review.AvatarUrl) ? "flex" : "none"); align-items: center; justify-content: center; font-weight: 600; font-size: 18px;">
+                            @review.GetInitials()
+                        </div>
+                        <div style="margin-left: 12px;">
+                            <div style="font-weight: 600; color: var(--text-primary);">@review.StudentName</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">
+                                @if (!string.IsNullOrEmpty(review.Company))
+                                {
+                                    <text>@review.JobTitle at @review.Company</text>
+                                }
+                                else
+                                {
+                                    <text>@review.JobTitle</text>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div style="color: var(--text-primary); margin-bottom: 12px; font-size: 20px;">
+                        @review.GetStarRating()
+                    </div>
+                    <p style="color: var(--text-secondary); line-height: 1.6; font-style: italic;">
+                        "@review.ReviewText"
+                    </p>
+                    @if (review.IsVerified)
+                    {
+                        <div style="margin-top: 12px; font-size: 12px; color: var(--text-secondary);">
+                            ✓ Verified Student
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+        
+        @* Refresh hint for admins *@
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    💡 Reviews automatically refresh every 30 minutes and rotate on each page load
+                </small>
+            </div>
+        }
+    }
+</div>
