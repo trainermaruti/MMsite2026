@@ -67,24 +67,17 @@ jobs:
             $config | ConvertTo-Json -Depth 10 | Set-Content appsettings.json
             Write-Host "✓ Connection string configured from secrets"
           } else {
-            Write-Host "⚠ WARNING: AZURE_SQL_CONNECTION_STRING secret is not set!"
-            Write-Host "⚠ App will use connection string from Azure App Service Configuration"
-            Write-Host "⚠ Make sure to configure DefaultConnection in Azure Portal > Configuration > Connection strings"
+            Write-Host "?? WARNING: AZURE_SQL_CONNECTION_STRING secret is not set!"
+            Write-Host "?? App will use connection string from Azure App Service Configuration"
+            Write-Host "?? Make sure to configure DefaultConnection in Azure Portal > Configuration > Connection strings"
           }
         shell: pwsh
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F7A9D98B4D91484397F4EE2DBB18D24F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0259E3BF840948D98D71E5C950E26307 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B7C7468306BC45F48A924713AD7AF0B4 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'marutimakwana'
-          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
           
