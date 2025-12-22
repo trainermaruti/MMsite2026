@@ -1,9 +1,61 @@
 @model List<TrainingEvent>
 
 @{
-    ViewData["Title"] = "Upcoming Training Events & Workshops";
-    ViewData["Description"] = "Register for upcoming automation training events, PLC workshops, webinars, and technical seminars by Maruti Makwana. Join live sessions on industrial automation, SCADA, HMI, and robotics programming.";
+    ViewData["Title"] = "Upcoming Workshops & Training Events | Maruti Makwana (MCT)";
+    ViewData["Description"] = "Register for live technical workshops, Azure webinars, and AI training events by Maruti Makwana. Join professional development sessions and stay updated with technology.";
     ViewData["Keywords"] = "automation events, PLC workshops, SCADA webinars, technical training seminars, industrial automation events, robotics workshop, automation conference, live training sessions, upcoming courses, registration";
+    ViewData["CanonicalUrl"] = "https://marutimakwana.com/Events";
+}
+
+@if (Model != null && Model.Any())
+{
+    @* Structured Data for Events *@
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "ItemList",
+      "name": "Upcoming Technical Workshops",
+      "itemListElement": [
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var trainingEvent = Model[i];
+            <text>
+            {
+              "@@type": "ListItem",
+              "position": @(i + 1),
+              "item": {
+                "@@type": "Event",
+                "name": "@Html.Raw(trainingEvent.Title)",
+                "description": "@Html.Raw(trainingEvent.Summary ?? trainingEvent.Description)",
+                "startDate": "@trainingEvent.StartDate.ToString("yyyy-MM-ddTHH:mm")",
+                "endDate": "@(trainingEvent.EndDate?.ToString("yyyy-MM-ddTHH:mm") ?? trainingEvent.StartDate.AddHours(2).ToString("yyyy-MM-ddTHH:mm"))",
+                "eventStatus": "https://schema.org/EventScheduled",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                "location": {
+                  "@@type": "Place",
+                  "name": "Live Workshop / On-site",
+                  "address": {
+                    "@@type": "PostalAddress",
+                    "addressLocality": "Ahmedabad",
+                    "addressRegion": "Gujarat",
+                    "addressCountry": "IN"
+                  }
+                },
+                "performer": {
+                  "@@type": "Person",
+                  "name": "Maruti Makwana"
+                },
+                "offers": {
+                  "@@type": "Offer",
+                  "url": "@trainingEvent.RegistrationLink"
+                }
+              }
+            }@(i < Model.Count - 1 ? "," : "")
+            </text>
+        }
+      ]
+    }
+    </script>
 }
 
 <div class="container mt-5 mb-5">

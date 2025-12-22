@@ -348,6 +348,11 @@
                     <span>Featured Videos</span>
                 </a>
                 
+                <a href="/Admin/Videos" class="modern-sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Videos" ? "active" : "")">
+                    <div class="modern-sidebar-icon"><i class="fas fa-play-circle"></i></div>
+                    <span>Video Library</span>
+                </a>
+                
                 <a href="/Admin/WebsiteImages" class="modern-sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "WebsiteImages" ? "active" : "")">
                     <div class="modern-sidebar-icon"><i class="fas fa-images"></i></div>
                     <span>Website Images</span>

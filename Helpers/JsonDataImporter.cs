@@ -180,6 +180,7 @@ public class JsonDataImporter
             await SafeImport("Certificates", () => ImportCertificates(context), importStats);
             await SafeImport("Images", () => ImportImages(context), importStats);
             await SafeImport("FeaturedVideos", () => ImportFeaturedVideos(context), importStats);
+            await SafeImport("Videos", () => ImportVideos(context), importStats);
             await SafeImport("Profiles", () => ImportProfiles(context), importStats);
             await SafeImport("ProfileDocuments", () => ImportProfileDocuments(context), importStats);
             await SafeImport("SystemSettings", () => ImportSystemSettings(context), importStats);
@@ -400,6 +401,32 @@ public class JsonDataImporter
         if (videos == null || !videos.Any()) return 0;
         
         context.FeaturedVideos.AddRange(videos);
+        await context.SaveChangesAsync();
+        return videos.Count;
+    }
+
+    private static async Task<int> ImportVideos(ApplicationDbContext context)
+    {
+        var jsonPath = GetJsonFilePath("VideosDatabase.json");
+        if (!File.Exists(jsonPath)) return 0;
+
+        var jsonData = await File.ReadAllTextAsync(jsonPath);
+        var videos = JsonSerializer.Deserialize<List<Video>>(jsonData, JsonOptions);
+
+        if (videos == null || !videos.Any()) return 0;
+
+        foreach (var video in videos)
+        {
+            // Auto-generate thumbnail if missing
+            if (string.IsNullOrWhiteSpace(video.ThumbnailUrl))
+            {
+                video.ThumbnailUrl = video.GenerateThumbnailUrl();
+            }
+
+            video.CreatedDate = DateTime.UtcNow;
+            context.Videos.Add(video);
+        }
+
         await context.SaveChangesAsync();
         return videos.Count;
     }

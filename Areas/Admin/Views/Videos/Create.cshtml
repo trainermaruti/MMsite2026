@@ -1,0 +1,135 @@
+@model MarutiTrainingPortal.Models.Video
+
+@{
+    ViewData["Title"] = "Add New Video";
+    Layout = "_ModernAdminLayout";
+}
+
+<div style="padding: 0 32px 32px 32px;">
+    <div style="margin-bottom: 32px;">
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+            <i class="fas fa-plus-circle" style="color: var(--primary); margin-right: 12px;"></i>Add New Video
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 15px; margin: 0;">Add a new showcase video to your library</p>
+    </div>
+
+    <div class="modern-card">
+        <form asp-action="Create" method="post" class="needs-validation" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label">Video Title <span style="color: var(--error);">*</span></label>
+                        <input asp-for="Title" class="form-control" placeholder="e.g. Master Azure DevOps in 60 Minutes" required />
+                        <span asp-validation-for="Title" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label asp-for="VideoUrl" class="form-label">YouTube Video URL <span style="color: var(--error);">*</span></label>
+                        <div class="input-group">
+                            <input asp-for="VideoUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." required id="VideoUrl" />
+                            <button type="button" class="btn btn-secondary" id="fetchMetadataBtn">
+                                <i class="fas fa-magic me-1"></i> Fetch Info
+                            </button>
+                        </div>
+                        <div class="form-text" style="color: var(--text-muted);">Paste the YouTube URL and click "Fetch Info" to auto-fill Title and Date.</div>
+                        <span asp-validation-for="VideoUrl" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Category" class="form-label">Category</label>
+                        <input asp-for="Category" class="form-control" placeholder="e.g. Azure, AI, Demonstration" />
+                        <span asp-validation-for="Category" style="color: var(--error);"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="PublishDate" class="form-label">Publish Date <span style="color: var(--error);">*</span></label>
+                        <input asp-for="PublishDate" class="form-control" type="date" required />
+                        <span asp-validation-for="PublishDate" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Description</label>
+                        <textarea asp-for="Description" class="form-control" rows="10" placeholder="Brief overview of the video content..."></textarea>
+                        <span asp-validation-for="Description" style="color: var(--error);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" id="isActiveSwitch" checked>
+                        <label asp-for="IsActive" class="form-check-label" for="isActiveSwitch">Publish to Library (Live)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 32px; display: flex; gap: 12px;">
+                <button type="submit" class="modern-btn modern-btn-primary">
+                    <i class="fas fa-save"></i> Create Video
+                </button>
+                <a asp-action="Index" class="modern-btn modern-btn-ghost">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('fetchMetadataBtn').addEventListener('click', async function() {
+            const url = document.getElementById('VideoUrl').value;
+            if (!url) {
+                alert('Please enter a YouTube URL first.');
+                return;
+            }
+
+            const btn = this;
+            const icon = btn.querySelector('i');
+            btn.disabled = true;
+            icon.className = 'fas fa-spinner fa-spin me-1';
+
+            try {
+                const response = await fetch(`@Url.Action("GetVideoMetadata", "Videos", new { area = "Admin" })?url=${encodeURIComponent(url)}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.title) {
+                        document.querySelector('input[name="Title"]').value = data.title;
+                    }
+                    if (data.publishDate) {
+                        // YouTube format is now trimmed to YYYY-MM-DD
+                        document.querySelector('input[name="PublishDate"]').value = data.publishDate;
+                    }
+                    if (data.description) {
+                        document.querySelector('textarea[name="Description"]').value = data.description;
+                    }
+                } else {
+                    alert('Could not fetch video info. You may need to enter it manually.');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert('An error occurred while fetching information.');
+            } finally {
+                btn.disabled = false;
+                icon.className = 'fas fa-magic me-1';
+            }
+        });
+    </script>
+}

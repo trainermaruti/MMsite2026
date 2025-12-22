@@ -1,0 +1,41 @@
+[
+  {
+    "Id": 1,
+    "Title": "Semantic Kernel SDK Tutorial \u2013 Create Smarter AI Agents",
+    "Description": "Want to develop your own AI agent using Microsoft\u2019s Semantic Kernel SDK? In this hands-on lecture, we\u2019ll walk through the process of building intelligent, extensible AI agents that combine reasoning, memory, and tool integration.\r\n\r\n\u2705 What You\u2019ll Learn in This Lecture:\r\n\r\nWhat is Semantic Kernel SDK and why use it for AI agents\r\nSetting up your development environment\r\nCreating plugins, skills, and planners with Semantic Kernel\r\nHow to connect your agent to tools, APIs, and external services\r\nTesting and deploying your AI agent in real-world workflows\r\n\r\n\u25B6\uFE0FWatch Next : https://youtu.be/iVCH1PONcZY?si=uHtCDSa2k2mzWWiJ\r\n\r\n\uD83C\uDF10 Stay updated with real-world tech skills.\r\nConnect with SkillTech\r\n\uD83D\uDCD8 Facebook: https://www.facebook.com/people/SkillTech\r\n\uD835\uDD4F Twitter/X: https://x.com/skilltechclub\r\n\uD83D\uDCBC LinkedIn: https://www.linkedin.com/company/skilltechclub\r\n\uD83D\uDCF1 WhatsApp Channel: https://whatsapp.com/channel/0029Vb6Yo7xJkK76DVxBWq3X\r\n\uD83D\uDCF7 Instagram: https://www.instagram.com/skilltech.club/\r\n\r\n\uD83C\uDF0D Explore More with SkillTech\r\n\uD83C\uDF10 Official Website: https://skilltech.club/\r\n\uD83C\uDF93 Azure AI Courses: https://skilltech.club/courses/azure-ai-fundamentals-certification\r\n\uD83D\uDCC2 Free Resources: https://skilltech.club/Resource/Index\r\n\r\nLink : https://learn.microsoft.com/en-us/semantic-kernel/get-started/quick-start-guide?pivots=programming-language-csharp\r\n\r\nBy the end of this session, you\u2019ll know how to code, customize, and run AI agents using the Semantic Kernel SDK \u2014 giving you the power to build agents that can plan, reason, and act autonomously.\r\n\r\n\uD83D\uDCA1 Perfect for AI developers, engineers, and solution architects who want to leverage Semantic Kernel for advanced agentic AI solutions.\r\n\r\n\u2705 Don\u2019t forget to:\r\n\uD83D\uDC4D Like the video\r\n\uD83D\uDCAC Share your thoughts in the comments\r\n\uD83D\uDD14 Subscribe for weekly Azure AI Live training\r\n\r\n\r\n#SemanticKernel, #AIAgentDevelopment, #AgenticAI, #MicrosoftAI, #AzureAI, #AIProgramming, #SemanticKernelSDK, #LLMAgents, #AIArchitecture, #autonomousagents",
+    "VideoUrl": "https://www.youtube.com/watch?v=wn1dfAl5Dos\u0026list=PLS-oDvHudZ8ZML3y_D60ON60iamPQU74T\u0026index=1\u0026pp=iAQB",
+    "ThumbnailUrl": "https://img.youtube.com/vi/wn1dfAl5Dos/mqdefault.jpg",
+    "PublishDate": "2025-08-22T00:00:00",
+    "Category": null,
+    "IsActive": true,
+    "IsDeleted": false,
+    "CreatedDate": "2025-12-22T11:37:56.85896Z",
+    "UpdatedDate": null
+  },
+  {
+    "Id": 2,
+    "Title": "How Semantic Kernel Supercharges AI Agents!",
+    "Description": "\uD83E\uDDE0 Want to know how Semantic Kernel powers Agentic AI systems? In this lecture, we explore how Microsoft\u2019s Semantic Kernel framework enables AI agents to orchestrate prompts, connect to tools, and manage memory for smarter, context-aware performance.\r\n\r\n\u2705 What You\u2019ll Learn:\r\n\r\nWhat is Semantic Kernel and why it matters in Agentic AI\r\nCore features: plugins, planners, memories, and connectors\r\nHow Semantic Kernel integrates with LLMs and Azure AI\r\nReal-world use cases: automation, chat agents, knowledge assistants\r\nStep-by-step guide to getting started with Semantic Kernel\r\n\r\nBy combining natural language understanding with tool integration and reasoning, Semantic Kernel allows developers to build modular, extensible, and intelligent AI agents.\r\n\r\n\uD83D\uDCA1 Perfect for AI developers, solution architects, and students looking to build production-ready AI solutions with Microsoft\u2019s open-source agentic AI framework.\r\n\r\n\u25B6\uFE0FWatch Next : https://youtu.be/T3o2CkvU53Q?si=hGmM7CzePbIHFnnX\r\n\r\n\uD83C\uDF10 Stay updated with real-world tech skills.\r\nConnect with SkillTech\r\n\uD83D\uDCD8 Facebook: https://www.facebook.com/people/SkillTech\r\n\uD835\uDD4F Twitter/X: https://x.com/skilltechclub\r\n\uD83D\uDCBC LinkedIn: https://www.linkedin.com/company/skilltechclub\r\n\uD83D\uDCF1 WhatsApp Channel: https://whatsapp.com/channel/0029Vb6Yo7xJkK76DVxBWq3X\r\n\uD83D\uDCF7 Instagram: https://www.instagram.com/skilltech.club/\r\n\r\n\uD83C\uDF0D Explore More with SkillTech\r\n\uD83C\uDF10 Official Website: https://skilltech.club/\r\n\uD83C\uDF93 Azure AI Courses: https://skilltech.club/courses/azure-ai-fundamentals-certification\r\n\uD83D\uDCC2 Free Resources: https://skilltech.club/Resource/Index\r\n\r\n\u2705 Don\u2019t forget to:\r\n\uD83D\uDC4D Like the video\r\n\uD83D\uDCAC Share your thoughts in the comments\r\n\uD83D\uDD14 Subscribe for weekly Azure AI Live training\r\n\r\n#SemanticKernel, #AgenticAI, #AzureAI, #MicrosoftAI, #LLMAgents, #AIFrameworks, #AIArchitecture, #PromptEngineering, #AutonomousAgents, #AIOrchestration\r\n\r\nChapters:\r\n00:00\u200B\u200B\u200B \u23E9 Intro\r\n01:05 \u23E9 What is a semantic kernel?\r\n07:11 \u23E9 Enterprise ready\r\n09:52 \u23E9 Modular and Extensible",
+    "VideoUrl": "https://www.youtube.com/watch?v=iVCH1PONcZY\u0026list=PLS-oDvHudZ8ZML3y_D60ON60iamPQU74T\u0026index=2\u0026pp=iAQB",
+    "ThumbnailUrl": "https://img.youtube.com/vi/iVCH1PONcZY/mqdefault.jpg",
+    "PublishDate": "2025-08-21T00:00:00",
+    "Category": null,
+    "IsActive": true,
+    "IsDeleted": false,
+    "CreatedDate": "2025-12-22T11:37:56.8909476Z",
+    "UpdatedDate": null
+  },
+  {
+    "Id": 3,
+    "Title": "Azure AI Foundry: Integrating Custom Tools into Agents",
+    "Description": "\uD83D\uDEE0 Want to make your AI agent smarter and more capable? In this lecture, we\u2019ll show you exactly how to integrate custom tools into your AI agent using Azure AI Foundry so it can handle more complex tasks and connect to real-world data sources.\r\n\r\n\u2705 What You\u2019ll Learn:\r\n\r\nUnderstanding the role of tools in AI agents\r\nCreating and registering custom tools in Azure AI Foundry\r\nConnecting your agent to APIs, databases, and external services\r\nUsing Prompt Flow and Model Catalog with tool integrations\r\nTesting and validating tool functionality in your AI workflows\r\n\r\nWhether you\u2019re building automation bots, research assistants, or data-driven AI applications, this guide will help you extend your agent\u2019s abilities beyond pre-trained capabilities.\r\n\r\n\uD83D\uDCA1 Perfect for AI developers, cloud engineers, and solution architects working with Microsoft Azure AI.\r\n\r\n\u25B6\uFE0FWatch Next : https://youtu.be/8QmhQkk6X3k?si=Zqj9xS1hkuy16WHf\r\n\r\n\uD83C\uDF10 Stay updated with real-world tech skills.\r\nConnect with SkillTech\r\n\uD83D\uDCD8 Facebook: https://www.facebook.com/people/SkillTech\r\n\uD835\uDD4F Twitter/X: https://x.com/skilltechclub\r\n\uD83D\uDCBC LinkedIn: https://www.linkedin.com/company/skilltechclub\r\n\uD83D\uDCF1 WhatsApp Channel: https://whatsapp.com/channel/0029Vb6Yo7xJkK76DVxBWq3X\r\n\uD83D\uDCF7 Instagram: https://www.instagram.com/skilltech.club/\r\n\r\n\uD83C\uDF0D Explore More with SkillTech\r\n\uD83C\uDF10 Official Website: https://skilltech.club/\r\n\uD83C\uDF93 Azure AI Courses: https://skilltech.club/courses/azure-ai-fundamentals-certification\r\n\uD83D\uDCC2 Free Resources: https://skilltech.club/Resource/Index\r\n\r\n\u2705 Don\u2019t forget to:\r\n\uD83D\uDC4D Like the video\r\n\uD83D\uDCAC Share your thoughts in the comments\r\n\uD83D\uDD14 Subscribe for weekly Azure AI Live training\r\n\r\n#AzureAI, #AIAgent, #CustomAITools, #AzureAIFoundry, #AIIntegration, #PromptFlow, #MicrosoftAI, #ToolOrchestration, #LLMAgents, #CloudAI, #aidevelopment #microsoftfoundry\r\n\r\nChapters:\r\n00:00\u200B\u200B\u200B \u23E9 Intro\r\n01:14 \u23E9 Why use custom tools?\r\n05:58 \u23E9 Custom tools functionality\r\n05:58 \u23E9 Demo",
+    "VideoUrl": "https://www.youtube.com/watch?v=T3o2CkvU53Q\u0026list=PLS-oDvHudZ8ZML3y_D60ON60iamPQU74T\u0026index=3\u0026pp=iAQB",
+    "ThumbnailUrl": "https://img.youtube.com/vi/T3o2CkvU53Q/mqdefault.jpg",
+    "PublishDate": "2025-08-14T00:00:00",
+    "Category": null,
+    "IsActive": true,
+    "IsDeleted": false,
+    "CreatedDate": "2025-12-22T11:37:56.891034Z",
+    "UpdatedDate": null
+  }
+]

@@ -1,0 +1,59 @@
+@model MarutiTrainingPortal.Models.Video
+
+@{
+    ViewData["Title"] = "Delete Video";
+    Layout = "_ModernAdminLayout";
+}
+
+<div style="padding: 0 32px 32px 32px;">
+    <div style="margin-bottom: 32px;">
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+            <i class="fas fa-trash-alt" style="color: var(--error); margin-right: 12px;"></i>Confirm Deletion
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 15px; margin: 0;">Are you sure you want to remove this video?</p>
+    </div>
+
+    <div class="modern-card" style="border-top: 4px solid var(--error);">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color);">
+                    <img src="@(string.IsNullOrEmpty(Model.ThumbnailUrl) ? Model.GenerateThumbnailUrl() : Model.ThumbnailUrl)" 
+                         alt="Thumbnail" 
+                         style="width: 100%; height: auto; display: block;" />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h4 style="color: var(--text-primary); font-weight: 700; margin-bottom: 16px;">@Model.Title</h4>
+                
+                <div style="display: grid; grid-template-columns: 120px 1fr; gap: 8px; font-size: 15px;">
+                    <div style="color: var(--text-tertiary); font-weight: 600;">Category:</div>
+                    <div style="color: var(--text-primary);">@Model.Category</div>
+                    
+                    <div style="color: var(--text-tertiary); font-weight: 600;">Published:</div>
+                    <div style="color: var(--text-primary);">@Model.PublishDate.ToString("MMMM dd, yyyy")</div>
+                    
+                    <div style="color: var(--text-tertiary); font-weight: 600;">YouTube URL:</div>
+                    <div style="color: var(--text-primary); word-break: break-all;">@Model.VideoUrl</div>
+                </div>
+
+                <div style="margin-top: 24px; color: var(--text-secondary); line-height: 1.6;">
+                    @Model.Description
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning mt-4" style="background: var(--warning-alpha); border: 1px solid var(--warning); color: var(--text-primary); border-radius: 8px; padding: 16px;">
+            <i class="fas fa-info-circle me-2"></i> <strong>Note:</strong> This video will be soft-deleted. It will no longer appear on the public website, but the record will remain in the system.
+        </div>
+
+        <form asp-action="Delete" method="post" style="margin-top: 32px; display: flex; gap: 12px;">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="modern-btn" style="background: var(--error); color: white;">
+                <i class="fas fa-trash-alt me-2"></i> Confirm Delete
+            </button>
+            <a asp-action="Index" class="modern-btn modern-btn-ghost">
+                <i class="fas fa-times me-2"></i> Cancel
+            </a>
+        </form>
+    </div>
+</div>

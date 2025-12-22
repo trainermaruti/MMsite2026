@@ -1,16 +1,52 @@
 @model List<Training>
 
 @{
-    ViewData["Title"] = "Past Training Programs & Success Stories";
-    ViewData["Description"] = "Explore successful training programs delivered by Maruti Makwana to 135+ companies. Corporate training in PLC, SCADA, HMI, Industrial Automation, and Robotics with proven results.";
-    ViewData["Keywords"] = "corporate training programs, past trainings, success stories, client testimonials, automation training clients, PLC training companies, industrial training portfolio, training case studies, corporate workshops";
+    ViewData["Title"] = "Success Stories & Corporate Training Portfolio | Maruti Makwana";
+    ViewData["Description"] = "Case studies and success stories of corporate training delivered by Maruti Makwana. Professional training in Azure, AI, and Automation for 135+ global enterprises.";
+    ViewData["Keywords"] = "corporate training achievements, success stories, Maruti Makwana portfolio, training case studies, enterprise automation training, Azure success stories, industrial training results";
+    ViewData["CanonicalUrl"] = "https://marutimakwana.com/Trainings";
+}
+
+@if (Model != null && Model.Any())
+{
+    @* Structured Data for Trainings Portfolio *@
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "ItemList",
+      "name": "Corporate Training Portfolio",
+      "description": "Succesful corporate training programs delivered by Maruti Makwana",
+      "itemListElement": [
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var training = Model[i];
+            <text>
+            {
+              "@@type": "ListItem",
+              "position": @(i + 1),
+              "item": {
+                "@@type": "Course",
+                "name": "@Html.Raw(training.Title)",
+                "description": "@Html.Raw(training.Description)",
+                "provider": {
+                  "@@type": "Person",
+                  "name": "Maruti Makwana",
+                  "jobTitle": "Microsoft Certified Trainer"
+                }
+              }
+            }@(i < Model.Count - 1 ? "," : "")
+            </text>
+        }
+      ]
+    }
+    </script>
 }
 
 <div class="container mt-5 mb-5">
     <div class="row mb-4">
         <div class="col-12 text-center">
-            <h1>My Past Trainings</h1>
-            <p class="text-muted">Showcase of successful training programs delivered to various organizations</p>
+            <h1 class="display-4 fw-bold mb-3" style="color: var(--text-primary);">Corporate Training Success Stories</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 800px;">A showcase of successful training programs delivered to world-class organizations</p>
         </div>
     </div>
 
@@ -96,7 +132,6 @@
             }
         </style>
     }
-    </div>
 </div>
 
 

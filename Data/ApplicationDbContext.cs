@@ -23,6 +23,7 @@ namespace MarutiTrainingPortal.Data
         public DbSet<FeaturedVideo> FeaturedVideos { get; set; }
         public DbSet<WebsiteImage> WebsiteImages { get; set; }
         public DbSet<ProfileDocument> ProfileDocuments { get; set; }
+        public DbSet<Video> Videos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -93,6 +94,12 @@ namespace MarutiTrainingPortal.Data
 
             modelBuilder.Entity<WebsiteImage>()
                 .HasQueryFilter(wi => !wi.IsDeleted);
+
+            modelBuilder.Entity<Video>()
+                .HasQueryFilter(v => !v.IsDeleted);
+
+            modelBuilder.Entity<Video>()
+                .HasIndex(v => v.PublishDate);
 
             // Configure relationships
             modelBuilder.Entity<ContactMessage>()
