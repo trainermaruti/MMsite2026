@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Ensure static web assets are enabled even in Production mode locally
+// This fixes the 404 error for MarutiTrainingPortal.styles.css when running locally in Production environment
+builder.WebHost.UseStaticWebAssets();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

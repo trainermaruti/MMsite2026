@@ -1,9 +1,42 @@
 @model List<Course>
 
 @{
-    ViewData["Title"] = "PLC & Automation Video Courses";
-    ViewData["Description"] = "Comprehensive video courses on PLC Programming, SCADA, HMI, Industrial Automation, Robotics, and IoT. Learn from expert trainer Maruti Makwana with practical, hands-on training modules.";
-    ViewData["Keywords"] = "PLC video courses, SCADA tutorials, HMI programming videos, automation online courses, robotics training videos, industrial automation course, PLC programming tutorials, Siemens PLC videos, Allen Bradley course, automation learning platform";
+    ViewData["Title"] = "Azure Cloud & AI Video Courses | Maruti Makwana (MCT)";
+    ViewData["Description"] = "Master Microsoft Azure and AI with self-paced video courses by Microsoft Certified Trainer (MCT) Maruti Makwana. Hands-on recordings for AZ-104, AI-900, AI-102, and more.";
+    ViewData["Keywords"] = "Azure video courses, AI training videos, Microsoft Certified Trainer, MCT, AZ-104 recordings, AI-900 workshops, Maruti Makwana courses, SkillTech Club training, cloud certification videos";
+}
+
+@if (Model != null && Model.Any())
+{
+    <!-- Structured Data for Courses (GEO/AI Optimization) -->
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "ItemList",
+      "itemListElement": [
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var course = Model[i];
+            <text>
+            {
+              "@@type": "ListItem",
+              "position": @(i + 1),
+              "item": {
+                "@@type": "Course",
+                "name": "@Html.Raw(course.Title)",
+                "description": "@Html.Raw(course.Description)",
+                "provider": {
+                  "@@type": "Person",
+                  "name": "Maruti Makwana",
+                  "sameAs": "https://marutimakwana.com"
+                }
+              }
+            }@(i < Model.Count - 1 ? "," : "")
+            </text>
+        }
+      ]
+    }
+    </script>
 }
 
 <div class="container mt-5 mb-5">
@@ -26,8 +59,8 @@
 
     <div class="row mb-4">
         <div class="col-md-12">
-            <h1>Video Courses</h1>
-            <p class="text-muted">Self-paced learning with recorded video courses on Azure Cloud and AI</p>
+            <h1>Azure Cloud & AI Courses</h1>
+            <p class="text-muted">Self-paced learning with recorded video workshops by **Microsoft Certified Trainer (MCT)** Maruti Makwana.</p>
         </div>
     </div>
 

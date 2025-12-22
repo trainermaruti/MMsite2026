@@ -1,10 +1,106 @@
 @inject IImageService ImageService
 @{
-    ViewData["Title"] = "Expert Industrial Automation & PLC Training";
-    ViewData["Description"] = "Join 130,000+ professionals trained by Maruti Makwana. Expert training in PLC Programming, SCADA, HMI, Robotics, Industrial Automation, and IoT. 19+ years of industry experience. Trusted by 135+ companies worldwide.";
-    ViewData["Keywords"] = "PLC training courses, SCADA programming, HMI development, industrial automation training, robotics certification, automation engineer courses, Siemens PLC training, Allen Bradley training, Rockwell automation, industrial IoT training, automation testing, control systems training, electrical engineering courses, Maruti Makwana trainer, SkillTech institute, online automation courses, corporate training programs";
+    ViewData["Title"] = "Maruti Makwana | Azure Cloud & AI Corporate Trainer | Microsoft Certified Trainer (MCT)";
+    ViewData["Description"] = "Expert Azure Cloud, AI, and Industrial Automation workshops by Maruti Makwana (MCT). Microsoft Certified Trainer with 19+ years of experience in AZ-900, AZ-104, and AI-102.";
+    ViewData["Keywords"] = "AZ-900, AI-900, AZ-104, AI-102, AZ-204, AZ-305, Microsoft Copilot, Microsoft Certified Trainer, MCT, Maruti Makwana, Azure Corporate Training, SkillTech Club";
     ViewData["CanonicalUrl"] = "https://marutimakwana.com/";
+    var youtubeUrl = "https://www.youtube.com/@skilltechclub";
 }
+
+<!-- Structured Data for GEO/AI Optimization -->
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Person",
+  "name": "Maruti Makwana",
+  "jobTitle": "Corporate Trainer",
+  "image": "https://marutimakwana.com/images/logo.jpg",
+  "url": "https://marutimakwana.com",
+  "address": {
+    "@@type": "PostalAddress",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "addressCountry": "India"
+  },
+  "knowsAbout": ["Azure Cloud", "AI", "Industrial Automation", "PLC", "SCADA", "DevOps", "Machine Learning"],
+  "sameAs": [
+    "https://www.linkedin.com/in/marutimakwana",
+    "@youtubeUrl",
+    "https://twitter.com/marutimakwana",
+    "https://www.facebook.com/marutimakwana",
+    "https://www.instagram.com/marutimakwana"
+  ],
+  "worksFor": {
+    "@@type": "Organization",
+    "name": "Maruti Makwana Training Portal",
+    "parentOrganization": {
+      "@@type": "Organization",
+      "name": "SkillTech Club",
+      "url": "https://skilltech.club"
+    }
+  },
+  "award": "Microsoft Certified Trainer (MCT)"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
+  "mainEntity": [{
+    "@@type": "Question",
+    "name": "What is Azure Cloud Training for Enterprises?",
+    "acceptedAnswer": {
+      "@@type": "Answer",
+      "text": "Azure Cloud Training for Enterprises is a specialized program designed to upskill technical teams in cloud architecture, security, and AI integration. It focuses on hands-on workshops that solve real-world business challenges using Microsoft Azure’s ecosystem."
+    }
+  }, {
+    "@@type": "Question",
+    "name": "Does Maruti Makwana provide corporate training in Ahmedabad?",
+    "acceptedAnswer": {
+      "@@type": "Answer",
+      "text": "Yes, Maruti Makwana provides expert corporate technical training across Ahmedabad, Gandhinagar, Vadodara, and throughout Gujarat, India."
+    }
+  }]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "ItemList",
+  "itemListElement": [
+    {
+      "@@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@@type": "Course",
+        "name": "AZ-104: Microsoft Azure Administrator Training",
+        "description": "Comprehensive corporate training for Azure Administration and Infrastructure management.",
+        "provider": { "@@type": "Person", "name": "Maruti Makwana" }
+      }
+    },
+    {
+      "@@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@@type": "Course",
+        "name": "AI-900: Microsoft Azure AI Fundamentals",
+        "description": "Foundational workshop on Artificial Intelligence and Machine Learning services in Azure.",
+        "provider": { "@@type": "Person", "name": "Maruti Makwana" }
+      }
+    },
+    {
+      "@@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@@type": "Course",
+        "name": "AI-102: Designing and Implementing an Azure AI Solution",
+        "description": "Advanced technical training for creating AI-powered applications on Microsoft Azure.",
+        "provider": { "@@type": "Person", "name": "Maruti Makwana" }
+      }
+    }
+  ]
+}
+</script>
 
 <style>
 /* HERO SECTION BUTTONS - White icons in both modes */
@@ -244,11 +340,12 @@ html.light-theme .hero-portrait-shadow {
         <div class="row align-items-center g-5" style="overflow: visible;">
             <div class="col-lg-6 order-2 order-lg-1 hero-copy" style="text-align: left; overflow: visible;">
                 <h1 class="fw-bold mb-4 fade-up" style="font-size: clamp(32px, 5vw, 56px); line-height: 1.2;">
-                    Transform your workforce with <span style="background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 900;">Azure AI</span> and <span style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 900;">Cloud</span> training for modern enterprises.
+                    <span style="display: block; color: #ffffff;">Microsoft Certified Trainer</span>
+                    <span style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 900;">Azure Cloud & AI</span>
                 </h1>
 
                 <p class="mb-5 fade-up" style="font-size: clamp(16px, 2vw, 20px); line-height: 1.7; max-width: 600px;">
-                    Master Azure cloud services with hands-on workshops covering architecture, deployment, security, and best practices for enterprise solutions.
+                    Expert MCT (Microsoft Certified Trainer) Maruti Makwana delivering high-impact workshops in AZ-104, AI-102, and AI-900 for modern enterprises.
                 </p>
 
                 <div class="mb-5 fade-up d-flex flex-column align-items-center">
@@ -270,10 +367,10 @@ html.light-theme .hero-portrait-shadow {
 
             <div class="col-lg-6 order-1 order-lg-2 hero-portrait-container position-relative fade-up" style="text-align: center; padding-top: 60px; padding-bottom: 60px; overflow: visible;">
                 <div class="hero-portrait-shadow" style="position: relative; display: inline-block; border-radius: 50%; border: 8px solid rgba(59, 130, 246, 0.2); max-width: 450px; width: 100%; aspect-ratio: 1; overflow: hidden;">
-                    <img src="@await ImageService.GetImageUrlAsync("home_profile_photo")"
-                         alt="Maruti Makwana - Expert PLC SCADA HMI Automation Trainer with 19 Years Experience"
-                         class="img-fluid"
-                         style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+                     <img src="@await ImageService.GetImageUrlAsync("home_profile_photo")"
+                          alt="Maruti Makwana - Azure Cloud and AI Trainer"
+                          class="img-fluid"
+                          style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
                     <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(59, 130, 246, 0.95); backdrop-filter: blur(10px); padding: 12px 32px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-award" style="color: #ffffff; font-size: 20px;"></i>
@@ -432,7 +529,7 @@ html.light-theme .hero-portrait-shadow {
                 <div class="hover-lift-card fade-up profile-card" style="background: var(--card-bg); border-radius: 20px; padding: 40px; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; justify-content: center; grid-row: span 2;">
                     <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 4px solid rgba(59, 130, 246, 0.3); margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);">
                         <img src="@await ImageService.GetImageUrlAsync("home_professional_profile")" 
-                             alt="Maruti Makwana - Industrial Automation Expert & Professional Technical Trainer" 
+                             alt="Maruti Makwana - Professional Technical Trainer specializing in Azure and AI" 
                              style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <h3 style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">Professional Profile</h3>
@@ -792,6 +889,14 @@ html.light-theme .hero-portrait-shadow {
     </div>
     
     </div> <!-- End Featured Training Journey Programs -->
+
+    <!-- GEO Optimization: Answer "What is" Questions -->
+    <div style="max-width: 900px; margin: 60px auto 0 auto; padding: 40px; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border-color); text-align: center;">
+        <h2 style="font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 20px;">What is Azure Cloud Training for Enterprises?</h2>
+        <p style="font-size: 18px; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+            Azure Cloud Training for Enterprises is a specialized program designed to upskill technical teams in cloud architecture, security, and AI integration. It focuses on hands-on workshops that solve real-world business challenges using Microsoft Azure’s cutting-edge ecosystem. This training is delivered through instructor-led workshops and customized enterprise sessions.
+        </p>
+    </div>
 </section> <!-- End Featured Training Journey Section -->
     
     @* Featured Video Section *@
@@ -822,6 +927,21 @@ html.light-theme .hero-portrait-shadow {
                         allowfullscreen
                         loading="lazy">
                     </iframe>
+                </div>
+                
+                <!-- Video Transcript for SEO/E-E-A-T -->
+                <div style="margin-top: 30px; padding: 25px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid var(--primary);">
+                    <h4 style="color: var(--text-primary); font-size: 1.2rem; font-weight: 700; margin-bottom: 15px;">Full Transcript Summary</h4>
+                    <div style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; max-height: 200px; overflow-y: auto; padding-right: 10px;">
+                        <p>In this featured training session, Maruti Makwana demonstrates the core principles of Azure Cloud architecture and its practical application in enterprise environments. Key topics include:</p>
+                        <ul style="margin-bottom: 15px;">
+                            <li>Setting up scalable cloud infrastructure on Microsoft Azure.</li>
+                            <li>Integrating AI and Machine Learning models for business automation.</li>
+                            <li>Best practices for cloud security and DevOps pipelines.</li>
+                            <li>Real-world case studies from over 135+ corporate training sessions.</li>
+                        </ul>
+                        <p>This session provides a comprehensive overview of how modern businesses can leverage cloud technologies to accelerate digital transformation and improve operational efficiency.</p>
+                    </div>
                 </div>
             </div>
         }
@@ -888,22 +1008,22 @@ html.light-theme .hero-portrait-shadow {
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 32px; align-items: center; justify-items: center; margin-bottom: 40px;">
             <!-- Company Logos - These would be your actual client logos -->
             <div class="hover-scale fade-up" style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                <img src="https://skilltech.club/images/clientlogo1.png" alt="IBM" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
+                <img src="https://skilltech.club/images/clientlogo1.png" alt="Corporate training conducted for IBM professionals" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
             </div>
             <div class="hover-scale fade-up" style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                <img src="https://skilltech.club/images/clientlogo2.png" alt="TCS" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
+                <img src="https://skilltech.club/images/clientlogo2.png" alt="Corporate training conducted for TCS professionals" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
             </div>
             <div class="hover-scale fade-up" style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                <img src="https://skilltech.club/images/clientlogo3.png" alt="Infosys" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
+                <img src="https://skilltech.club/images/clientlogo3.png" alt="Corporate training conducted for Infosys professionals" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
             </div>
             <div class="hover-scale fade-up" style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                <img src="https://skilltech.club/images/clientlogo4.png" alt="Wipro" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
+                <img src="https://skilltech.club/images/clientlogo4.png" alt="Corporate training conducted for Wipro professionals" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
             </div>
             <div class="hover-scale fade-up" style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                <img src="https://skilltech.club/images/clientlogo5.png" alt="Accenture" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
+                <img src="https://skilltech.club/images/clientlogo5.png" alt="Corporate training conducted for Accenture professionals" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
             </div>
             <div class="hover-scale fade-up" style="padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                <img src="https://skilltech.club/images/clientlogo6.png" alt="Capgemini" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
+                <img src="https://skilltech.club/images/clientlogo6.png" alt="Corporate training conducted for Capgemini professionals" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s;" onmouseover="this.style.filter='grayscale(0%)'; this.style.opacity='1';" onmouseout="this.style.filter='grayscale(100%)'; this.style.opacity='0.7';" />
             </div>
         </div>
     </div>
@@ -921,7 +1041,7 @@ html.light-theme .hero-portrait-shadow {
             Join thousands of learners mastering Azure AI, Cloud Computing, and Microsoft technologies with our comprehensive online platform.
         </p>
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="https://www.youtube.com/@@skilltechclub" target="_blank" class="skilltech-visit-btn" style="background: white !important; color: #001f3f !important; border: none; padding: 14px 32px; font-weight: 600; text-decoration: none; border-radius: 8px; display: inline-block;">
+            <a href="@youtubeUrl" target="_blank" class="skilltech-visit-btn" style="background: white !important; color: #001f3f !important; border: none; padding: 14px 32px; font-weight: 600; text-decoration: none; border-radius: 8px; display: inline-block;">
                 <i class="fab fa-youtube"></i> <span style="color: #001f3f !important;">Visit YouTube</span>
             </a>
             <a href="https://skilltech.club/courses" target="_blank" class="skilltech-browse-btn" style="background: transparent !important; color: #ffffff !important; border: 2px solid #ffffff !important; padding: 14px 32px; font-weight: 600; text-decoration: none; border-radius: 8px; display: inline-block;">

@@ -12,6 +12,7 @@
     <meta name="author" content="Maruti Makwana" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="@(ViewData["CanonicalUrl"] ?? $"https://marutimakwana.com{Context.Request.Path}")" />
+    @{ var youtubeUrl = "https://www.youtube.com/@skilltechclub"; }
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -30,40 +31,35 @@
     <meta name="twitter:image" content="https://marutimakwana.com/images/logo.jpg" />
     
     <!-- Schema.org Structured Data -->
+    <!-- Global Structured Data -->
     <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
-      "@@type": "EducationalOrganization",
+      "@@type": "WebSite",
       "name": "Maruti Makwana Training Portal",
-      "alternateName": "SkillTech Training Institute",
+      "url": "https://marutimakwana.com",
+      "potentialAction": {
+        "@@type": "SearchAction",
+        "target": "https://marutimakwana.com/Courses?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "Organization",
+      "name": "Maruti Makwana Training Portal",
       "url": "https://marutimakwana.com",
       "logo": "https://marutimakwana.com/images/logo.jpg",
-      "description": "Professional technical training in Industrial Automation, PLC Programming, SCADA, HMI, Robotics, and IoT by expert trainer Maruti Makwana",
-      "founder": {
-        "@@type": "Person",
-        "name": "Maruti Makwana",
-        "jobTitle": "Expert Trainer & Industry Professional",
-        "description": "19+ years of experience in industrial automation and technical training"
-      },
-      "aggregateRating": {
-        "@@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "1200",
-        "bestRating": "5"
-      },
-      "address": {
-        "@@type": "PostalAddress",
-        "addressCountry": "IN"
-      },
-      "contactPoint": {
-        "@@type": "ContactPoint",
-        "contactType": "Customer Service",
-        "availableLanguage": ["English", "Hindi", "Gujarati"]
+      "parentOrganization": {
+        "@@type": "Organization",
+        "name": "SkillTech Club",
+        "url": "https://skilltech.club"
       },
       "sameAs": [
         "https://www.linkedin.com/in/marutimakwana",
-        "https://twitter.com/marutimakwana",
-        "https://www.facebook.com/marutimakwana"
+        "@youtubeUrl"
       ]
     }
     </script>
@@ -156,8 +152,6 @@
                         <img src="~/images/logo.jpg?v=@DateTime.Now.Ticks" alt="Maruti Makwana Logo" style="width: 48px; height: 48px; object-fit: contain; border-radius: 8px;" />
                         <h5 style="font-size: 18px; font-weight: 700; margin: 0; color: var(--text-primary);">Maruti Makwana</h5>
                     </div>
-                        <i class="fas fa-graduation-cap" style="color: var(--primary); margin-right: 8px;"></i>Maruti Makwana
-                    </h6>
                     <p style="color: var(--text-tertiary); font-size: 14px; line-height: 1.6;">
                         Corporate Trainer specializing in Azure Cloud Services and AI Technologies. Empowering IT professionals through hands-on training programs.
                     </p>
