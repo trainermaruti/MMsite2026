@@ -24,6 +24,7 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
                 TotalTrainings = await _context.Trainings.CountAsync(),
                 TotalCourses = await _context.Courses.CountAsync(),
                 TotalEvents = await _context.TrainingEvents.CountAsync(),
+                TotalVideos = await _context.Videos.CountAsync(),
                 UnreadContactMessages = await _context.ContactMessages.CountAsync(),
                 RecentMessages = await _context.ContactMessages
                     .OrderByDescending(m => m.CreatedDate)

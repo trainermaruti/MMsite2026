@@ -10,7 +10,7 @@
 :root {
   /* Colors now inherit from theme.css */
   /* Using CSS variables for dynamic theming */
-  
+
   /* Legacy support - map to new theme variables */
   --border-light: var(--border-color);
   --border-dark: var(--border-color);
@@ -20,13 +20,13 @@
   --bg-white: var(--bg-primary);
   --bg-dark: var(--bg-tertiary);
   --bg-subtle: var(--bg-secondary);
-  
+
   /* Gradients - now using theme gradients */
   --gradient-purple-blue: var(--gradient-primary);
   --gradient-blue-cyan: var(--gradient-secondary);
   --gradient-orange-pink: var(--gradient-accent);
   --gradient-green-teal: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
-  
+
   /* Pastel Icons */
   --pastel-blue: #dbeafe;
   --pastel-purple: #ede9fe;
@@ -34,7 +34,7 @@
   --pastel-green: #d1fae5;
   --pastel-pink: #fce7f3;
   --pastel-yellow: #fef3c7;
-  
+
   /* Spacing */
   --spacing-xs: 8px;
   --spacing-sm: 12px;
@@ -42,12 +42,12 @@
   --spacing-lg: 24px;
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
-  
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  
+
   /* Shadows now use theme shadows */
 }
 
@@ -350,7 +350,7 @@
 .grid-background {
   position: relative;
   background-color: var(--bg-white);
-  background-image: 
+  background-image:
     linear-gradient(var(--border-light) 1px, transparent 1px),
     linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -468,6 +468,52 @@
 .modern-btn-ghost:hover {
   background: var(--bg-tertiary);
   border-color: var(--border-hover);
+}
+
+.modern-btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  backdrop-filter: blur(8px);
+}
+
+.modern-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.modern-btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.modern-btn-danger:hover {
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+  transform: translateY(-2px);
+}
+
+.modern-btn-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.modern-btn-warning:hover {
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+  transform: translateY(-2px);
+}
+
+.modern-btn-info {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.modern-btn-info:hover {
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+  transform: translateY(-2px);
 }
 
 /* ========================================
@@ -593,7 +639,8 @@
 }
 
 .modern-main {
-  margin-left: 292px; /* Sidebar width + gap */
+  margin-left: 292px;
+  /* Sidebar width + gap */
   padding: var(--spacing-lg) var(--spacing-2xl);
   min-height: 100vh;
   max-width: none !important;
@@ -618,6 +665,7 @@
 .text-gradient {
   background: var(--gradient-purple-blue);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -646,25 +694,25 @@
   .modern-sidebar {
     transform: translateX(-100%);
   }
-  
+
   .modern-sidebar.open {
     transform: translateX(0);
   }
-  
+
   .modern-main {
     margin-left: 0;
   }
-  
+
   .bento-item-large {
     grid-column: span 1;
   }
-  
+
   /* Responsive table - horizontal scroll */
   .modern-table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .modern-table {
     min-width: 800px;
   }
@@ -674,75 +722,75 @@
   .modern-hero-title {
     font-size: 36px;
   }
-  
+
   .stat-card-value {
     font-size: 24px;
   }
-  
+
   .bento-grid {
     grid-template-columns: 1fr;
   }
-  
+
   /* Mobile table adjustments */
   .modern-table th,
   .modern-table td {
     padding: 12px 14px;
     font-size: 13px;
   }
-  
+
   .modern-table th {
     font-size: 11px;
   }
-  
+
   /* Stack action buttons on mobile */
   .modern-table .btn-group {
     display: flex;
     flex-direction: column;
     gap: 4px;
   }
-  
+
   .modern-table .btn-group .btn {
     font-size: 12px;
     padding: 6px 10px;
   }
-  
+
   /* Card layout alternative for small screens */
   @media (max-width: 600px) {
     .modern-table-container.mobile-cards {
       overflow-x: visible;
     }
-    
+
     .modern-table-container.mobile-cards .modern-table {
       min-width: auto;
     }
-    
+
     .modern-table-container.mobile-cards .modern-table thead {
       display: none;
     }
-    
+
     .modern-table-container.mobile-cards .modern-table tbody,
     .modern-table-container.mobile-cards .modern-table tr {
       display: block;
     }
-    
+
     .modern-table-container.mobile-cards .modern-table tr {
       margin-bottom: 16px;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       overflow: hidden;
     }
-    
+
     .modern-table-container.mobile-cards .modern-table td {
       display: flex;
       justify-content: space-between;
       padding: 12px 16px;
       border-bottom: 1px solid var(--border-color);
     }
-    
+
     .modern-table-container.mobile-cards .modern-table td:last-child {
       border-bottom: none;
     }
-    
+
     .modern-table-container.mobile-cards .modern-table td::before {
       content: attr(data-label);
       font-weight: 600;
@@ -779,24 +827,24 @@
     padding: 16px;
     box-shadow: var(--shadow-md);
   }
-  
+
   .navbar-nav {
     flex-direction: column !important;
     width: 100%;
     gap: 8px !important;
   }
-  
+
   .nav-item {
     width: 100%;
   }
-  
+
   .nav-link,
   .modern-btn {
     width: 100% !important;
     justify-content: flex-start !important;
     margin-bottom: 0 !important;
   }
-  
+
   .modern-btn-primary {
     justify-content: center !important;
   }
@@ -806,19 +854,19 @@
   .spotlight-container {
     padding: 60px 16px 40px 16px !important;
   }
-  
+
   .container {
     padding: 0 16px !important;
   }
-  
+
   .stat-card {
     padding: 20px !important;
   }
-  
+
   .hover-lift-card {
     padding: 24px !important;
   }
-  
+
   .modern-card-glass {
     border-radius: 12px;
   }
@@ -829,16 +877,16 @@
     padding: 10px 16px !important;
     font-size: 13px !important;
   }
-  
+
   .stat-card-value {
     font-size: 28px !important;
   }
-  
+
   .stat-card-icon {
     width: 40px !important;
     height: 40px !important;
   }
-  
+
   .stat-card-icon i {
     font-size: 18px !important;
   }
@@ -912,6 +960,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1044,6 +1093,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

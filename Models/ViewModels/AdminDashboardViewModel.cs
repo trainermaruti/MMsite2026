@@ -5,6 +5,7 @@ namespace MarutiTrainingPortal.Models.ViewModels
         public int TotalTrainings { get; set; }
         public int TotalCourses { get; set; }
         public int TotalEvents { get; set; }
+        public int TotalVideos { get; set; }
         public int TotalContactMessages { get; set; }
         public int UnreadContactMessages { get; set; }
         public int TotalStudents { get; set; }

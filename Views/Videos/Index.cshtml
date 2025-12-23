@@ -52,8 +52,8 @@
 <div class="container mt-5 mb-5">
     <div class="row mb-4">
         <div class="col-12 text-center">
-            <h1 class="display-4 fw-bold mb-3" style="color: var(--text-primary);">Video Training Library</h1>
-            <p class="lead text-muted mx-auto" style="max-width: 800px;">Exclusive technical training sessions, tutorials, and demonstration videos</p>
+            <h1 class="display-4 fw-bold mb-3" style="color: var(--text-primary);">My Video Vlog</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 800px;">Stories, insights, and experiences from my journey</p>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
             <div style="display: flex; flex-direction: column; gap: 32px;">
                 @foreach (var video in Model)
                 {
-                    <div class="landscape-video-card hover-lift-card fade-up" style="display: flex; align-items: center; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border-color); padding: 20px; gap: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                    <div class="landscape-video-card hover-lift-card fade-up" style="display: flex; align-items: center; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border-color); padding: 20px; gap: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
                         
                         @* Left: Thumbnail *@
                         <div style="flex: 0 0 33%; min-width: 280px; position: relative; border-radius: 16px; overflow: hidden; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
@@ -111,7 +111,7 @@
                                 <h3 style="font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; line-height: 1.3; transition: color 0.3s ease;">
                                     @video.Title
                                 </h3>
-                                <div style="font-size: 14px; color: var(--text-tertiary); margin-bottom: 16px;">SkillTech Club</div>
+                                <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px; margin-bottom: 16px; opacity: 0.8; display: flex; align-items: center; gap: 8px;"><span>SkillTech Club</span><span style="opacity: 0.5;">•</span><span>@video.PublishDate.ToString("MMM dd, yyyy")</span></div>
                             </a>
 
                             <div style="color: var(--text-secondary); font-size: 15px; margin-bottom: 20px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-align: justify; opacity: 0.9;">
@@ -160,16 +160,16 @@
     @@media (max-width: 768px) {
         .landscape-video-card {
             flex-direction: row !important; /* Keep horizontal list style */
-            padding: 12px !important;
-            gap: 12px !important;
+            padding: 8px !important;
+            gap: 10px !important;
             align-items: flex-start !important;
-            border-radius: 12px !important;
+            border-radius: 10px !important;
         }
         
-        .landscape-video-card div[style*="flex: 0 0 40%"] {
-            flex: 0 0 120px !important; /* Compact thumbnail like YT */
-            min-width: 120px !important;
-            border-radius: 8px !important;
+        .landscape-video-card div[style*="flex: 0 0"] {
+            flex: 0 0 90px !important; /* Smaller thumbnail */
+            min-width: 90px !important; max-width: 90px !important;
+            border-radius: 6px !important;
         }
 
         .landscape-video-card div[style*="flex: 1"] {
@@ -178,19 +178,25 @@
         }
 
         .landscape-video-card h3 {
-            font-size: 15px !important;
-            margin-bottom: 2px !important;
+            font-size: 14px !important;
+            margin-bottom: 6px !important;
             line-height: 1.3 !important;
-            -webkit-line-clamp: 2 !important;
+            -webkit-line-clamp: 3 !important;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
         .landscape-video-card div[style*="font-size: 14px"] {
-            font-size: 12px !important;
+            font-size: 11px !important;
             margin-bottom: 0 !important;
+        }        
+        /* Fix channel name and date on mobile - stack vertically or keep inline */
+        .landscape-video-card div[style*="display: flex"][style*="gap: 8px"] {
+            flex-wrap: wrap !important;
+            font-size: 11px !important;
         }
+
 
         /* Essential: Hide description on mobile for clean list view */
         .landscape-video-card div[style*="text-align: justify"] {

@@ -3,22 +3,22 @@
     "Id": 1,
     "FullName": "Maruti Makwana",
     "Title": "Corporate Trainer - Azure Cloud \u0026 AI",
-    "Bio": "Passionate corporate trainer with expertise in Azure Cloud Services and AI technologies. Dedicated to empowering IT professionals with cutting-edge skills.",
+    "Bio": "\u003Cp\u003EPassionate corporate trainer with expertise in Azure Cloud Services and AI technologies. Dedicated to empowering IT professionals with cutting-edge skills.\u003C/p\u003E",
     "ProfileImageUrl": "/images/41258b2e-84fd-413e-a335-009a905a8742_44.png",
     "Email": "maruti_makwana@hotmail.com",
     "PhoneNumber": "\u002B91 9998114148",
     "WhatsAppNumber": "\u002B91 9081908127",
     "Expertise": "Azure Cloud, AI, Machine Learning, DevOps, Cloud Architecture",
     "TotalTrainingsDone": 50,
-    "TotalStudents": 2000,
+    "TotalStudents": 170000,
     "LinkedInUrl": "https://www.linkedin.com/in/marutimakwana/",
     "InstagramUrl": "https://www.instagram.com/marutimakwana?igsh=MWttazg1dGRkbTU3cg==",
     "YouTubeUrl": "https://www.youtube.com/@skilltechclub",
     "SkillTechUrl": "https://skilltech.club",
-    "TwitterUrl": "https://twitter.com/maruti",
-    "GitHubUrl": "https://github.com/maruti",
+    "TwitterUrl": null,
+    "GitHubUrl": null,
     "CertificationsAndAchievements": "Azure Certified Trainer, AI Specialist, AWS Certified Solutions Architect",
     "CreatedDate": "2025-12-18T06:46:44.3594865Z",
-    "UpdatedDate": "2025-12-18T06:46:44.3595139Z"
+    "UpdatedDate": "2025-12-23T08:08:10.6175623Z"
   }
 ]

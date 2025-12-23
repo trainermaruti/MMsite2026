@@ -9,37 +9,37 @@
     --primary-hover: #003366;
     --primary-dark: #001a33;
     --primary-light: rgba(0, 31, 63, 0.1);
-    
+
     /* Secondary Colors - Dark Blue */
     --secondary: #001f3f;
     --secondary-hover: #003366;
     --secondary-dark: #001a33;
     --secondary-light: rgba(0, 31, 63, 0.1);
-    
+
     /* Accent Colors - Dark Blue */
     --accent: #001f3f;
     --accent-hover: #003366;
     --accent-light: rgba(0, 31, 63, 0.1);
-    
+
     /* Dark Backgrounds - Pure Black */
     --bg-primary: #000000;
     --bg-secondary: #000000;
     --bg-tertiary: #001f3f;
     --bg-elevated: #000000;
     --bg-card: #001f3f;
-    
+
     /* High Contrast White Text */
     --text-primary: #ffffff;
     --text-secondary: #ffffff;
     --text-tertiary: #ffffff;
     --text-muted: #ffffff;
     --text-inverse: #000000;
-    
+
     /* Borders - White */
     --border-color: rgba(255, 255, 255, 0.2);
     --border-hover: rgba(255, 255, 255, 0.4);
     --border-accent: rgba(255, 255, 255, 0.3);
-    
+
     /* Shadows - Subtle Dark Shadows */
     --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
@@ -47,34 +47,38 @@
     --shadow-xl: 0 20px 30px -5px rgba(0, 0, 0, 0.8), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
     --shadow-glow-blue: 0 0 20px rgba(0, 31, 63, 0.3);
     --shadow-glow-grey: 0 0 20px rgba(255, 255, 255, 0.2);
-    
-    /* Status Colors - Dark Blue (no green, orange, red) */
-    --success: #001f3f;
-    --success-light: rgba(0, 31, 63, 0.1);
-    --warning: #001f3f;
-    --warning-light: rgba(0, 31, 63, 0.1);
-    --error: #001f3f;
-    --error-light: rgba(0, 31, 63, 0.1);
-    --info: #001f3f;
-    --info-light: rgba(0, 31, 63, 0.1);
-    
+
+    /* Status Colors - Proper contrast for visibility */
+    --success: #10b981;
+    --success-bg: rgba(16, 185, 129, 0.15);
+    --success-light: rgba(16, 185, 129, 0.1);
+    --warning: #f59e0b;
+    --warning-bg: rgba(245, 158, 11, 0.15);
+    --warning-light: rgba(245, 158, 11, 0.1);
+    --error: #ef4444;
+    --error-bg: rgba(239, 68, 68, 0.15);
+    --error-light: rgba(239, 68, 68, 0.1);
+    --info: #3b82f6;
+    --info-bg: rgba(59, 130, 246, 0.15);
+    --info-light: rgba(59, 130, 246, 0.1);
+
     /* Professional Gradients - Dark Blue */
     --gradient-primary: linear-gradient(135deg, #001f3f 0%, #002b5c 100%);
     --gradient-secondary: linear-gradient(135deg, #001f3f 0%, #001a33 100%);
     --gradient-accent: linear-gradient(135deg, #003366 0%, #001f3f 100%);
     --gradient-hero: linear-gradient(135deg, #000000 0%, #001f3f 50%, #003366 100%);
     --gradient-mesh: radial-gradient(at 40% 20%, rgba(0, 31, 63, 0.1) 0px, transparent 50%),
-                     radial-gradient(at 80% 0%, rgba(0, 51, 102, 0.05) 0px, transparent 50%);
-    
+        radial-gradient(at 80% 0%, rgba(0, 51, 102, 0.05) 0px, transparent 50%);
+
     /* Glass Effect - Dark Blue Glass */
     --glass-bg: rgba(0, 31, 63, 0.7);
     --glass-border: rgba(255, 255, 255, 0.2);
     --glass-blur: blur(12px);
-    
+
     /* Overlays */
     --overlay-dark: rgba(0, 0, 0, 0.95);
     --overlay-light: rgba(0, 31, 63, 0.8);
-    
+
 }
 
 /* ============================================================================
@@ -90,37 +94,37 @@
     --primary-hover: #003366;
     --primary-dark: #001a33;
     --primary-light: rgba(0, 31, 63, 0.1);
-    
+
     /* Secondary Colors - Dark Blue */
     --secondary: #001f3f;
     --secondary-hover: #003366;
     --secondary-dark: #001a33;
     --secondary-light: rgba(0, 31, 63, 0.1);
-    
+
     /* Accent Colors - Dark Blue */
     --accent: #001f3f;
     --accent-hover: #003366;
     --accent-light: rgba(0, 31, 63, 0.1);
-    
+
     /* Light Backgrounds - Pure White */
     --bg-primary: #ffffff;
     --bg-secondary: #ffffff;
     --bg-tertiary: #ffffff;
     --bg-elevated: #ffffff;
     --bg-card: #ffffff;
-    
+
     /* Black Text on White Background */
     --text-primary: #000000;
     --text-secondary: #000000;
     --text-tertiary: #000000;
     --text-muted: #000000;
     --text-inverse: #ffffff;
-    
+
     /* Borders - Black for Light Theme */
     --border-color: rgba(0, 0, 0, 0.1);
     --border-hover: rgba(0, 0, 0, 0.2);
     --border-accent: rgba(0, 0, 0, 0.3);
-    
+
     /* Shadows - Lighter for Light Theme */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -128,7 +132,7 @@
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     --shadow-glow-blue: 0 0 20px rgba(0, 31, 63, 0.15);
     --shadow-glow-grey: 0 0 20px rgba(0, 0, 0, 0.1);
-    
+
     /* Status Colors - Same but with light backgrounds */
     --success: #059669;
     --success-light: rgba(5, 150, 105, 0.1);
@@ -138,20 +142,20 @@
     --error-light: rgba(220, 38, 38, 0.1);
     --info: #2563eb;
     --info-light: rgba(37, 99, 235, 0.1);
-    
+
     /* Light Theme Gradients */
     --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     --gradient-secondary: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
     --gradient-accent: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
     --gradient-hero: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #e0e7ff 100%);
     --gradient-mesh: radial-gradient(at 40% 20%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
-                     radial-gradient(at 80% 0%, rgba(156, 163, 175, 0.05) 0px, transparent 50%);
-    
+        radial-gradient(at 80% 0%, rgba(156, 163, 175, 0.05) 0px, transparent 50%);
+
     /* Glass Effect - Light Glass */
     --glass-bg: rgba(255, 255, 255, 0.8);
     --glass-border: rgba(0, 0, 0, 0.1);
     --glass-blur: blur(12px);
-    
+
     /* Overlays */
     --overlay-dark: rgba(255, 255, 255, 0.95);
     --overlay-light: rgba(249, 250, 251, 0.9);
@@ -208,28 +212,72 @@ body {
     position: relative;
 }
 
-/* White text for dark backgrounds (default) */
+/* White text for dark backgrounds (default) - but respect inline styles */
 * {
     color: #ffffff;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h4,
+h5,
+h6 {
     color: #ffffff !important;
 }
 
-p, span, div, td, th, li {
-    color: #ffffff !important;
+h3:not([style*="color"]) {
+    color: #ffffff;
+}
+
+p,
+td,
+th,
+li {
+    color: #ffffff;
+}
+
+/* Divs and other elements should respect their inline styles */
+div:not([style*="color"]),
+span:not([style*="color"]) {
+    color: #ffffff;
+}
+
+/* Alert and Status Elements - must respect their colors */
+.alert,
+.badge,
+.modern-badge,
+.stat-card-trend,
+[class*="badge-"],
+[class*="alert-"],
+[style*="--success"],
+[style*="--warning"],
+[style*="--error"],
+[style*="--info"] {
+    color: inherit !important;
+}
+
+.alert *,
+.badge *,
+.modern-badge *,
+[class*="badge-"] *,
+[class*="alert-"] * {
+    color: inherit !important;
 }
 
 /* Black text for light/white backgrounds */
-.bg-white, .bg-light, [style*="background: white"], [style*="background: #fff"],
-[style*="background-color: white"], [style*="background-color: #fff"],
+.bg-white,
+.bg-light,
+[style*="background: white"],
+[style*="background: #fff"],
+[style*="background-color: white"],
+[style*="background-color: #fff"],
 [style*="background-color: rgb(255, 255, 255)"] {
     color: #000000 !important;
 }
 
-.bg-white *, .bg-light *, 
-[style*="background: white"] *, 
+.bg-white *,
+.bg-light *,
+[style*="background: white"] *,
 [style*="background: #fff"] *,
 [style*="background-color: white"] *,
 [style*="background-color: #fff"] *,
@@ -253,12 +301,12 @@ body::before {
     right: 0;
     bottom: 0;
     background: radial-gradient(circle at 20% 50%, rgba(96, 165, 250, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(156, 163, 175, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 80% 80%, rgba(156, 163, 175, 0.03) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
 }
 
-body > * {
+body>* {
     position: relative;
     z-index: 1;
 }
@@ -377,7 +425,6 @@ body > * {
 
 .card-title {
     color: #ffffff !important;
-}
     color: var(--text-primary);
     font-weight: 700;
     font-size: 1.25rem;
@@ -536,10 +583,23 @@ textarea.form-control {
 }
 
 @keyframes gradientShift {
-    0%, 100% { transform: translateX(0) translateY(0); }
-    25% { transform: translateX(5%) translateY(5%); }
-    50% { transform: translateX(-5%) translateY(5%); }
-    75% { transform: translateX(5%) translateY(-5%); }
+
+    0%,
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+
+    25% {
+        transform: translateX(5%) translateY(5%);
+    }
+
+    50% {
+        transform: translateX(-5%) translateY(5%);
+    }
+
+    75% {
+        transform: translateX(5%) translateY(-5%);
+    }
 }
 
 /* ============================================================================
@@ -568,6 +628,7 @@ textarea.form-control {
     background: var(--gradient-primary);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -706,6 +767,7 @@ footer a:hover {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -717,6 +779,7 @@ footer a:hover {
         opacity: 0;
         transform: translateX(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -728,6 +791,7 @@ footer a:hover {
         opacity: 0;
         transform: translateX(30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -735,9 +799,12 @@ footer a:hover {
 }
 
 @keyframes glow {
-    0%, 100% {
+
+    0%,
+    100% {
         box-shadow: var(--shadow-glow-purple);
     }
+
     50% {
         box-shadow: var(--shadow-glow-cyan);
     }
@@ -767,43 +834,43 @@ footer a:hover {
     .stat-value {
         font-size: 2rem;
     }
-    
+
     .stat-card {
         padding: 24px;
     }
-    
+
     .btn {
         padding: 10px 24px;
     }
-    
+
     /* Card improvements for mobile */
     .card {
         margin-bottom: 1rem !important;
     }
-    
+
     .card-body {
         padding: 1rem !important;
     }
-    
+
     .card-title {
         font-size: 1.1rem !important;
         margin-bottom: 0.75rem !important;
     }
-    
+
     .card-text {
         font-size: 0.875rem !important;
         margin-bottom: 0.5rem !important;
     }
-    
+
     .card-img-top {
         height: 180px !important;
     }
-    
+
     /* Reduce hover effects on mobile */
     .card:hover {
         transform: none !important;
     }
-    
+
     /* Badge spacing */
     .badge {
         font-size: 0.7rem !important;
@@ -815,57 +882,58 @@ footer a:hover {
     .hero-section {
         padding: 60px 0;
     }
-    
+
     .stat-value {
         font-size: 1.75rem;
     }
-    
+
     /* Enhanced mobile card styles */
     .card {
         border-radius: 12px !important;
         margin-bottom: 1.25rem !important;
     }
-    
+
     .card-body {
         padding: 0.875rem !important;
     }
-    
+
     .card-title {
         font-size: 1rem !important;
         margin-bottom: 0.5rem !important;
         line-height: 1.3 !important;
     }
-    
+
     .card-text {
         font-size: 0.813rem !important;
         margin-bottom: 0.4rem !important;
         line-height: 1.5 !important;
     }
-    
+
     .card-img-top {
         height: 160px !important;
         border-radius: 12px 12px 0 0 !important;
     }
-    
+
     .card-footer {
         padding: 0.75rem !important;
         font-size: 0.813rem !important;
     }
-    
+
     /* Better button sizing in cards */
     .card-footer .btn {
         padding: 0.5rem 1rem !important;
         font-size: 0.813rem !important;
     }
-    
+
     /* Improve badge display */
     .badge {
         font-size: 0.65rem !important;
         padding: 0.2rem 0.4rem !important;
     }
-    
+
     /* Smaller text for metadata */
-    small, .text-muted {
+    small,
+    .text-muted {
         font-size: 0.75rem !important;
     }
 }

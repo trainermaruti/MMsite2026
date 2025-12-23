@@ -1,7 +1,7 @@
 @model MarutiTrainingPortal.Models.ViewModels.AdminProfileViewModel
 @{
     ViewData["Title"] = "My Profile";
-    Layout = "~/Areas/Admin/Views/Shared/_ModernAdminLayout.cshtml";
+    Layout = "_ModernAdminLayout";
 }
 
 <div style="padding: 24px 48px 48px 48px;">
@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="col-12">
-                                <label asp-for="Bio" class="form-label">Short Bio</label>
+                                <label for="bio-hidden" class="form-label">Short Bio</label>
                                 <div id="bio-editor"></div>
                                 <textarea asp-for="Bio" id="bio-hidden" style="display: none;"></textarea>
                                 <span asp-validation-for="Bio" class="text-danger small"></span>
@@ -195,7 +195,7 @@
                                 @Html.AntiForgeryToken()
 
                                 <div class="mb-3">
-                                    <label class="form-label">Upload New Photo</label>
+                                    <label for="profileImage" class="form-label">Upload New Photo</label>
                                     <input type="file" name="profileImage" id="profileImage" accept="image/*" class="form-control modern-input" />
                                     <small class="text-muted d-block mt-1">
                                         <i class="fas fa-info-circle"></i> Max file size: 5MB. Supported formats: JPG, PNG, GIF, WebP

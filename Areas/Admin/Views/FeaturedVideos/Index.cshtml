@@ -2,94 +2,97 @@
 
 @{
     ViewData["Title"] = "Featured Videos";
+    Layout = "_ModernAdminLayout";
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Featured Videos</h1>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a asp-action="Create" class="btn btn-primary" style="white-space: nowrap;">
-                <i class="fas fa-plus"></i> Add New Video
-            </a>
-            <button type="button" onclick="importFromJson()" class="btn btn-info" style="white-space: nowrap;">
-                <i class="fas fa-file-import"></i> Import from JSON
-            </button>
-            <button type="button" onclick="syncToJson()" class="btn" style="white-space: nowrap; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
-                <i class="fas fa-sync-alt"></i> Sync to JSON
-            </button>
-        </div>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+            <i class="fas fa-star" style="color: var(--primary); margin-right: 12px;"></i>Featured Videos
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 15px; margin: 0;">Manage the top videos featured on your home page</p>
     </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <a asp-action="Create" class="modern-btn modern-btn-primary" style="white-space: nowrap;">
+            <i class="fas fa-plus me-2"></i>Add New Video
+        </a>
+        <button type="button" onclick="importFromJson()" class="modern-btn modern-btn-info" style="white-space: nowrap;">
+            <i class="fas fa-file-import me-2"></i>Import from JSON
+        </button>
+        <button type="button" onclick="syncToJson()" class="modern-btn" style="white-space: nowrap; min-width: auto; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
+            <i class="fas fa-sync-alt me-2"></i>Sync to JSON
+        </button>
+    </div>
+</div>
 
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["SuccessMessage"]
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success); border-radius: 8px; margin-bottom: 24px;">
+            <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
+    <div class="modern-table-container">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>TITLE</th>
+                    <th>YOUTUBE URL</th>
+                    <th>STATUS</th>
+                    <th>ORDER</th>
+                    <th>CREATED</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    @foreach (var video in Model)
+                    {
                         <tr>
-                            <th>Title</th>
-                            <th>YouTube URL</th>
-                            <th>Active</th>
-                            <th>Display Order</th>
-                            <th>Created Date</th>
-                            <th>Actions</th>
+                            <td><strong style="color: var(--text-primary);">@video.Title</strong></td>
+                            <td>
+                                <a href="@video.YouTubeUrl" target="_blank" class="text-decoration-none" style="color: var(--text-primary);">
+                                    <i class="fab fa-youtube text-danger me-1"></i> View Video
+                                </a>
+                            </td>
+                            <td>
+                                @if (video.IsActive)
+                                {
+                                    <span class="badge" style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success);">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge" style="background: var(--bg-tertiary); color: var(--text-muted); border: 1px solid var(--border-color);">Inactive</span>
+                                }
+                            </td>
+                            <td><span class="badge bg-primary">@video.DisplayOrder</span></td>
+                            <td>@video.CreatedDate.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <a asp-action="Edit" asp-route-id="@video.Id" class="modern-btn modern-btn-ghost" style="padding: 6px 12px; font-size: 13px;">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@video.Id" class="modern-btn modern-btn-danger" style="padding: 6px 12px; font-size: 13px;">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Any())
-                        {
-                            @foreach (var video in Model)
-                            {
-                                <tr>
-                                    <td>@video.Title</td>
-                                    <td>
-                                        <a href="@video.YouTubeUrl" target="_blank" class="text-decoration-none">
-                                            <i class="fab fa-youtube text-danger"></i> View
-                                        </a>
-                                    </td>
-                                    <td>
-                                        @if (video.IsActive)
-                                        {
-                                            <span class="badge bg-success">Active</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary">Inactive</span>
-                                        }
-                                    </td>
-                                    <td>@video.DisplayOrder</td>
-                                    <td>@video.CreatedDate.ToString("MMM dd, yyyy")</td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@video.Id" class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                        <a asp-action="Delete" asp-route-id="@video.Id" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="6" class="text-center py-4">
-                                    <i class="fas fa-video fa-3x text-muted mb-3"></i>
-                                    <p class="text-muted">No featured videos found. Click "Add New Video" to create one.</p>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 48px;">
+                            <i class="fas fa-video fa-3x text-muted mb-3"></i>
+                            <p style="color: var(--text-muted);">No featured videos found. Click "Add New Video" to create one.</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -143,8 +146,9 @@
                 if (response.ok) {
                     const alertDiv = document.createElement('div');
                     alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                    alertDiv.style.cssText = 'background: var(--success-bg); color: var(--success); border: 1px solid var(--success); border-radius: 8px; margin-bottom: 24px;';
                     alertDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Successfully synced all featured videos to JSON file!<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-                    document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+                    document.querySelector('.modern-table-container').insertAdjacentElement('beforebegin', alertDiv);
                     
                     setTimeout(() => {
                         const bsAlert = new bootstrap.Alert(alertDiv);
@@ -156,8 +160,9 @@
             } catch (error) {
                 const alertDiv = document.createElement('div');
                 alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.style.cssText = 'background: #fee; border: 1px solid #f00; color: #c00; border-radius: 8px; margin-bottom: 24px;';
                 alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Error syncing to JSON file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-                document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+                document.querySelector('.modern-table-container').insertAdjacentElement('beforebegin', alertDiv);
             } finally {
                 icon.classList.remove('fa-spin');
                 btn.disabled = false;

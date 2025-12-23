@@ -2,145 +2,145 @@
 
 @{
     ViewData["Title"] = "Profile Document Management";
+    Layout = "_ModernAdminLayout";
 }
 
-<div class="container-fluid px-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mt-4">📄 Profile Document</h1>
-        <a asp-action="Upload" class="btn btn-primary">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+            <i class="fas fa-file-pdf" style="color: var(--primary); margin-right: 12px;"></i>Profile Document
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 15px; margin: 0;">Manage the technical profile PDF available for download</p>
+    </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <a asp-action="Upload" class="modern-btn modern-btn-primary" style="white-space: nowrap;">
             <i class="fas fa-upload me-2"></i>Upload New Document
         </a>
     </div>
+</div>
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success); border-radius: 8px; margin-bottom: 24px;">
             <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <i class="fas fa-file-pdf me-2"></i>Manage Profile Documents
+    @if (Model == null || !Model.Any())
+    {
+        <div class="modern-card" style="text-align: center; padding: 64px 20px;">
+            <i class="fas fa-file-pdf fa-4x text-muted mb-4"></i>
+            <h3 style="color: var(--text-secondary); margin-bottom: 12px;">No Profile Document Uploaded</h3>
+            <p style="color: var(--text-muted); margin-bottom: 32px;">Upload a PDF document that visitors can download from your profile.</p>
+            <a asp-action="Upload" class="modern-btn modern-btn-primary">
+                <i class="fas fa-upload me-2"></i>Upload Document
+            </a>
         </div>
-        <div class="card-body">
-            @if (Model == null || !Model.Any())
-            {
-                <div class="text-center py-5">
-                    <i class="fas fa-file-pdf fa-3x text-muted mb-3"></i>
-                    <h5>No Profile Document Uploaded</h5>
-                    <p class="text-muted">Upload a PDF document that visitors can download from your profile.</p>
-                    <a asp-action="Upload" class="btn btn-primary">
-                        <i class="fas fa-upload me-2"></i>Upload Document
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>File Name</th>
-                                <th>Size</th>
-                                <th>Downloads</th>
-                                <th>Status</th>
-                                <th>Public URL</th>
-                                <th>Created</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var doc in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        <strong>@doc.Title</strong>
-                                        @if (!string.IsNullOrEmpty(doc.Description))
-                                        {
-                                            <br><small class="text-muted">@doc.Description</small>
-                                        }
-                                    </td>
-                                    <td><code>@doc.FileName</code></td>
-                                    <td>@doc.FileSizeFormatted</td>
-                                    <td>
-                                        <span class="badge bg-info">
-                                            <i class="fas fa-download me-1"></i>@doc.DownloadCount
-                                        </span>
-                                    </td>
-                                    <td>
-                                        @if (doc.IsEnabled)
-                                        {
-                                            <span class="badge bg-success">
-                                                <i class="fas fa-check-circle me-1"></i>Enabled
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary">
-                                                <i class="fas fa-times-circle me-1"></i>Disabled
-                                            </span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <div class="input-group input-group-sm">
-                                            <input type="text" class="form-control" value="@Url.Action("DownloadProfile", "Document", null, Context.Request.Scheme)" readonly>
-                                            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard(this)" title="Copy URL">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                        </div>
-                                        <small class="text-muted">https://yourdomain.com/profile.pdf</small>
-                                    </td>
-                                    <td>@doc.CreatedDate.ToString("MMM dd, yyyy")</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            <a href="@doc.FilePath" target="_blank" class="btn btn-info" title="Preview">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-warning" onclick="toggleDocument(@doc.Id)" title="@(doc.IsEnabled ? "Disable" : "Enable")">
-                                                <i class="fas fa-@(doc.IsEnabled ? "toggle-on" : "toggle-off")"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" onclick="deleteDocument(@doc.Id)" title="Delete">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+    }
+    else
+    {
+        <div class="modern-table-container">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>TITLE</th>
+                        <th>FILE INFO</th>
+                        <th>STATS</th>
+                        <th>STATUS</th>
+                        <th>PUBLIC URL</th>
+                        <th>CREATED</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doc in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong style="color: var(--text-primary);">@doc.Title</strong>
+                                @if (!string.IsNullOrEmpty(doc.Description))
+                                {
+                                    <br><small style="color: var(--text-muted);">@doc.Description</small>
+                                }
+                            </td>
+                            <td>
+                                <code style="font-size: 11px; color: var(--text-primary);">@doc.FileName</code>
+                                <br><small style="color: var(--text-secondary);">@doc.FileSizeFormatted</small>
+                            </td>
+                            <td>
+                                <span class="badge" style="background: var(--primary-dark); color: var(--primary);">
+                                    <i class="fas fa-download me-1"></i>@doc.DownloadCount
+                                </span>
+                            </td>
+                            <td>
+                                @if (doc.IsEnabled)
+                                {
+                                    <span class="badge" style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success);">Enabled</span>
+                                }
+                                else
+                                {
+                                    <span class="badge" style="background: var(--bg-tertiary); color: var(--text-muted); border: 1px solid var(--border-color);">Disabled</span>
+                                }
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 4px; max-width: 200px;">
+                                    <input type="text" class="form-control form-control-sm" value="@Url.Action("DownloadProfile", "Document", null, Context.Request.Scheme)" readonly style="background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary); font-size: 11px;">
+                                    <button class="modern-btn modern-btn-ghost" type="button" onclick="copyToClipboard(this)" style="padding: 4px 8px;" title="Copy URL">
+                                        <i class="fas fa-copy" style="font-size: 12px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>@doc.CreatedDate.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                <div style="display: flex; gap: 8px;">
+                                    <a href="@doc.FilePath" target="_blank" class="modern-btn modern-btn-info" style="padding: 6px 12px; font-size: 13px;" title="Preview">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <button type="button" class="modern-btn modern-btn-warning" onclick="toggleDocument(@doc.Id)" style="padding: 6px 12px; font-size: 13px;" title="@(doc.IsEnabled ? "Disable" : "Enable")">
+                                        <i class="fas fa-@(doc.IsEnabled ? "toggle-on" : "toggle-off")"></i>
+                                    </button>
+                                    <button type="button" class="modern-btn modern-btn-danger" onclick="deleteDocument(@doc.Id)" style="padding: 6px 12px; font-size: 13px;" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-                <div class="alert alert-info mt-3">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <strong>Tip:</strong> Only the most recent enabled document will be available for download at <code>/profile.pdf</code>
-                </div>
-            }
+        <div class="alert alert-info mt-4" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: var(--primary); border-radius: 12px;">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Tip:</strong> Only the most recent enabled document will be available for download at <code>/profile.pdf</code>
         </div>
-    </div>
+    }
 
     @if (Model != null && Model.Any())
     {
-        <div class="card shadow mt-4">
-            <div class="card-header bg-secondary text-white">
-                <i class="fas fa-link me-2"></i>Integration Instructions
-            </div>
-            <div class="card-body">
-                <h6>Public Download URL:</h6>
-                <div class="bg-dark text-light p-3 rounded mb-3">
-                    <code class="text-warning">@Url.Action("DownloadProfile", "Document", null, Context.Request.Scheme)</code>
+        <div class="modern-card" style="margin-top: 32px; padding: 24px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                    <i class="fas fa-link"></i>
                 </div>
-
-                <h6>How to Use:</h6>
-                <ul>
-                    <li>Share this URL anywhere (email, LinkedIn, business cards)</li>
-                    <li>Clean, professional URL: <code>https://yourdomain.com/profile.pdf</code></li>
-                    <li>Clicking the link automatically downloads the PDF</li>
-                    <li>Button already added to your homepage hero section</li>
-                </ul>
+                <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin: 0;">Integration Instructions</h3>
             </div>
+            
+            <div style="background: var(--bg-tertiary); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 24px;">
+                <h6 style="font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Public Download URL</h6>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <code style="font-size: 14px; color: var(--text-primary); flex: 1;">@Url.Action("DownloadProfile", "Document", null, Context.Request.Scheme)</code>
+                </div>
+            </div>
+
+            <h6 style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px;">How to Use:</h6>
+            <ul style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 0;">
+                <li>Share this URL anywhere (email, LinkedIn, business cards)</li>
+                <li>Clean, professional URL: <code>https://yourdomain.com/profile.pdf</code></li>
+                <li>Clicking the link automatically downloads the PDF</li>
+                <li>Button already added to your homepage hero section</li>
+            </ul>
         </div>
     }
 </div>

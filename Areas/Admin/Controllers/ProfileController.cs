@@ -1,3 +1,4 @@
+using MarutiTrainingPortal.Models;
 using MarutiTrainingPortal.Models.ViewModels;
 using MarutiTrainingPortal.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -27,14 +28,50 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
         // GET: Admin/Profile
         public async Task<IActionResult> Index()
         {
-            var profile = await _profileService.GetAdminProfileAsync();
-            if (profile == null)
+            try
             {
-                TempData["ErrorMessage"] = "Profile not found";
+                // Read profile from JSON file
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "ProfilesDatabase.json");
+                var jsonData = await System.IO.File.ReadAllTextAsync(jsonPath);
+                var profiles = System.Text.Json.JsonSerializer.Deserialize<List<Profile>>(jsonData);
+
+                if (profiles == null || !profiles.Any())
+                {
+                    TempData["ErrorMessage"] = "Profile not found";
+                    return RedirectToAction("Index", "Dashboard");
+                }
+
+                var profile = profiles.First();
+
+                // Map to ViewModel
+                var model = new AdminProfileViewModel
+                {
+                    Id = profile.Id,
+                    FullName = profile.FullName,
+                    Title = profile.Title,
+                    Bio = profile.Bio,
+                    Expertise = profile.Expertise,
+                    CertificationsAndAchievements = profile.CertificationsAndAchievements,
+                    ProfileImageUrl = profile.ProfileImageUrl,
+                    Email = profile.Email,
+                    PhoneNumber = profile.PhoneNumber,
+                    WhatsAppNumber = profile.WhatsAppNumber,
+                    LinkedInUrl = profile.LinkedInUrl,
+                    InstagramUrl = profile.InstagramUrl,
+                    YouTubeUrl = profile.YouTubeUrl,
+                    SkillTechUrl = profile.SkillTechUrl,
+                    TwitterUrl = profile.TwitterUrl,
+                    GitHubUrl = profile.GitHubUrl,
+                    UpdatedDate = profile.UpdatedDate
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error loading profile: {ex.Message}";
                 return RedirectToAction("Index", "Dashboard");
             }
-
-            return View(profile);
         }
 
         // POST: Admin/Profile/UpdatePersonalInfo
@@ -42,20 +79,44 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdatePersonalInfo(AdminProfileViewModel model)
         {
+            // Remove Contact & Social fields from validation since they're not in this form
+            ModelState.Remove("Email");
+            
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Please correct the errors and try again";
                 return View("Index", model);
             }
 
-            var result = await _profileService.UpdatePersonalInfoAsync(model);
-            if (result)
+            try
             {
-                TempData["SuccessMessage"] = "Personal information updated successfully";
+                // Read current JSON file
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "ProfilesDatabase.json");
+                var jsonData = await System.IO.File.ReadAllTextAsync(jsonPath);
+                var profiles = System.Text.Json.JsonSerializer.Deserialize<List<Profile>>(jsonData);
+
+                if (profiles == null || !profiles.Any()) return RedirectToAction(nameof(Index));
+                
+                var profile = profiles.First();
+                
+                // Update profile with new data
+                profile.FullName = model.FullName;
+                profile.Title = model.Title;
+                profile.Bio = model.Bio;
+                profile.Expertise = model.Expertise;
+                profile.CertificationsAndAchievements = model.CertificationsAndAchievements;
+                profile.UpdatedDate = DateTime.UtcNow;
+
+                // Write back to JSON as array
+                var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+                var updatedJson = System.Text.Json.JsonSerializer.Serialize(profiles, options);
+                await System.IO.File.WriteAllTextAsync(jsonPath, updatedJson);
+
+                TempData["SuccessMessage"] = "Profile synced to JSON successfully";
             }
-            else
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Failed to update personal information";
+                TempData["ErrorMessage"] = $"Failed to sync profile: {ex.Message}";
             }
 
             return RedirectToAction(nameof(Index));
@@ -66,20 +127,51 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateContactInfo(AdminProfileViewModel model)
         {
+            // Remove Personal Info fields from validation since they're not in this form
+            ModelState.Remove("FullName");
+            ModelState.Remove("Title");
+            ModelState.Remove("Bio");
+            ModelState.Remove("Expertise");
+            
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Please correct the errors and try again";
                 return View("Index", model);
             }
 
-            var result = await _profileService.UpdateContactInfoAsync(model);
-            if (result)
+            try
             {
-                TempData["SuccessMessage"] = "Contact information updated successfully";
+                // Read current JSON file
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "ProfilesDatabase.json");
+                var jsonData = await System.IO.File.ReadAllTextAsync(jsonPath);
+                var profiles = System.Text.Json.JsonSerializer.Deserialize<List<Profile>>(jsonData);
+
+                if (profiles == null || !profiles.Any()) return RedirectToAction(nameof(Index));
+                
+                var profile = profiles.First();
+                
+                // Update contact info with new data
+                profile.Email = model.Email;
+                profile.PhoneNumber = model.PhoneNumber;
+                profile.WhatsAppNumber = model.WhatsAppNumber;
+                profile.LinkedInUrl = model.LinkedInUrl;
+                profile.InstagramUrl = model.InstagramUrl;
+                profile.YouTubeUrl = model.YouTubeUrl;
+                profile.SkillTechUrl = model.SkillTechUrl;
+                profile.TwitterUrl = model.TwitterUrl;
+                profile.GitHubUrl = model.GitHubUrl;
+                profile.UpdatedDate = DateTime.UtcNow;
+
+                // Write back to JSON as array
+                var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+                var updatedJson = System.Text.Json.JsonSerializer.Serialize(profiles, options);
+                await System.IO.File.WriteAllTextAsync(jsonPath, updatedJson);
+
+                TempData["SuccessMessage"] = "Contact information synced to JSON successfully";
             }
-            else
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Failed to update contact information";
+                TempData["ErrorMessage"] = $"Failed to sync contact info: {ex.Message}";
             }
 
             return RedirectToAction(nameof(Index));
@@ -99,16 +191,23 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
             try
             {
                 var imageUrl = await _imageUploadService.UploadImageAsync(profileImage, "profiles");
-                var result = await _profileService.UpdateProfilePhotoAsync(imageUrl);
+                
+                // Sync to JSON
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "ProfilesDatabase.json");
+                var jsonData = await System.IO.File.ReadAllTextAsync(jsonPath);
+                var profiles = System.Text.Json.JsonSerializer.Deserialize<List<Profile>>(jsonData);
+                
+                if (profiles == null || !profiles.Any()) return RedirectToAction(nameof(Index));
+                
+                var profile = profiles.First();
+                profile.ProfileImageUrl = imageUrl;
+                profile.UpdatedDate = DateTime.UtcNow;
+                
+                var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+                var updatedJson = System.Text.Json.JsonSerializer.Serialize(profiles, options);
+                await System.IO.File.WriteAllTextAsync(jsonPath, updatedJson);
 
-                if (result)
-                {
-                    TempData["SuccessMessage"] = "Profile photo updated successfully";
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Failed to update profile photo";
-                }
+                TempData["SuccessMessage"] = "Profile photo synced to JSON successfully";
             }
             catch (Exception ex)
             {

@@ -362,15 +362,16 @@
                     <div class="modern-sidebar-icon"><i class="fas fa-file-pdf"></i></div>
                     <span>Profile PDF</span>
                 </a>
+
+                <a href="/Admin/Profile" class="modern-sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Profile" ? "active" : "")">
+                    <div class="modern-sidebar-icon"><i class="fas fa-user-cog"></i></div>
+                    <span>Profile Settings</span>
+                </a>
+                  
                 
                 <a href="/Admin/Messages" class="modern-sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Messages" ? "active" : "")">
                     <div class="modern-sidebar-icon"><i class="fas fa-inbox"></i></div>
                     <span>Messages</span>
-                </a>
-                
-                <a href="/Admin/Profile" class="modern-sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Profile" ? "active" : "")">
-                    <div class="modern-sidebar-icon"><i class="fas fa-user-circle"></i></div>
-                    <span>Profile</span>
                 </a>
                 
                 <div style="margin: 24px 0; border-top: 1px solid var(--border-color);"></div>
@@ -403,11 +404,6 @@
                         <div class="avatar-name" style="font-size: 16px;">@User.Identity?.Name</div>
                         <div class="avatar-email">@User.Identity?.Name</div>
                     </div>
-
-                    <a href="/Admin/Profile" class="avatar-dropdown-item">
-                        <i class="fas fa-user-circle"></i>
-                        <span>My Profile</span>
-                    </a>
 
                     <a href="/Admin/Settings" class="avatar-dropdown-item">
                         <i class="fas fa-cog"></i>

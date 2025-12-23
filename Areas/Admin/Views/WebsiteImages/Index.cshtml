@@ -2,93 +2,93 @@
 
 @{
     ViewData["Title"] = "Website Images";
+    Layout = "_ModernAdminLayout";
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-        <h1 class="h3">Website Images</h1>
-        <div class="d-flex gap-2 flex-wrap">
-            <a asp-action="Create" class="btn btn-primary" style="white-space: nowrap;">
-                <i class="fas fa-plus"></i> Add New Image
-            </a>
-            <button type="button" onclick="importFromJson()" class="btn btn-info" style="white-space: nowrap;">
-                <i class="fas fa-file-import me-2"></i>Import from JSON
-            </button>
-            <button type="button" onclick="syncToJson()" class="btn" style="white-space: nowrap; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
-                <i class="fas fa-sync-alt me-2"></i>Sync to JSON
-            </button>
-        </div>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <h1 style="font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+            <i class="fas fa-images" style="color: var(--primary); margin-right: 12px;"></i>Website Images
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 15px; margin: 0;">Manage and organize all images used across the platform</p>
     </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <a asp-action="Create" class="modern-btn modern-btn-primary" style="white-space: nowrap;">
+            <i class="fas fa-plus me-2"></i>Add New Image
+        </a>
+        <button type="button" onclick="importFromJson()" class="modern-btn modern-btn-info" style="white-space: nowrap;">
+            <i class="fas fa-file-import me-2"></i>Import from JSON
+        </button>
+        <button type="button" onclick="syncToJson()" class="modern-btn" style="white-space: nowrap; min-width: auto; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
+            <i class="fas fa-sync-alt me-2"></i>Sync to JSON
+        </button>
+    </div>
+</div>
 
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["SuccessMessage"]
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success); border-radius: 8px; margin-bottom: 24px;">
+            <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
 
     <!-- Category Filter -->
-    <div class="mb-4">
-        <div class="btn-group" role="group">
-            <a href="@Url.Action("Index", new { category = "All" })" 
-               class="btn @(ViewBag.SelectedCategory == "All" ? "btn-primary" : "btn-outline-primary")">
-                All Images
+    <div style="margin-bottom: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="@Url.Action("Index", new { category = "All" })" 
+           class="modern-pill @(ViewBag.SelectedCategory == "All" ? "active" : "")" style="text-decoration: none;">
+            All Images
+        </a>
+        @foreach (var cat in ViewBag.Categories)
+        {
+            <a href="@Url.Action("Index", new { category = cat })" 
+               class="modern-pill @(ViewBag.SelectedCategory == cat ? "active" : "")" style="text-decoration: none;">
+                @cat
             </a>
-            @foreach (var cat in ViewBag.Categories)
-            {
-                <a href="@Url.Action("Index", new { category = cat })" 
-                   class="btn @(ViewBag.SelectedCategory == cat ? "btn-primary" : "btn-outline-primary")">
-                    @cat
-                </a>
-            }
-        </div>
+        }
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                @if (Model.Any())
-                {
-                    @foreach (var image in Model)
-                    {
-                        <div class="col-md-4 col-lg-3 mb-4">
-                            <div class="card h-100">
-                                <img src="@image.ImageUrl" class="card-img-top" alt="@image.AltText" style="height: 200px; object-fit: cover;">
-                                <div class="card-body">
-                                    <h6 class="card-title">@image.DisplayName</h6>
-                                    <p class="card-text">
-                                        <small class="text-muted">
-                                            <strong>Key:</strong> @image.ImageKey<br/>
-                                            <strong>Category:</strong> @image.Category
-                                        </small>
-                                    </p>
-                                    @if (!string.IsNullOrEmpty(image.Description))
-                                    {
-                                        <p class="card-text"><small>@image.Description</small></p>
-                                    }
-                                </div>
-                                <div class="card-footer bg-transparent">
-                                    <a asp-action="Edit" asp-route-id="@image.Id" class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <a asp-action="Delete" asp-route-id="@image.Id" class="btn btn-sm btn-outline-danger">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </a>
-                                </div>
-                            </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px;">
+        @if (Model.Any())
+        {
+            @foreach (var image in Model)
+            {
+                <div class="modern-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                    <div style="position: relative; padding-top: 60%; overflow: hidden; background: var(--bg-tertiary);">
+                        <img src="@image.ImageUrl" alt="@image.AltText" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="position: absolute; top: 12px; right: 12px;">
+                            <span class="badge" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); color: white; border: 1px solid rgba(255,255,255,0.1);">@image.Category</span>
                         </div>
-                    }
-                }
-                else
-                {
-                    <div class="col-12 text-center py-5">
-                        <i class="fas fa-images fa-4x text-muted mb-3"></i>
-                        <p class="text-muted">No images found. Click "Add New Image" to upload your first image.</p>
                     </div>
-                }
+                    <div style="padding: 20px; flex: 1;">
+                        <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">@image.DisplayName</h3>
+                        <div style="margin-bottom: 12px;">
+                            <code style="font-size: 12px; color: var(--text-primary); background: var(--primary-dark); padding: 2px 6px; border-radius: 4px;">@image.ImageKey</code>
+                        </div>
+                        @if (!string.IsNullOrEmpty(image.Description))
+                        {
+                            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">@image.Description</p>
+                        }
+                    </div>
+                    <div style="padding: 16px 20px; border-top: 1px solid var(--border-color); background: var(--bg-secondary); display: flex; gap: 8px;">
+                        <a asp-action="Edit" asp-route-id="@image.Id" class="modern-btn modern-btn-ghost" style="flex: 1; padding: 8px; font-size: 13px;">
+                            <i class="fas fa-edit me-1"></i> Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@image.Id" class="modern-btn modern-btn-danger" style="flex: 1; padding: 8px; font-size: 13px;">
+                            <i class="fas fa-trash me-1"></i> Delete
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="grid-column: 1 / -1; text-align: center; padding: 80px 20px; background: var(--bg-secondary); border: 2px dashed var(--border-color); border-radius: 16px;">
+                <i class="fas fa-images fa-4x text-muted mb-3"></i>
+                <h3 style="color: var(--text-secondary);">No images found</h3>
+                <p style="color: var(--text-muted);">Click "Add New Image" to upload your first image.</p>
             </div>
-        </div>
+        }
     </div>
 </div>
 
@@ -118,8 +118,9 @@
             } catch (error) {
                 const alertDiv = document.createElement('div');
                 alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.style.cssText = 'background: #fee; border: 1px solid #f00; color: #c00; border-radius: 8px; margin-bottom: 24px;';
                 alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Error importing from JSON file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-                document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+                document.querySelector('div[style*="display: grid"]').insertAdjacentElement('beforebegin', alertDiv);
                 icon.classList.remove('fa-spin');
                 btn.disabled = false;
             }
@@ -144,8 +145,9 @@
                 if (response.ok) {
                     const alertDiv = document.createElement('div');
                     alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                    alertDiv.style.cssText = 'background: var(--success-bg); color: var(--success); border: 1px solid var(--success); border-radius: 8px; margin-bottom: 24px;';
                     alertDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Successfully synced all images to JSON file!<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-                    document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+                    document.querySelector('div[style*="display: grid"]').insertAdjacentElement('beforebegin', alertDiv);
                     
                     setTimeout(() => {
                         const bsAlert = new bootstrap.Alert(alertDiv);
@@ -157,12 +159,39 @@
             } catch (error) {
                 const alertDiv = document.createElement('div');
                 alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.style.cssText = 'background: #fee; border: 1px solid #f00; color: #c00; border-radius: 8px; margin-bottom: 24px;';
                 alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Error syncing to JSON file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-                document.querySelector('.card').insertAdjacentElement('beforebegin', alertDiv);
+                document.querySelector('div[style*="display: grid"]').insertAdjacentElement('beforebegin', alertDiv);
             } finally {
                 icon.classList.remove('fa-spin');
                 btn.disabled = false;
             }
         }
     </script>
+    <style>
+        .modern-pill {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .modern-pill:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--primary);
+        }
+        
+        .modern-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
 }
