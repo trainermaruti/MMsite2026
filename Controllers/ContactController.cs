@@ -33,6 +33,13 @@ namespace MarutiTrainingPortal.Controllers
             return View(profile);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Booking()
+        {
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

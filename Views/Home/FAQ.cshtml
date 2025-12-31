@@ -1,0 +1,371 @@
+@{
+    ViewData["Title"] = "Frequently Asked Questions | Maruti Makwana Training";
+    ViewData["Description"] = "Frequently asked questions about Azure Corporate Training, SkillTech Club access, certificates, workshop logistics, and global training services by Microsoft Certified Trainer Maruti Makwana.";
+    ViewData["Keywords"] = "Azure training FAQ, SkillTech Club access, corporate training questions, Azure certification, MCT, remote training, global workshops";
+    ViewData["CanonicalUrl"] = "https://marutimakwana.com/faq";
+}
+
+<!-- FAQPage Schema for SEO -->
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@@type": "Question",
+      "name": "What is the difference between MarutiMakwana.com and SkillTech.club?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "MarutiMakwana.com is my professional portfolio where companies can book me for corporate training. SkillTech.club is our official Learning Management System (LMS) where students access recorded courses, materials, and certificates."
+      }
+    },
+    {
+      "@@type": "Question",
+      "name": "I attended a live workshop. Where can I find the recordings?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "All recordings and study materials are hosted on SkillTech.club. You can log in using the credentials provided during your workshop registration to access lifetime content."
+      }
+    },
+    {
+      "@@type": "Question",
+      "name": "Do you offer corporate Azure training for global teams?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "Yes, we align training schedules with US (EST/PST), UK (GMT), and UAE time zones. We specialize in remote Virtual Instructor-Led Training (VILT) for global enterprises."
+      }
+    },
+    {
+      "@@type": "Question",
+      "name": "How do I download my course certificate?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "Once you complete a course or workshop, your verifiable certificate is automatically generated on your SkillTech.club dashboard. You can download it as a PDF or share it directly to LinkedIn."
+      }
+    },
+    {
+      "@@type": "Question",
+      "name": "Can individual students buy courses directly?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "Yes! While I specialize in corporate batches, individual learners can purchase self-paced video courses directly on SkillTech.club."
+      }
+    },
+    {
+      "@@type": "Question",
+      "name": "What is the mode of training?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "We offer both Live Virtual Instructor-Led Training (VILT) and self-paced pre-recorded video courses. Live sessions are conducted via Microsoft Teams with hands-on lab access for participants worldwide. All training materials are accessible through our SkillTech.club learning platform."
+      }
+    },
+    {
+      "@@type": "Question",
+      "name": "Can you customize the training syllabus for our project?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "Absolutely. We conduct a pre-training audit to understand your team's skill gaps and tailor the workshop to focus on your specific project requirements (e.g., Azure DevOps, Generative AI, or Kubernetes)."
+      }
+    },
+    {
+      "@@type": "Question",
+      "name": "Do you provide hands-on labs?",
+      "acceptedAnswer": {
+        "@@type": "Answer",
+        "text": "Yes, all workshops are 60-70% hands-on. We provide sandbox Azure environments for participants to practice real-world scenarios without risking your production environment."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+    /* FAQ Page Styling */
+    .faq-hero {
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        padding: 80px 0 60px 0;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    html.light-mode .faq-hero,
+    html.light-theme .faq-hero {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        color: #1e293b;
+    }
+
+    .faq-hero h1 {
+        font-size: clamp(32px, 5vw, 48px);
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    .faq-hero p {
+        font-size: 18px;
+        opacity: 0.9;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .faq-section {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+
+    .faq-category {
+        margin-bottom: 60px;
+    }
+
+    .faq-category-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid #3b82f6;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .faq-item {
+        background: var(--card-bg);
+        border-left: 5px solid #3b82f6;
+        margin-bottom: 20px;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+        transform: translateX(8px);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+    }
+
+    .faq-item h3 {
+        margin-top: 0;
+        color: #3b82f6;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .faq-item p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .faq-item a {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .faq-item a:hover {
+        text-decoration: underline;
+    }
+
+    .skilltech-badge {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: #ffffff;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.85em;
+        font-weight: 700;
+        display: inline-block;
+    }
+
+    .contact-box {
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        color: #ffffff;
+        text-align: center;
+        padding: 60px 40px;
+        margin-top: 80px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    html.light-mode .contact-box,
+    html.light-theme .contact-box {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: #1e293b;
+    }
+
+    .contact-box h2 {
+        margin-top: 0;
+        font-size: 32px;
+        margin-bottom: 16px;
+    }
+
+    .contact-box p {
+        font-size: 18px;
+        margin-bottom: 24px;
+        opacity: 0.9;
+    }
+
+    .btn-contact {
+        display: inline-block;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white !important;
+        padding: 14px 32px;
+        text-decoration: none;
+        border-radius: 8px;
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-contact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    @@media (max-width: 768px) {
+        .faq-hero {
+            padding: 60px 0 40px 0;
+        }
+
+        .faq-section {
+            margin: 40px auto;
+        }
+
+        .faq-category-title {
+            font-size: 24px;
+        }
+
+        .faq-item {
+            padding: 20px;
+        }
+
+        .faq-item h3 {
+            font-size: 18px;
+        }
+
+        .contact-box {
+            padding: 40px 20px;
+        }
+
+        .contact-box h2 {
+            font-size: 28px;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="faq-hero">
+    <div class="container">
+        <h1 class="fade-up">Frequently Asked Questions</h1>
+        <p class="fade-up">Everything about Corporate Training, Azure Certifications, and the SkillTech Platform</p>
+    </div>
+</div>
+
+<!-- FAQ Content -->
+<div class="faq-section">
+    
+    <!-- SkillTech Club & Access -->
+    <div class="faq-category fade-up">
+        <h2 class="faq-category-title">
+            <i class="fas fa-graduation-cap" style="color: #3b82f6;"></i>
+            SkillTech Club & Access
+        </h2>
+        
+        <div class="faq-item">
+            <h3>What is the difference between this website and SkillTech.club?</h3>
+            <p>
+                <strong>MarutiMakwana.com</strong> is my professional portfolio where companies can review my profile and book me for corporate training.
+                <br><br>
+                <span class="skilltech-badge">SkillTech.club</span> is our official Learning Management System (LMS) where students log in to access recorded courses, study materials, and assessments.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>I attended a live workshop. Where can I find the recordings?</h3>
+            <p>
+                All recordings and study materials are hosted on <a href="https://skilltech.club" target="_blank">SkillTech.club</a>. 
+                You can log in using the credentials provided during your workshop registration to access your lifetime content.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do I download my course certificate?</h3>
+            <p>
+                Once you complete a course or workshop, your verifiable certificate is automatically generated on your SkillTech.club dashboard. 
+                You can download it as a PDF or share it directly to LinkedIn.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can individual students buy courses directly?</h3>
+            <p>
+                Yes! While I specialize in corporate batches, individual learners can purchase self-paced video courses directly on the 
+                <a href="https://skilltech.club" target="_blank">SkillTech.club</a> website.
+            </p>
+        </div>
+    </div>
+
+    <!-- Corporate Training & Logistics -->
+    <div class="faq-category fade-up">
+        <h2 class="faq-category-title">
+            <i class="fas fa-building" style="color: #3b82f6;"></i>
+            Corporate Training & Logistics
+        </h2>
+
+        <div class="faq-item">
+            <h3>Do you offer corporate Azure training for global teams?</h3>
+            <p>
+                Yes, we provide flexible training schedules aligned with <strong>US (EST/PST)</strong>, <strong>UK (GMT)</strong>, and <strong>UAE</strong> time zones. 
+                We specialize in live online Virtual Instructor-Led Training (VILT) for global enterprises.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can you customize the training syllabus for our project?</h3>
+            <p>
+                Absolutely. Unlike standard certification courses, we conduct a pre-training audit to understand your team's skill gaps and project requirements, 
+                then tailor the workshop to focus on those specific Azure and AI topics (e.g., Azure DevOps, Generative AI, or Kubernetes).
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Do you provide hands-on labs?</h3>
+            <p>
+                Yes, all workshops are <strong>60-70% hands-on</strong>. We provide sandbox Azure environments for participants to practice real-world scenarios 
+                without risking your production environment.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What is the typical batch size for corporate training?</h3>
+            <p>
+                We recommend <strong>15-25 participants</strong> per batch for optimal interaction and hands-on guidance. 
+                For larger teams, we can run multiple batches or customize the delivery format.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How long is a typical Azure training workshop?</h3>
+            <p>
+                Most certification-focused workshops (AZ-104, AI-102, etc.) run for <strong>4-5 days (6-8 hours per day)</strong>. 
+                Custom topic-focused sessions can be condensed into 2-3 day intensive workshops based on your requirements.
+            </p>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-box fade-up">
+        <h2>Still have a question?</h2>
+        <p>If you couldn't find the answer you were looking for, feel free to reach out directly.</p>
+        <p>I typically respond to inquiries within 24 hours.</p>
+        <a href="https://marutimakwana.com/Contact" class="btn-contact">
+            <i class="fas fa-envelope me-2"></i>Contact Maruti Directly
+        </a>
+        <br><br>
+        <small style="opacity: 0.8;">Or email: maruti_makwana@hotmail.com</small>
+    </div>
+
+</div>

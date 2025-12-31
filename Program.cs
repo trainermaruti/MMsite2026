@@ -528,6 +528,12 @@ app.MapControllerRoute(
     name: "admin",
     pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
+// Custom FAQ route for SEO-friendly URL
+app.MapControllerRoute(
+    name: "faq",
+    pattern: "FAQ",
+    defaults: new { controller = "Home", action = "FAQ" });
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

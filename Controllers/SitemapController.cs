@@ -63,6 +63,7 @@ namespace MarutiTrainingPortal.Controllers
                 await AddUrlAsync(writer, baseUrl, "/Events", "daily", "0.9");
                 await AddUrlAsync(writer, baseUrl, "/Events/Calendar", "daily", "0.9");
                 await AddUrlAsync(writer, baseUrl, "/Profile/About", "monthly", "0.7");
+                await AddUrlAsync(writer, baseUrl, "/FAQ", "monthly", "0.7");
                 await AddUrlAsync(writer, baseUrl, "/Contact", "monthly", "0.6");
                 await AddUrlAsync(writer, baseUrl, "/Verify", "monthly", "0.7");
 

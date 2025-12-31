@@ -1,5 +1,5 @@
 // Kinetic Animations with GSAP
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initScrollAnimations();
     initTimelineAnimations();
     initCardEffects();
@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // Scroll Animations for fade-up elements
 function initScrollAnimations() {
     if (typeof gsap === 'undefined') return;
-    
+
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // Fade up elements
     document.querySelectorAll('.fade-up').forEach(el => {
         gsap.from(el, {
@@ -25,12 +25,12 @@ function initScrollAnimations() {
             ease: 'power2.out'
         });
     });
-    
+
     // Counter animation for stats
     document.querySelectorAll('.stat-number').forEach(stat => {
         const target = parseInt(stat.getAttribute('data-count'));
         const suffix = stat.textContent.replace(/[\d,]+/g, '').trim(); // Extract suffix like "K+" or "+"
-        
+
         if (!isNaN(target)) {
             gsap.from(stat, {
                 scrollTrigger: {
@@ -42,7 +42,7 @@ function initScrollAnimations() {
                 duration: 2,
                 ease: 'power2.out',
                 snap: { textContent: 1 },
-                onUpdate: function() {
+                onUpdate: function () {
                     const currentValue = Math.ceil(stat.textContent);
                     // Preserve K+ or other suffixes from original text
                     stat.textContent = currentValue.toLocaleString() + suffix;
@@ -55,7 +55,7 @@ function initScrollAnimations() {
 // Timeline specific animations
 function initTimelineAnimations() {
     if (typeof gsap === 'undefined') return;
-    
+
     // Animate timeline cards on scroll
     document.querySelectorAll('.timeline-card').forEach((card, index) => {
         gsap.from(card, {
@@ -71,7 +71,7 @@ function initTimelineAnimations() {
             ease: 'power3.out'
         });
     });
-    
+
     // Animate icon badges
     document.querySelectorAll('.timeline-node-wrapper > div:first-child').forEach((badge, index) => {
         gsap.from(badge, {
@@ -91,9 +91,10 @@ function initTimelineAnimations() {
 }
 
 // 3D Card Tilt Effects
+// Modified: Tilt only works on RIGHT HALF of card, LEFT HALF = NO ANIMATION
 function initCardEffects() {
     if (typeof gsap === 'undefined') return;
-    
+
     document.querySelectorAll('.timeline-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
@@ -101,24 +102,38 @@ function initCardEffects() {
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 50;
-            const rotateY = (centerX - x) / 50;
-            
-            gsap.to(card, {
-                rotateX: rotateX,
-                rotateY: rotateY,
-                duration: 0.4,
-                transformPerspective: 1500,
-                ease: 'power2.out'
-            });
+
+            // Check if mouse is on RIGHT HALF (50% to 100% width)
+            if (x >= centerX) {
+                // RIGHT HALF: Apply tilt animation
+                const rotateX = (y - centerY) / 50;
+                const rotateY = (centerX - x) / 50;
+
+                gsap.to(card, {
+                    rotateX: rotateX,
+                    rotateY: rotateY,
+                    duration: 0.4,
+                    transformPerspective: 1500,
+                    ease: 'power2.out'
+                });
+            } else {
+                // LEFT HALF: NO ANIMATION - Kill tweens and clear transforms
+                gsap.killTweensOf(card);
+                gsap.set(card, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    clearProps: 'transform'
+                });
+            }
         });
-        
+
         card.addEventListener('mouseleave', () => {
             gsap.to(card, {
                 rotateX: 0,
                 rotateY: 0,
                 duration: 0.6,
-                ease: 'power2.out'
+                ease: 'power2.out',
+                clearProps: 'transform'
             });
         });
     });

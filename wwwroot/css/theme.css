@@ -394,9 +394,12 @@ body>* {
     position: relative;
     overflow: hidden;
     color: #ffffff !important;
+    border-radius: 16px;
+    /* Added: Rounded corners for all cards */
 }
 
-.card::before {
+/* REMOVED: Lightning/shine animation effect on hover */
+/* .card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -409,12 +412,20 @@ body>* {
 
 .card:hover::before {
     left: 100%;
-}
+} */
 
 .card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-glow-purple);
+    /* Updated: Subtle glow effect (minimal brightness) */
+    box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.2),
+        0 5px 15px -3px rgba(59, 130, 246, 0.15),
+        0 0 20px rgba(59, 130, 246, 0.1);
     border-color: var(--border-hover);
+}
+
+.card-header {
+    border-radius: 16px 16px 0 0 !important;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .card-body {

@@ -1,0 +1,125 @@
+@{
+    ViewData["Title"] = "Book a Consultation";
+    ViewData["Description"] = "Schedule a free 30-minute consultation with Maruti Makwana to discuss your Azure Cloud and AI training needs. Book directly through our calendar.";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="fw-bold mb-3" style="font-size: clamp(32px, 5vw, 48px);">
+                    Book Your <span style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Consultation</span>
+                </h1>
+                <p class="lead mb-4" style="color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+                    Schedule a free consultation to discuss your corporate training needs, certification roadmap, or custom workshop requirements.
+                </p>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="row mb-5 g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm" style="background: var(--card-bg);">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0">
+                                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-chalkboard-teacher" style="color: #ffffff; font-size: 20px;"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="card-title mb-2">Expert Guidance</h5>
+                                    <p class="card-text mb-0" style="color: var(--text-secondary);">
+                                        Get personalized recommendations from a Microsoft Certified Trainer with 19+ years of experience.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm" style="background: var(--card-bg);">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0">
+                                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-clipboard-check" style="color: #ffffff; font-size: 20px;"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="card-title mb-2">Custom Solutions</h5>
+                                    <p class="card-text mb-0" style="color: var(--text-secondary);">
+                                        Discuss tailored training programs designed specifically for your team's needs and skill levels.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What We'll Discuss -->
+            <div class="card mb-5 border-0 shadow-sm" style="background: var(--card-bg);">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4">
+                        <i class="fas fa-lightbulb me-2" style="color: #3b82f6;"></i>What We'll Discuss
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: #22c55e;"></i>Corporate Azure & AI training programs</li>
+                                <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: #22c55e;"></i>Custom workshop requirements</li>
+                                <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: #22c55e;"></i>Certification roadmaps (AZ-104, AI-102, AI-900)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: #22c55e;"></i>Team upskilling strategies</li>
+                                <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: #22c55e;"></i>Training delivery options (VILT/On-site)</li>
+                                <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: #22c55e;"></i>Timeline and pricing discussions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendly Embedded Widget -->
+            <div class="card border-0 shadow-lg" style="background: var(--card-bg); border-radius: 16px;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 20px; border-radius: 16px 16px 0 0;">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-check me-2"></i>Select a Date & Time
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <!-- Calendly inline widget begin -->
+                    <div class="calendly-inline-widget" 
+                         data-url="https://calendly.com/marutimct/30min" 
+                         style="min-width:320px;height:700px;">
+                    </div>
+                    <!-- Calendly inline widget end -->
+                </div>
+            </div>
+
+            <!-- Alternative Contact Methods -->
+            <div class="text-center mt-5">
+                <p class="text-muted mb-3">Prefer a different way to connect?</p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="/Contact" class="btn btn-outline-primary">
+                        <i class="fas fa-envelope me-2"></i>Send Message
+                    </a>
+                    <a href="https://wa.me/919998114148" target="_blank" class="btn btn-outline-success">
+                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                    </a>
+                    <a href="mailto:maruti_makwana@hotmail.com" class="btn btn-outline-danger">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Calendly inline widget script -->
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+}
