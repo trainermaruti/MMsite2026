@@ -22,7 +22,10 @@ public class ContactMessageCleanupService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Contact Message Cleanup Service started");
+        _logger.LogInformation("Contact Message Cleanup Service started. First cleanup will run in 24 hours.");
+
+        // Wait 24 hours before first cleanup to avoid deleting messages on server restart
+        await Task.Delay(_checkInterval, stoppingToken);
 
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -52,7 +55,11 @@ public class ContactMessageCleanupService : BackgroundService
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         // Get messages older than 28 days
-        var cutoffDate = DateTime.Now.AddDays(-28);
+        var cutoffDate = DateTime.UtcNow.AddDays(-28);
+        
+        _logger.LogInformation(
+            "Running cleanup check. Cutoff date: {CutoffDate}. Messages created before this will be deleted.",
+            cutoffDate.ToString("yyyy-MM-dd HH:mm:ss"));
         
         var oldMessages = await context.ContactMessages
             .Where(m => !m.IsDeleted && m.CreatedDate < cutoffDate)
@@ -60,22 +67,70 @@ public class ContactMessageCleanupService : BackgroundService
 
         if (oldMessages.Any())
         {
+            _logger.LogWarning(
+                "Found {Count} messages to delete. Oldest: {OldestDate}, Newest: {NewestDate}",
+                oldMessages.Count,
+                oldMessages.Min(m => m.CreatedDate).ToString("yyyy-MM-dd HH:mm:ss"),
+                oldMessages.Max(m => m.CreatedDate).ToString("yyyy-MM-dd HH:mm:ss"));
+
             foreach (var message in oldMessages)
             {
                 message.IsDeleted = true;
-                message.UpdatedDate = DateTime.Now;
+                message.UpdatedDate = DateTime.UtcNow;
             }
 
             await context.SaveChangesAsync(cancellationToken);
             
             _logger.LogInformation(
-                "Auto-cleanup completed: Soft-deleted {Count} contact messages older than 28 days (before {CutoffDate})",
-                oldMessages.Count,
-                cutoffDate.ToString("yyyy-MM-dd"));
+                "Auto-cleanup completed: Soft-deleted {Count} contact messages older than 28 days",
+                oldMessages.Count);
+
+            // Also update JSON file to remove old messages
+            await UpdateJsonBackupAsync(cancellationToken);
         }
         else
         {
             _logger.LogInformation("Contact message cleanup: No messages older than 28 days found");
+        }
+    }
+
+    private async Task UpdateJsonBackupAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "ContactMessagesDatabase.json");
+            
+            if (!File.Exists(jsonPath))
+            {
+                _logger.LogInformation("JSON backup file does not exist, skipping JSON cleanup");
+                return;
+            }
+
+            using var scope = _serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            // Get all non-deleted messages for JSON
+            var activeMessages = await context.ContactMessages
+                .Where(m => !m.IsDeleted)
+                .Include(m => m.Event)
+                .OrderByDescending(m => m.CreatedDate)
+                .ToListAsync(cancellationToken);
+
+            // Save to JSON
+            var options = new System.Text.Json.JsonSerializerOptions 
+            { 
+                WriteIndented = true,
+                PropertyNamingPolicy = null,
+                ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
+            };
+            var json = System.Text.Json.JsonSerializer.Serialize(activeMessages, options);
+            await File.WriteAllTextAsync(jsonPath, json, cancellationToken);
+
+            _logger.LogInformation("JSON backup updated successfully. Active messages: {Count}", activeMessages.Count);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating JSON backup file");
         }
     }
 }

@@ -1431,6 +1431,21 @@ html.light-theme .stat-card-icon {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+/* Ensure stat card icons are always white */
+.stat-card-icon i,
+.stat-card-icon .fas {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html.light-mode .stat-card-icon i,
+html.light-mode .stat-card-icon .fas,
+html.light-theme .stat-card-icon i,
+html.light-theme .stat-card-icon .fas {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
 html.light-mode .modern-sidebar,
 html.light-theme .modern-sidebar {
   background: rgba(255, 255, 255, 0.9);

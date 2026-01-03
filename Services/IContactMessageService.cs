@@ -17,5 +17,7 @@ namespace MarutiTrainingPortal.Services
         Task<bool> DeleteMessageAsync(int id);
 
         Task<byte[]> ExportToCsvAsync(string? filter = "All");
+
+        Task<List<ContactMessage>> GetAllMessagesForBackupAsync();
     }
 }

@@ -6,7 +6,7 @@ namespace MarutiTrainingPortal.Services
     public interface IEmailSender
     {
         Task SendEmailAsync(string toEmail, string subject, string body);
-        Task<bool> SendEmailAsync(string toEmail, string toName, string subject, string htmlBody, string? plainTextBody = null);
+        Task<bool> SendEmailAsync(string toEmail, string toName, string subject, string htmlBody, string? replyToEmail = null, string? replyToName = null);
     }
 
     public class EmailSender : IEmailSender
@@ -24,12 +24,12 @@ namespace MarutiTrainingPortal.Services
         {
             try
             {
-                var smtpHost = _configuration["EmailSettings:SmtpHost"] ?? "smtp.gmail.com";
-                var smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "587");
-                var smtpUsername = _configuration["EmailSettings:SmtpUsername"];
-                var smtpPassword = _configuration["EmailSettings:SmtpPassword"];
-                var fromEmail = _configuration["EmailSettings:FromEmail"];
-                var fromName = _configuration["EmailSettings:FromName"] ?? "Maruti Training Portal";
+                var smtpHost = _configuration["SmtpSettings:Host"] ?? "smtp.gmail.com";
+                var smtpPort = int.Parse(_configuration["SmtpSettings:Port"] ?? "587");
+                var smtpUsername = _configuration["SmtpSettings:Username"];
+                var smtpPassword = _configuration["SmtpSettings:Password"];
+                var fromEmail = _configuration["SmtpSettings:FromEmail"];
+                var fromName = _configuration["SmtpSettings:FromName"] ?? "Maruti Training Portal";
 
                 if (string.IsNullOrEmpty(smtpUsername) || string.IsNullOrEmpty(smtpPassword))
                 {
@@ -64,16 +64,16 @@ namespace MarutiTrainingPortal.Services
             }
         }
 
-        public async Task<bool> SendEmailAsync(string toEmail, string toName, string subject, string htmlBody, string? plainTextBody = null)
+        public async Task<bool> SendEmailAsync(string toEmail, string toName, string subject, string htmlBody, string? replyToEmail = null, string? replyToName = null)
         {
             try
             {
-                var smtpHost = _configuration["EmailSettings:SmtpHost"] ?? "smtp.gmail.com";
-                var smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "587");
-                var smtpUsername = _configuration["EmailSettings:SmtpUsername"];
-                var smtpPassword = _configuration["EmailSettings:SmtpPassword"];
-                var fromEmail = _configuration["EmailSettings:FromEmail"];
-                var fromName = _configuration["EmailSettings:FromName"] ?? "Maruti Training Portal";
+                var smtpHost = _configuration["SmtpSettings:Host"] ?? "smtp.gmail.com";
+                var smtpPort = int.Parse(_configuration["SmtpSettings:Port"] ?? "587");
+                var smtpUsername = _configuration["SmtpSettings:Username"];
+                var smtpPassword = _configuration["SmtpSettings:Password"];
+                var fromEmail = _configuration["SmtpSettings:FromEmail"];
+                var fromName = _configuration["SmtpSettings:FromName"] ?? "Maruti Training Portal";
 
                 if (string.IsNullOrEmpty(smtpUsername) || string.IsNullOrEmpty(smtpPassword))
                 {
@@ -98,8 +98,14 @@ namespace MarutiTrainingPortal.Services
 
                 mailMessage.To.Add(new MailAddress(toEmail, toName));
 
+                // Add Reply-To header if provided
+                if (!string.IsNullOrEmpty(replyToEmail))
+                {
+                    mailMessage.ReplyToList.Add(new MailAddress(replyToEmail, replyToName ?? replyToEmail));
+                }
+
                 await smtpClient.SendMailAsync(mailMessage);
-                _logger.LogInformation($"Email sent successfully to {toEmail}");
+                _logger.LogInformation($"Email sent successfully to {toEmail}" + (replyToEmail != null ? $" with Reply-To: {replyToEmail}" : ""));
                 return true;
             }
             catch (Exception ex)

@@ -69,7 +69,8 @@ public class ContactService
                 var emailSubject = $"New Contact Form Submission: {model.Subject}";
                 var emailBody = BuildAdminEmailBody(model, sourceIp, userAgent, contactMessage.Id);
                 
-                var emailSent = await _emailSender.SendEmailAsync(adminEmail, "Admin", emailSubject, emailBody);
+                // Set Reply-To as the user's email so admin can reply directly
+                var emailSent = await _emailSender.SendEmailAsync(adminEmail, "Admin", emailSubject, emailBody, model.Email, model.Name);
                 
                 if (emailSent)
                 {

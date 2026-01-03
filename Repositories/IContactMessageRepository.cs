@@ -42,5 +42,10 @@ namespace MarutiTrainingPortal.Repositories
         /// Export messages to list for CSV generation
         /// </summary>
         Task<List<ContactMessage>> ExportAsync(string? filter = "All");
+
+        /// <summary>
+        /// Get all messages for JSON backup (including deleted)
+        /// </summary>
+        Task<List<ContactMessage>> GetAllForBackupAsync();
     }
 }

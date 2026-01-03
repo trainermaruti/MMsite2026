@@ -19,22 +19,6 @@ namespace MarutiTrainingPortal.Repositories
             string? searchQuery = null, 
             string? filter = "All")
         {
-            // Auto-cleanup: Soft delete messages older than 28 days
-            var cutoffDate = DateTime.Now.AddDays(-28);
-            var oldMessages = await _context.ContactMessages
-                .Where(m => !m.IsDeleted && m.CreatedDate < cutoffDate)
-                .ToListAsync();
-            
-            if (oldMessages.Any())
-            {
-                foreach (var msg in oldMessages)
-                {
-                    msg.IsDeleted = true;
-                    msg.UpdatedDate = DateTime.Now;
-                }
-                await _context.SaveChangesAsync();
-            }
-
             var query = _context.ContactMessages
                 .Where(m => !m.IsDeleted)
                 .Include(m => m.Event)
@@ -132,6 +116,14 @@ namespace MarutiTrainingPortal.Repositories
             }
 
             return await query
+                .OrderByDescending(m => m.CreatedDate)
+                .ToListAsync();
+        }
+
+        public async Task<List<ContactMessage>> GetAllForBackupAsync()
+        {
+            return await _context.ContactMessages
+                .Include(m => m.Event)
                 .OrderByDescending(m => m.CreatedDate)
                 .ToListAsync();
         }

@@ -3,6 +3,22 @@
     ViewData["Description"] = "Schedule a free 30-minute consultation with Maruti Makwana to discuss your Azure Cloud and AI training needs. Book directly through our calendar.";
 }
 
+<style>
+    /* White icons for contact buttons in both light and dark mode */
+    .contact-btn-icon {
+        color: #ffffff !important;
+        filter: brightness(0) invert(1);
+    }
+    
+    /* Alternative - using SVG filter approach for better compatibility */
+    .btn-outline-primary .contact-btn-icon,
+    .btn-outline-success .contact-btn-icon,
+    .btn-outline-danger .contact-btn-icon {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+</style>
+
 <div class="container mt-5 mb-5">
     <div class="row">
         <div class="col-lg-10 offset-lg-1">
@@ -24,7 +40,7 @@
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="fas fa-chalkboard-teacher" style="color: #ffffff; font-size: 20px;"></i>
+                                        <i class="fas fa-chalkboard-teacher contact-btn-icon" style="font-size: 20px;"></i>
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
@@ -43,7 +59,7 @@
                             <div class="d-flex align-items-start">
                                 <div class="flex-shrink-0">
                                     <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                        <i class="fas fa-clipboard-check" style="color: #ffffff; font-size: 20px;"></i>
+                                        <i class="fas fa-clipboard-check contact-btn-icon" style="font-size: 20px;"></i>
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
@@ -83,20 +99,29 @@
                 </div>
             </div>
 
-            <!-- Calendly Embedded Widget -->
+            <!-- Calendly Link Widget -->
             <div class="card border-0 shadow-lg" style="background: var(--card-bg); border-radius: 16px;">
                 <div class="card-header text-white" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); padding: 20px; border-radius: 16px 16px 0 0;">
-                    <h5 class="mb-0">
-                        <i class="fas fa-calendar-check me-2"></i>Select a Date & Time
+                    <h5 class="mb-0" style="color: #ffffff !important;">
+                        <i class="fas fa-calendar-check me-2 contact-btn-icon"></i>Select a Date & Time
                     </h5>
                 </div>
-                <div class="card-body p-0">
-                    <!-- Calendly inline widget begin -->
-                    <div class="calendly-inline-widget" 
-                         data-url="https://calendly.com/marutimct/30min" 
-                         style="min-width:320px;height:700px;">
+                <div class="card-body p-5 text-center" style="min-height: 300px; display: flex; align-items: center; justify-content: center;">
+                    <!-- Calendly link widget begin -->
+                    <div>
+                        <div class="mb-4">
+                            <i class="fas fa-calendar-alt" style="font-size: 64px; color: #3b82f6; opacity: 0.3; margin-bottom: 20px;"></i>
+                        </div>
+                        <h4 class="mb-3">Ready to Schedule?</h4>
+                        <p class="text-muted mb-4">Click the button below to open the calendar and pick a time that works for you.</p>
+                        <a href="" 
+                           onclick="Calendly.initPopupWidget({url: 'https://calendly.com/marutimct/30min'});return false;" 
+                           class="btn btn-primary btn-lg"
+                           style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; padding: 16px 48px; border-radius: 12px; font-weight: 600; font-size: 18px; box-shadow: 0 8px 16px rgba(59, 130, 246, 0.4); transition: all 0.3s ease;">
+                            <i class="fas fa-calendar-check me-2 contact-btn-icon"></i>Schedule time with Maruti
+                        </a>
                     </div>
-                    <!-- Calendly inline widget end -->
+                    <!-- Calendly link widget end -->
                 </div>
             </div>
 
@@ -105,13 +130,13 @@
                 <p class="text-muted mb-3">Prefer a different way to connect?</p>
                 <div class="d-flex gap-3 justify-content-center flex-wrap">
                     <a href="/Contact" class="btn btn-outline-primary">
-                        <i class="fas fa-envelope me-2"></i>Send Message
+                        <i class="fas fa-envelope me-2 contact-btn-icon"></i>Send Message
                     </a>
                     <a href="https://wa.me/919998114148" target="_blank" class="btn btn-outline-success">
-                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                        <i class="fab fa-whatsapp me-2 contact-btn-icon"></i>WhatsApp
                     </a>
                     <a href="mailto:maruti_makwana@hotmail.com" class="btn btn-outline-danger">
-                        <i class="fas fa-envelope me-2"></i>Email
+                        <i class="fas fa-envelope me-2 contact-btn-icon"></i>Email
                     </a>
                 </div>
             </div>
@@ -120,6 +145,8 @@
 </div>
 
 @section Scripts {
+    <!-- Calendly widget CSS -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <!-- Calendly inline widget script -->
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 }

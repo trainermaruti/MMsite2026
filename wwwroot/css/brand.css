@@ -13,7 +13,7 @@
     --brand-gradient-mid: #60a5fa;
     --brand-gradient-end: #3b82f6;
     --brand-glow-color: rgba(59, 130, 246, 0.4);
-    
+
     /* Core Colors */
     --brand-bg: #0a0a0a;
     --brand-bg-secondary: #111111;
@@ -22,16 +22,16 @@
     --brand-accent-light: #93c5fd;
     --brand-muted: #9ca3af;
     --brand-shadow: rgba(59, 130, 246, 0.25);
-    
+
     /* Text Colors */
     --text-primary: #e5e5e5;
     --text-secondary: #a3a3a3;
     --text-muted: #737373;
-    
+
     /* Border & UI */
     --border-color: rgba(255, 255, 255, 0.1);
     --border-color-hover: rgba(59, 130, 246, 0.3);
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -232,7 +232,8 @@ html.light-theme {
 
 .nav-link {
     display: flex;
-    flex-direction: row; /* Ensure icon and text are side-by-side */
+    flex-direction: row;
+    /* Ensure icon and text are side-by-side */
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
@@ -249,18 +250,20 @@ html.light-theme {
 /* Responsive nav links */
 @media (max-width: 768px) {
     .nav-list {
-        display: none !important; /* Hide desktop nav on mobile */
+        display: none !important;
+        /* Hide desktop nav on mobile */
     }
-    
+
     .nav-link {
         padding: 0.5rem 0.75rem;
         font-size: 0.813rem;
     }
-    
+
     .nav-link span {
-        display: none; /* Hide text on very small screens, show only icons */
+        display: none;
+        /* Hide text on very small screens, show only icons */
     }
-    
+
     .nav-link i {
         font-size: 1.1rem;
     }
@@ -355,12 +358,20 @@ html.light-theme {
     transform: translateY(0);
 }
 
+/* Ensure icon and text are white in both light and dark mode */
+.btn-cta i,
+.btn-cta span {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
 /* Show CTA on all screens, adjust size on mobile */
 @media (max-width: 768px) {
     .btn-cta span {
-        display: none; /* Show only icon on very small screens */
+        display: none;
+        /* Show only icon on very small screens */
     }
-    
+
     .btn-cta {
         padding: 0;
         width: 2.5rem;
@@ -544,6 +555,7 @@ html.light-theme {
 
 /* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -551,7 +563,7 @@ html.light-theme {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    
+
     .brand-link:hover,
     .brand-logo,
     .nav-link:hover i,
@@ -582,22 +594,22 @@ html.light-theme {
         font-size: 1.125rem;
         letter-spacing: 0.075em;
     }
-    
+
     .brand-subtitle {
         font-size: 0.625rem;
         letter-spacing: 0.05em;
     }
-    
+
     .brand-logo {
         width: 36px;
         height: 36px;
     }
-    
+
     .brand-link {
         gap: 0.625rem;
         padding: 0.25rem 0.5rem;
     }
-    
+
     .header-container {
         padding: 0.5rem 1rem;
     }
@@ -608,16 +620,16 @@ html.light-theme {
         font-size: 1rem;
         letter-spacing: 0.05em;
     }
-    
+
     .brand-subtitle {
         font-size: 0.563rem;
     }
-    
+
     .brand-logo {
         width: 32px;
         height: 32px;
     }
-    
+
     .mobile-drawer-content {
         width: 100%;
         max-width: 100%;
@@ -635,17 +647,17 @@ html.light-theme {
         color: #ffffff;
         text-shadow: 0 0 2px #000000;
     }
-    
+
     .brand-subtitle {
         color: #ffffff;
         opacity: 1;
     }
-    
+
     .nav-link,
     .mobile-nav-link {
         border: 1px solid currentColor;
     }
-    
+
     .btn-cta {
         border: 2px solid #ffffff;
     }
@@ -661,22 +673,22 @@ html.light-theme {
         background: none;
         border-bottom: 1px solid #000000;
     }
-    
+
     .brand-link {
         filter: none;
         transform: none;
     }
-    
+
     .brand-title {
         background: none;
         -webkit-text-fill-color: #000000;
         color: #000000;
     }
-    
+
     .brand-subtitle {
         color: #000000;
     }
-    
+
     .nav-toggle,
     .btn-cta,
     .btn-icon,
@@ -684,10 +696,8 @@ html.light-theme {
     .mobile-drawer {
         display: none !important;
     }
-    
+
     .nav-list {
         display: flex !important;
     }
 }
-
-

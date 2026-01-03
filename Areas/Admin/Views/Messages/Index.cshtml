@@ -32,6 +32,12 @@
         <p style="color: var(--text-secondary); font-size: 15px; margin: 0;">Manage contact messages and inquiries</p>
     </div>
     <div style="display: flex; gap: 12px;">
+        <form method="post" asp-area="Admin" asp-controller="Messages" asp-action="SaveToJson" style="display: inline;">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="modern-btn modern-btn-success" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">
+                <i class="fas fa-save me-2"></i>Save to JSON
+            </button>
+        </form>
         <a asp-area="Admin" asp-controller="Messages" asp-action="Export" asp-route-filter="@filter" class="modern-btn modern-btn-secondary">
             <i class="fas fa-download me-2"></i>Export CSV
         </a>
@@ -45,7 +51,7 @@
             <i class="fas fa-envelope"></i>
         </div>
         <div class="stat-content">
-            <div class="stat-value">@newCount</div>
+            <div class="stat-value" style="color: #ffffff !important; opacity: 1 !important; filter: none !important; -webkit-text-fill-color: #ffffff !important;">@newCount</div>
             <div class="stat-label">New Messages</div>
         </div>
     </a>
@@ -55,7 +61,7 @@
             <i class="fas fa-inbox"></i>
         </div>
         <div class="stat-content">
-            <div class="stat-value">@totalMessages</div>
+            <div class="stat-value" style="color: #ffffff !important; opacity: 1 !important; filter: none !important; -webkit-text-fill-color: #ffffff !important;">@totalMessages</div>
             <div class="stat-label">Total Messages</div>
         </div>
     </a>

@@ -75,5 +75,10 @@ namespace MarutiTrainingPortal.Services
             // Escape double quotes by doubling them
             return value.Replace("\"", "\"\"");
         }
+
+        public async Task<List<ContactMessage>> GetAllMessagesForBackupAsync()
+        {
+            return await _repository.GetAllForBackupAsync();
+        }
     }
 }

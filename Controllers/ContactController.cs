@@ -43,11 +43,17 @@ namespace MarutiTrainingPortal.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None, Duration = 0)]
         public async Task<IActionResult> Submit([FromForm] ContactFormModel model)
         {
-            // Rate limiting: 3 requests per 10 minutes per IP
+            // Prevent caching of contact form submissions
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate, private";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            // Rate limiting: 10 requests per 10 minutes per IP (increased for testing)
             var identifier = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-            if (!_rateLimiter.IsAllowed(identifier, maxRequests: 3, window: TimeSpan.FromMinutes(10)))
+            if (!_rateLimiter.IsAllowed(identifier, maxRequests: 10, window: TimeSpan.FromMinutes(10)))
             {
                 var errorMsg = "Too many requests. Please try again in a few minutes.";
                 

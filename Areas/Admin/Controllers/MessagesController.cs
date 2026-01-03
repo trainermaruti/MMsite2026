@@ -163,5 +163,38 @@ namespace MarutiTrainingPortal.Areas.Admin.Controllers
             TempData["SuccessMessage"] = "Message deleted successfully.";
             return RedirectToAction(nameof(Index));
         }
+
+        // POST: Admin/Messages/SaveToJson - Backup all messages to JSON file
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveToJson()
+        {
+            try
+            {
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "JsonData", "ContactMessagesDatabase.json");
+                
+                // Get all messages (including deleted ones for backup)
+                var allMessages = await _messageService.GetAllMessagesForBackupAsync();
+                
+                // Serialize to JSON
+                var options = new System.Text.Json.JsonSerializerOptions 
+                { 
+                    WriteIndented = true,
+                    PropertyNamingPolicy = null
+                };
+                var json = System.Text.Json.JsonSerializer.Serialize(allMessages, options);
+                
+                // Save to file
+                await System.IO.File.WriteAllTextAsync(jsonPath, json);
+                
+                TempData["SuccessMessage"] = $"Successfully saved {allMessages.Count} message(s) to JSON file.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error saving to JSON: {ex.Message}";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
