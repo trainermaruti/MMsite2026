@@ -3,6 +3,9 @@
     ViewData["Title"] = "Contact Me";
 }
 
+<!-- Google reCAPTCHA v2 API -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <style>
     /* White icons and text for buttons/headers in both light and dark mode */
     .contact-btn-icon {
@@ -145,6 +148,12 @@
                             <span id="Message-error" class="text-danger" role="alert"></span>
                         </div>
 
+                        <!-- reCAPTCHA v2 Widget -->
+                        <div class="mb-3">
+                            <div class="g-recaptcha" data-sitekey="6LfnrkEsAAAAAJBACUsRy9DSqi7TzpGjyiP1Fo-N"></div>
+                            <span id="recaptcha-error" class="text-danger" role="alert"></span>
+                        </div>
+
                         <button type="submit" class="btn btn-primary" id="submitBtn" style="color: #ffffff !important;">
                             <i class="fas fa-paper-plane me-2 contact-btn-icon"></i>Send Message
                         </button>
@@ -170,6 +179,18 @@
 
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
+
+                // Validate reCAPTCHA
+                const recaptchaResponse = grecaptcha.getResponse();
+                const recaptchaError = document.getElementById('recaptcha-error');
+                
+                if (!recaptchaResponse) {
+                    recaptchaError.textContent = 'Please complete the reCAPTCHA verification.';
+                    recaptchaError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
+                
+                recaptchaError.textContent = '';
 
                 // Disable submit button
                 submitBtn.disabled = true;
@@ -198,8 +219,9 @@
                         messageDiv.className = 'alert alert-success alert-dismissible fade show';
                         messageDiv.style.display = 'block';
                         
-                        // Reset form
+                        // Reset form and reCAPTCHA
                         form.reset();
+                        grecaptcha.reset();
                         
                         // Scroll to message
                         messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -208,6 +230,9 @@
                         messageText.textContent = result.message;
                         messageDiv.className = 'alert alert-danger alert-dismissible fade show';
                         messageDiv.style.display = 'block';
+                        
+                        // Reset reCAPTCHA on error
+                        grecaptcha.reset();
                         
                         // Scroll to message
                         messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });

@@ -12,17 +12,20 @@ namespace MarutiTrainingPortal.Controllers
         private readonly ContactService _contactService;
         private readonly IHtmlSanitizerService _htmlSanitizer;
         private readonly IRateLimitService _rateLimiter;
+        private readonly ReCaptchaService _reCaptchaService;
 
         public ContactController(
             ApplicationDbContext context, 
             ContactService contactService,
             IHtmlSanitizerService htmlSanitizer,
-            IRateLimitService rateLimiter)
+            IRateLimitService rateLimiter,
+            ReCaptchaService reCaptchaService)
         {
             _context = context;
             _contactService = contactService;
             _htmlSanitizer = htmlSanitizer;
             _rateLimiter = rateLimiter;
+            _reCaptchaService = reCaptchaService;
         }
 
         [HttpGet]
@@ -50,6 +53,24 @@ namespace MarutiTrainingPortal.Controllers
             Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate, private";
             Response.Headers["Pragma"] = "no-cache";
             Response.Headers["Expires"] = "0";
+
+            // Verify reCAPTCHA FIRST (before rate limiting to prevent abuse)
+            var recaptchaResponse = Request.Form["g-recaptcha-response"].ToString();
+            var remoteIp = HttpContext.Connection.RemoteIpAddress?.ToString();
+            
+            var (isValid, recaptchaError) = await _reCaptchaService.VerifyAsync(recaptchaResponse, remoteIp);
+            
+            if (!isValid)
+            {
+                // AJAX request
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest" || Request.ContentType?.Contains("application/json") == true)
+                {
+                    return Json(new { success = false, message = recaptchaError });
+                }
+                
+                TempData["ErrorMessage"] = recaptchaError;
+                return RedirectToAction(nameof(Index));
+            }
 
             // Rate limiting: 10 requests per 10 minutes per IP (increased for testing)
             var identifier = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";

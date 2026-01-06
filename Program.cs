@@ -13,6 +13,14 @@ builder.WebHost.UseStaticWebAssets();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Configure routing for lowercase URLs (SEO optimization)
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = false; // Keep query strings as-is
+    options.AppendTrailingSlash = false;
+});
+
 // --- FIX 1: Use In-Memory Database instead of SQL Server ---
 // This allows the app to run without a real SQL server connection.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -70,6 +78,10 @@ builder.Services.AddScoped<Ganss.Xss.HtmlSanitizer>();
 
 // Add Rate Limiting Service (in-memory for development)
 builder.Services.AddSingleton<IRateLimitService, RateLimitService>();
+
+// Add reCAPTCHA Service with HttpClient
+builder.Services.AddHttpClient<ReCaptchaService>();
+builder.Services.AddScoped<ReCaptchaService>();
 
 // Add Memory Cache for statistics
 builder.Services.AddMemoryCache();
@@ -472,6 +484,39 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// SEO FIX: Force all URLs to lowercase
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value;
+    
+    // Skip static files and API endpoints
+    if (path != null && !path.StartsWith("/lib") && !path.StartsWith("/css") && 
+        !path.StartsWith("/js") && !path.StartsWith("/images") && !path.StartsWith("/_"))
+    {
+        var lowercasePath = path.ToLower();
+        
+        // If URL contains uppercase characters, redirect to lowercase
+        if (path != lowercasePath)
+        {
+            var queryString = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "";
+            context.Response.Redirect(lowercasePath + queryString, permanent: true);
+            return;
+        }
+    }
+    
+    await next();
+});
+
+// SEO FIX: Redirect legacy URLs (Google Search Console 404s)
+// Fix 1: /video.html → /videos (301 Permanent)
+app.MapGet("/video.html", () => Results.Redirect("/videos", permanent: true));
+
+// Fix 2: /home/index.html → / (301 Permanent)  
+app.MapGet("/home/index.html", () => Results.Redirect("/", permanent: true));
+
+// Fix 3: /home → / (301 Permanent - consolidate duplicate)
+app.MapGet("/home", () => Results.Redirect("/", permanent: true));
 
 app.UseRouting();
 
