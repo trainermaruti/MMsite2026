@@ -4,7 +4,7 @@
     ViewData["Title"] = "Expert Azure Cloud & AI Video Courses | Maruti Makwana (MCT)";
     ViewData["Description"] = "Master Microsoft Azure and AI with self-paced video courses by Microsoft Certified Trainer Maruti Makwana. Hands-on learnings for AZ-104, AI-900, AI-102, and more.";
     ViewData["Keywords"] = "Azure video courses, AI training videos, Microsoft Certified Trainer, MCT, AZ-104 recordings, AI-900 workshops, Maruti Makwana courses, SkillTech Club training, cloud certification videos";
-    ViewData["CanonicalUrl"] = "https://marutimakwana.com/Courses";
+    ViewData["CanonicalUrl"] = "https://marutimakwana.com/courses";
 }
 
 @if (Model != null && Model.Any())
@@ -85,7 +85,7 @@
                 var mins = (totalSec % 3600) / 60;
                 var secs = totalSec % 60;
                 var durationFmt = $"{hrs:D2}:{mins:D2}:{secs:D2}";
-                var courseLink = !string.IsNullOrEmpty(course.SkillTechUrl) ? course.SkillTechUrl : $"/Courses/Details/{course.Id}";
+                var courseLink = !string.IsNullOrEmpty(course.SkillTechUrl) ? course.SkillTechUrl : $"/courses/Details/{course.Id}";
                 var isExternal = !string.IsNullOrEmpty(course.SkillTechUrl);
 
                 <div class="col-12 col-md-6 col-lg-4">

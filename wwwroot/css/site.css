@@ -1225,7 +1225,7 @@ body.light-theme * button i {
     font-size: 0.813rem !important;
     line-height: 1.4 !important;
   }
-}
+
 
 /* Extra small mobile - Further optimizations */
 @media (max-width: 480px) {

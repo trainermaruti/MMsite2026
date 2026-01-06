@@ -4,7 +4,7 @@
     ViewData["Title"] = "Success Stories & Corporate Training Portfolio | Maruti Makwana";
     ViewData["Description"] = "Case studies and success stories of corporate training delivered by Maruti Makwana. Professional training in Azure, AI, and Automation for 135+ global enterprises.";
     ViewData["Keywords"] = "corporate training achievements, success stories, Maruti Makwana portfolio, training case studies, enterprise automation training, Azure success stories, industrial training results";
-    ViewData["CanonicalUrl"] = "https://marutimakwana.com/Trainings";
+    ViewData["CanonicalUrl"] = "https://marutimakwana.com/trainings";
 }
 
 @if (Model != null && Model.Any())
@@ -117,7 +117,7 @@
                                 <small class="text-muted"><strong>Topics:</strong> @training.Topics</small>
                             </div>
                             <div class="card-footer bg-light" style="position: relative; z-index: 10;">
-                                <a href="/Trainings/Details/@training.Id" class="btn btn-sm btn-primary" style="position: relative; z-index: 20; pointer-events: auto;">View Details</a>
+                                <a href="/trainings/details/@training.Id" class="btn btn-sm btn-primary" style="position: relative; z-index: 20; pointer-events: auto;">View Details</a>
                             </div>
                         </div>
                     }

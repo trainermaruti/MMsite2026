@@ -126,7 +126,10 @@
 
                         <div class="mb-3">
                             <label for="Phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control" id="Phone" name="Phone" autocomplete="tel" required maxlength="20" aria-describedby="Phone-error">
+                            <div class="input-group">
+                                @await Html.PartialAsync("_CountryCodeSelect")
+                                <input type="tel" class="form-control" id="Phone" name="Phone" autocomplete="tel" required maxlength="15" aria-describedby="Phone-error" placeholder="Enter phone number">
+                            </div>
                             <span id="Phone-error" class="text-danger" role="alert"></span>
                         </div>
 
@@ -202,6 +205,11 @@
 
                 try {
                     const formData = new FormData(form);
+                    
+                    // Combine country code and phone number
+                    const countryCode = document.getElementById('CountryCode').value;
+                    const phoneNumber = document.getElementById('Phone').value;
+                    formData.set('Phone', countryCode + phoneNumber);
                     
                     const response = await fetch(form.action, {
                         method: 'POST',

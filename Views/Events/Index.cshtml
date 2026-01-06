@@ -4,7 +4,7 @@
     ViewData["Title"] = "Upcoming Workshops & Training Events | Maruti Makwana (MCT)";
     ViewData["Description"] = "Register for live technical workshops, Azure webinars, and AI training events by Maruti Makwana. Join professional development sessions and stay updated with technology.";
     ViewData["Keywords"] = "automation events, PLC workshops, SCADA webinars, technical training seminars, industrial automation events, robotics workshop, automation conference, live training sessions, upcoming courses, registration";
-    ViewData["CanonicalUrl"] = "https://marutimakwana.com/Events";
+    ViewData["CanonicalUrl"] = "https://marutimakwana.com/events";
 }
 
 @if (Model != null && Model.Any())
@@ -29,7 +29,7 @@
                 "description": "@Html.Raw(trainingEvent.Summary ?? trainingEvent.Description)",
                 "startDate": "@trainingEvent.StartDate.ToString("yyyy-MM-ddTHH:mm")",
                 "endDate": "@(trainingEvent.EndDate?.ToString("yyyy-MM-ddTHH:mm") ?? trainingEvent.StartDate.AddHours(2).ToString("yyyy-MM-ddTHH:mm"))",
-                "eventStatus": "https://schema.org/EventScheduled",
+                "eventStatus": "https://schema.org/eventscheduled",
                 "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
                 "location": {
                   "@@type": "Place",
@@ -204,7 +204,7 @@
                                                 <i class="fas fa-exclamation-circle" style="color: #ffffff !important;"></i> Full
                                             </button>
                                         }
-                                        <a href="/Events/Details/@trainingEvent.Id" class="btn btn-outline-primary btn-sm" style="flex: 0 0 auto; position: relative; z-index: 20; pointer-events: auto;" onclick="event.stopPropagation();">
+                                        <a href="/events/Details/@trainingEvent.Id" class="btn btn-outline-primary btn-sm" style="flex: 0 0 auto; position: relative; z-index: 20; pointer-events: auto;" onclick="event.stopPropagation();">
                                             <i class="fas fa-info-circle" style="color: #ffffff !important;"></i> Details
                                         </a>
                                     </div>
