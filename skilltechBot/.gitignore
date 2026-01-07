@@ -1,0 +1,80 @@
+## .NET Build Output
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+
+## User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## Visual Studio
+.vs/
+*.userprefs
+
+## Rider
+.idea/
+*.sln.iml
+
+## Sensitive Configuration Files
+appsettings.Development.json
+appsettings.Production.json
+**/appsettings.*.json
+!appsettings.json
+
+## API Keys and Secrets
+*.key
+*.secret
+secrets.json
+
+## OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+## Logs
+logs/
+*.log
+
+## Temporary Files
+*.tmp
+*.temp
+
+## Package Manager
+node_modules/
+bower_components/
+
+## Test Results
+TestResults/
+*.trx
+*.coverage
+
+## Publish Profiles
+PublishProfiles/
+*.pubxml
+*.publishsettings
+
+## Azure
+*.azurewebsites.net
+.azure/
+
+## Database
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+## Backup Files
+*.bak
+*~

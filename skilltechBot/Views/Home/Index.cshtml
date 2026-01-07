@@ -1,0 +1,808 @@
+@{
+    ViewData["Title"] = "SkillTech Navigator";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/Favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* SkillTech Brand Colors */
+            --orange-primary: #FF9D00;
+            --orange-hover: #E68900;
+            --orange-light: #FFF3E0;
+            --dark-blue: #263B56;
+            --white-bg: #FFFFFF;
+            --light-grey-bg: #F8F9FA;
+            --light-grey-border: #DEE2E6;
+            --card-border: #E9ECEF;
+            --text-primary: #212529;
+            --text-secondary: #6C757D;
+            --text-muted: #ADB5BD;
+            --success-green: #28A745;
+            --shadow-sm: rgba(0, 0, 0, 0.05) 0px 2px 4px 0px;
+            --shadow-md: rgba(0, 0, 0, 0.1) 0px 4px 8px 0px;
+            --shadow-lg: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
+        }
+
+        body {
+            font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--white-bg);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 24px 32px;
+            box-shadow: var(--shadow-sm);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @@keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+           justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            background: var(--orange-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            box-shadow: var(--shadow-md);
+            letter-spacing: 1px;
+        }
+
+        .header-text h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-text p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .status-badge {
+            background: #E8F5E9;
+            border: 1px solid var(--success-green);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--success-green);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @@keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            background: var(--white-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 28px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: var(--light-grey-bg);
+            min-height: 0;
+        }
+
+        /* Scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #F1F3F5;
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--orange-primary);
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--orange-hover);
+        }
+
+        /* Messages */
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: messageSlide 0.4s ease-out;
+        }
+
+        @@keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            letter-spacing: 0.5px;
+            overflow: hidden;
+        }
+
+        .message.bot .message-avatar {
+            background: var(--orange-primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message.user .message-avatar {
+            background: var(--dark-blue);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message-content {
+            max-width: 70%;
+            border-radius: 15px;
+            padding: 14px 18px;
+            line-height: 1.6;
+            font-size: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message.bot .message-content {
+            background: var(--white-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+        }
+
+        .message.user .message-content {
+            background: var(--orange-light);
+            border: 1px solid var(--orange-primary);
+            color: var(--dark-blue);
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            text-align: center;
+            padding: 20px 24px;
+            background: var(--white-bg);
+        }
+
+        .welcome-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 12px;
+        }
+
+        .welcome-screen h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark-blue);
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-screen p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 520px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            max-width: 700px;
+        }
+
+        .quick-action-btn {
+            background: var(--white-bg);
+            border: 2px solid var(--orange-primary);
+            padding: 14px 24px;
+            border-radius: 15px;
+            color: var(--orange-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .quick-action-btn:hover {
+            background: var(--orange-primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .quick-action-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Input Area */
+        .chat-input-area {
+            padding: 20px 24px;
+            border-top: 1px solid var(--card-border);
+            background: var(--white-bg);
+            position: relative;
+            z-index: 10;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--white-bg);
+            border: 2px solid var(--orange-primary);
+            border-radius: 15px;
+            padding: 14px 20px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Inter Tight', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--orange-hover);
+            box-shadow: 0 0 0 3px rgba(255, 157, 0, 0.1);
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .send-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--orange-primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .send-btn:hover {
+            background: var(--orange-hover);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .send-btn:active {
+            transform: scale(0.98);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            gap: 12px;
+        }
+
+        .typing-indicator .message-avatar {
+            background: var(--orange-primary);
+            color: white;
+        }
+
+        .typing-dots {
+            background: var(--white-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 14px 18px;
+            display: flex;
+            gap: 6px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--orange-primary);
+            border-radius: 50%;
+            animation: typingDot 1.4s ease-in-out infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @@keyframes typingDot {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Goal Badge */
+        .goal-badge {
+            display: inline-block;
+            background: var(--orange-light);
+            border: 1px solid var(--orange-primary);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--orange-primary);
+            margin-top: 8px;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .container {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .header-text h1 {
+                font-size: 22px;
+            }
+
+            .header-text p {
+                font-size: 13px;
+            }
+
+            .logo {
+                width: 48px;
+                height: 48px;
+                font-size: 18px;
+            }
+
+            .chat-messages {
+                padding: 20px 16px;
+                gap: 16px;
+            }
+
+            .message-content {
+                max-width: 85%;
+                padding: 12px 16px;
+            }
+
+            .message-avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .welcome-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+
+            .welcome-screen h2 {
+                font-size: 26px;
+            }
+
+            .welcome-screen p {
+                font-size: 15px;
+            }
+
+            .quick-action-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .chat-input-area {
+                padding: 16px;
+            }
+
+            .chat-input-container {
+                gap: 8px;
+            }
+
+            .chat-input {
+                padding: 12px 16px;
+            }
+
+            .send-btn {
+                width: 44px;
+                height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <img src="/images/skilltech-logo.png" alt="SkillTech Logo" class="welcome-logo" />
+                    <h2>Welcome to SkillTech Navigator</h2>
+                    <p>
+                        I can help you choose the right Azure certification, explore our courses, check pricing plans, or book mentorship with Maruti Makwana.
+                    </p>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" onclick="sendQuickMessage('I am new to Cloud and Azure')">
+                            I'm new to Cloud & Azure
+                        </button>
+                        <button class="quick-action-btn" onclick="sendQuickMessage('I need a certification')">
+                            I need a certification
+                        </button>
+                        <button class="quick-action-btn" onclick="sendQuickMessage('Tell me about pricing')">
+                            Tell me about pricing
+                        </button>
+                    </div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="message-avatar">ST</div>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="messageInput" 
+                        placeholder="Ask about courses, certifications, or pricing..."
+                        autocomplete="off"
+                    />
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        ➤
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let messageHistory = [];
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus input
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.focus();
+                
+                // Handle Enter key
+                messageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+        });
+
+        function sendQuickMessage(message) {
+            document.getElementById('messageInput').value = message;
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Hide welcome screen
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            if (welcomeScreen) {
+                welcomeScreen.style.display = 'none';
+            }
+
+            // Add user message
+            addMessage(message, 'user');
+            
+            // Clear input and disable
+            input.value = '';
+            input.disabled = true;
+            document.getElementById('sendBtn').disabled = true;
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        history: messageHistory
+                    })
+                });
+
+                const data = await response.json();
+                
+                hideTypingIndicator();
+
+                if (data.success) {
+                    addMessage(data.reply, 'bot', data.goal);
+                } else {
+                    addMessage(data.errorMessage || 'Sorry, I encountered an error. Please try again.', 'bot');
+                }
+            } catch (error) {
+                hideTypingIndicator();
+                addMessage('Sorry, I could not connect to the server. Please check your connection and try again.', 'bot');
+            }
+
+            // Re-enable input
+            input.disabled = false;
+            document.getElementById('sendBtn').disabled = false;
+            input.focus();
+        }
+
+        function addMessage(content, role, goal = null) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            
+            if (role === 'user') {
+                avatar.textContent = 'U';
+            } else {
+                avatar.textContent = 'ST';
+            }
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            const textDiv = document.createElement('div');
+            // Use formatText to convert markdown to HTML
+            textDiv.innerHTML = formatText(content);
+            contentDiv.appendChild(textDiv);
+
+            if (goal && role === 'bot') {
+                const goalBadge = document.createElement('div');
+                goalBadge.className = 'goal-badge';
+                goalBadge.textContent = `${goal}`;
+                contentDiv.appendChild(goalBadge);
+            }
+
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            contentDiv.appendChild(timeDiv);
+
+            if (role === 'user') {
+                messageDiv.appendChild(contentDiv);
+                messageDiv.appendChild(avatar);
+            } else {
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(contentDiv);
+            }
+
+            // Insert before typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            messagesContainer.insertBefore(messageDiv, typingIndicator);
+
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Add to history
+            messageHistory.push({
+                role: role,
+                content: content,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function formatText(text) {
+            if (!text) return "";
+
+            // 1. First handle markdown links BEFORE sanitization (to preserve URLs)
+            // Temporarily replace [text](url) with a placeholder
+            const linkPlaceholders = [];
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
+                const placeholder = `__LINK_${linkPlaceholders.length}__`;
+                linkPlaceholders.push({ text: linkText, url: url });
+                return placeholder;
+            });
+
+            // 2. Sanitize to prevent HTML injection (security)
+            let clean = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+            // 3. Restore markdown links as proper HTML
+            linkPlaceholders.forEach((link, index) => {
+                const linkHtml = `<a href="${link.url}" target="_blank" style="color:#FF9D00; text-decoration:underline; font-weight:500;">${link.text}</a>`;
+                clean = clean.replace(`__LINK_${index}__`, linkHtml);
+            });
+
+            // 4. Handle raw URLs (that aren't already in links)
+            clean = clean.replace(/(?<!href=")(https?:\/\/[^\s&<>"]+)/g, function(url) {
+                return `<a href="${url}" target="_blank" style="color:#FF9D00; text-decoration:underline; font-weight:500;">${url}</a>`;
+            });
+
+            // 5. Format **Bold** text
+            clean = clean.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // 6. Format *Italic* text (only single asterisks not part of bold)
+            clean = clean.replace(/(?<!\*)\*([^\*]+?)\*(?!\*)/g, '<em>$1</em>');
+
+            // 7. Format Bullet Points (lines starting with ✓, •, *, or -)
+            clean = clean.replace(/^[✓•\*\-]\s+(.*)$/gm, '<li style="margin-bottom:5px;">$1</li>');
+            
+            // Wrap consecutive <li> in <ul>
+            if (clean.includes('<li>')) {
+                clean = clean.replace(/(<li>.*?<\/li>(\s*<li>.*?<\/li>)*)/gs, '<ul style="margin: 10px 0; padding-left: 20px; list-style-type: disc;">$1</ul>');
+            }
+
+            // 8. Handle Newlines (convert \n to <br>)
+            clean = clean.replace(/\n/g, '<br>');
+
+            return clean;
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'flex';
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+    </script>
+
+    <!-- SkillTech Chat Widget Popup -->
+    <script>
+        // Configure widget to use chatbot on port 5186
+        window.SkillTechConfig = {
+            baseUrl: 'http://localhost:5186',
+            apiUrl: 'http://localhost:5186/api/chat'
+        };
+    </script>
+    <script src="http://localhost:5186/js/skilltech-embed.js" async></script>
+</body>
+</html>

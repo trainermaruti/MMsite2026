@@ -1,0 +1,862 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-01-03",
+  "courses": [
+    {
+      "id": "az-900",
+      "code": "AZ-900",
+      "name": "Microsoft Azure Fundamentals",
+      "level": "Beginner",
+      "category": "Azure Fundamentals",
+      "duration": "8-12 hours",
+      "prerequisites": [],
+      "description": "A foundational course designed to launch your cloud journey. It covers the core concepts of cloud computing, Azure architecture, and services. Ideal for anyone new to Azure.",
+      "keyTopics": [
+        "Cloud Concepts: High Availability, Scalability, Elasticity, Disaster Recovery, IaaS, PaaS, SaaS",
+        "Azure Architecture & Services: Regions, Availability Zones, Resource Groups, Compute (VMs, Containers), Networking (VNet, DNS), Storage, Databases",
+        "Management & Governance: Cost Management, Security (NSGs, Policy), Compliance"
+      ],
+      "outcomes": [
+        "Understand cloud computing concepts",
+        "Describe Azure architecture and services",
+        "Understand Azure management and governance",
+        "Pass the AZ-900 certification exam"
+      ],
+      "targetRoles": [
+        "IT Professionals new to Azure",
+        "Students/Graduates",
+        "Non-Technical Professionals (Sales, Managers)",
+        "Career Changers"
+      ],
+      "modules": [
+        "Cloud Concepts",
+        "Azure Architecture and Services",
+        "Azure Management and Governance"
+      ],
+      "certificationExam": "AZ-900",
+      "nextSteps": ["AI-900", "AZ-104", "AZ-204"],
+      "url": "https://skilltech.club/courses/azure-fundamentals-certification/az-900-certification/1",
+      "isFree": true,
+      "isPremium": false
+    },
+    {
+      "id": "ai-900",
+      "code": "AI-900",
+      "name": "Microsoft Azure AI Fundamentals",
+      "level": "Beginner",
+      "category": "AI Fundamentals",
+      "duration": "6-8 hours",
+      "prerequisites": [],
+      "description": "A comprehensive introduction to Artificial Intelligence and Machine Learning on Azure. It bridges the gap between theory and practice, preparing learners for the AI-900 certification.",
+      "keyTopics": [
+        "AI Workloads: ML, Computer Vision, Anomaly Detection, NLP, Responsible AI",
+        "Machine Learning on Azure: Regression, Classification, Clustering, Azure ML (Automated ML, Designer)",
+        "Computer Vision: Image Classification, Object Detection, Face Services",
+        "Natural Language Processing (NLP): Sentiment Analysis, Speech Recognition, Language Services",
+        "Generative AI: OpenAI Service, Prompt Engineering"
+      ],
+      "outcomes": [
+        "Understand AI and ML concepts",
+        "Describe Azure AI services",
+        "Understand responsible AI principles",
+        "Pass the AI-900 certification exam"
+      ],
+      "targetRoles": [
+        "Business Leaders",
+        "Developers",
+        "Data Analysts",
+        "Students",
+        "Non-technical individuals interested in AI"
+      ],
+      "modules": [
+        "AI Workloads and Considerations",
+        "Machine Learning Fundamentals",
+        "Computer Vision Workloads",
+        "Natural Language Processing Workloads",
+        "Generative AI Fundamentals"
+      ],
+      "certificationExam": "AI-900",
+      "nextSteps": ["AI-102"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-900-certification/2",
+      "isFree": true,
+      "isPremium": false
+    },
+    {
+      "id": "az-104",
+      "code": "AZ-104",
+      "name": "Microsoft Azure Administrator",
+      "level": "Intermediate",
+      "category": "Azure Administration",
+      "duration": "40-50 hours",
+      "prerequisites": ["AZ-900"],
+      "description": "A critical course for professionals managing Azure environments. Covers daily administration tasks, identity management, and networking.",
+      "keyTopics": [
+        "Identity & Governance: Azure AD (Entra ID), RBAC, Policy",
+        "Storage: Storage Accounts, File Shares, Blob Storage",
+        "Compute: VMs, Scaling, App Service, Containers",
+        "Networking: VNets, NSGs, Azure Firewall, DNS, Load Balancing",
+        "Monitoring: Azure Monitor, Backup/Recovery"
+      ],
+      "outcomes": [
+        "Manage Azure identities and governance",
+        "Implement and manage storage",
+        "Deploy and manage Azure compute resources",
+        "Configure and manage virtual networking",
+        "Pass the AZ-104 certification exam"
+      ],
+      "targetRoles": [
+        "IT Administrators",
+        "Network Administrators",
+        "Support Professionals",
+        "Cloud Engineers"
+      ],
+      "modules": [
+        "Manage Azure Identities and Governance",
+        "Implement and Manage Storage",
+        "Deploy and Manage Azure Compute Resources",
+        "Configure and Manage Virtual Networking",
+        "Monitor and Maintain Azure Resources"
+      ],
+      "certificationExam": "AZ-104",
+      "nextSteps": ["AZ-305", "AZ-400"],
+      "url": "https://skilltech.club/courses/azure-administrator-training/az-104-certification/12",
+      "isFree": false,
+      "isPremium": true,
+      "experienceRequired": "6 months of hands-on Azure experience; knowledge of OS, virtualization, and networking"
+    },
+    {
+      "id": "az-204",
+      "code": "AZ-204",
+      "name": "Developing Solutions for Microsoft Azure",
+      "level": "Intermediate",
+      "category": "Azure Development",
+      "duration": "40-50 hours",
+      "prerequisites": ["AZ-900"],
+      "description": "The definitive course for cloud developers. Focuses on coding, SDKs, and building scalable, secure applications using Azure services.",
+      "keyTopics": [
+        "Compute Solutions: VMs, App Service, Azure Functions",
+        "Storage: Blob Storage, Cosmos DB",
+        "Security: Authentication (MSAL), Key Vault, Managed Identities",
+        "Monitoring & Optimization: Application Insights, Redis Cache, CDN",
+        "Messaging: Event Grid, Event Hubs, Service Bus"
+      ],
+      "outcomes": [
+        "Develop Azure compute solutions",
+        "Develop for Azure storage",
+        "Implement Azure security",
+        "Monitor, troubleshoot, and optimize solutions",
+        "Pass the AZ-204 certification exam"
+      ],
+      "targetRoles": [
+        "Software Engineers",
+        "IT Professionals with coding skills",
+        "DevOps Engineers",
+        "Application Developers"
+      ],
+      "modules": [
+        "Develop Azure Compute Solutions",
+        "Develop for Azure Storage",
+        "Implement Azure Security",
+        "Monitor, Troubleshoot, and Optimize Azure Solutions",
+        "Connect to and Consume Azure Services"
+      ],
+      "certificationExam": "AZ-204",
+      "nextSteps": ["AZ-400", "AI-102"],
+      "url": "https://skilltech.club/courses/azure-developer-certification/az-204-certification/11",
+      "isFree": false,
+      "isPremium": true,
+      "experienceRequired": "1-2 years of development experience; proficiency in a supported language (C#, Python, etc.)"
+    },
+    {
+      "id": "ai-102",
+      "code": "AI-102",
+      "name": "Designing and Implementing a Microsoft Azure AI Solution",
+      "level": "Advanced",
+      "category": "AI Engineering",
+      "duration": "50-60 hours",
+      "prerequisites": ["AI-900", "AZ-900"],
+      "description": "A hands-on course for designing and deploying AI solutions. Covers Cognitive Services, Azure OpenAI, and custom AI workflows.",
+      "keyTopics": [
+        "Generative AI: RAG, Prompt Engineering, Fine-tuning, Content Filters",
+        "AI Agents: Azure AI Foundry Agent Service, Semantic Kernel",
+        "Natural Language: Text Analysis, Question Answering, Speech Recognition/Synthesis",
+        "Computer Vision: Image Analysis, Custom Vision, Face Detection",
+        "Information Extraction: Document Intelligence, Knowledge Mining (AI Search)"
+      ],
+      "outcomes": [
+        "Plan and manage Azure AI solutions",
+        "Implement computer vision solutions",
+        "Implement natural language processing solutions",
+        "Implement knowledge mining solutions",
+        "Implement conversational AI solutions",
+        "Pass the AI-102 certification exam"
+      ],
+      "targetRoles": [
+        "Azure Developers",
+        "Solution Architects",
+        "AI Engineers",
+        "Machine Learning Engineers"
+      ],
+      "modules": [
+        "Plan and Manage Azure AI Solution",
+        "Implement Computer Vision Solutions",
+        "Implement Natural Language Processing Solutions",
+        "Implement Knowledge Mining Solutions",
+        "Implement Conversational AI Solutions",
+        "Azure OpenAI Service",
+        "Retrieval-Augmented Generation (RAG)"
+      ],
+      "certificationExam": "AI-102",
+      "nextSteps": ["AZ-305"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-102-certification/13",
+      "isFree": false,
+      "isPremium": true
+    },
+    {
+      "id": "az-305",
+      "code": "AZ-305",
+      "name": "Designing Microsoft Azure Infrastructure Solutions",
+      "level": "Expert",
+      "category": "Azure Architecture",
+      "duration": "50-60 hours",
+      "prerequisites": ["AZ-104"],
+      "description": "An expert-level course for aspiring Azure Solutions Architects. Focuses on design decisions, trade-offs, and strategic planning for infrastructure.",
+      "keyTopics": [
+        "Governance & Monitoring: Azure Policy, Blueprints, Azure AD, Azure Monitor",
+        "Data Storage: SQL/NoSQL selection, Data Integration, Redundancy",
+        "Business Continuity: HA/DR strategies, Backup, Site Recovery",
+        "Infrastructure: Networking, Compute (VMs, Containers), Migration strategies"
+      ],
+      "outcomes": [
+        "Design identity, governance, and monitoring solutions",
+        "Design data storage solutions",
+        "Design business continuity solutions",
+        "Design infrastructure solutions",
+        "Pass the AZ-305 certification exam",
+        "Earn Azure Solutions Architect Expert certification"
+      ],
+      "targetRoles": [
+        "Azure Administrators",
+        "DevOps Engineers",
+        "Senior Developers",
+        "IT Consultants",
+        "Solutions Architects"
+      ],
+      "modules": [
+        "Design Identity, Governance, and Monitoring Solutions",
+        "Design Data Storage Solutions",
+        "Design Business Continuity Solutions",
+        "Design Infrastructure Solutions"
+      ],
+      "certificationExam": "AZ-305",
+      "nextSteps": [],
+      "url": "https://skilltech.club/courses/azure-architect-course/az-305-certification/6",
+      "isFree": false,
+      "isPremium": true,
+      "requiresPrerequisiteCertification": true,
+      "prerequisiteCertifications": ["AZ-104"],
+      "experienceRequired": "AZ-104 Certification and advanced IT operations experience"
+    },
+    {
+      "id": "az-400",
+      "code": "AZ-400",
+      "name": "Designing and Implementing Microsoft DevOps Solutions",
+      "level": "Advanced",
+      "category": "DevOps",
+      "duration": "40-50 hours",
+      "prerequisites": ["AZ-104", "AZ-204"],
+      "description": "Expert-level training for DevOps Engineers. Covers the entire lifecycle from planning to monitoring using Azure DevOps and GitHub.",
+      "keyTopics": [
+        "SRE & Instrumentation: Monitoring strategies, Site Reliability Engineering",
+        "Source Control & CI/CD: Git branching, Azure Pipelines, GitHub Actions",
+        "Release Strategy: Deployment patterns (Blue-Green, Canary), Package Management",
+        "Infrastructure as Code (IaC): ARM Templates, Bicep, Terraform",
+        "Security: DevSecOps, Dependency Management"
+      ],
+      "outcomes": [
+        "Design and implement DevOps development processes",
+        "Design and implement continuous integration",
+        "Design and implement continuous delivery",
+        "Implement dependency management",
+        "Pass the AZ-400 certification exam",
+        "Earn Azure DevOps Engineer Expert certification"
+      ],
+      "targetRoles": [
+        "Azure Administrators/Developers transitioning to DevOps",
+        "Build/Release Engineers",
+        "Site Reliability Engineers",
+        "DevOps Engineers"
+      ],
+      "modules": [
+        "Configure Processes and Communications",
+        "Design and Implement Source Control",
+        "Design and Implement Build and Release Pipelines",
+        "Develop Security and Compliance Plan",
+        "Implement Instrumentation Strategy"
+      ],
+      "certificationExam": "AZ-400",
+      "nextSteps": [],
+      "url": "https://skilltech.club/courses/azure-devops-course/az-400-certification/14",
+      "isFree": false,
+      "isPremium": true,
+      "experienceRequired": "AZ-104 or AZ-204 certification"
+    },
+    {
+      "id": "dp-900",
+      "code": "DP-900",
+      "name": "Microsoft Azure Data Fundamentals",
+      "level": "Beginner",
+      "category": "Data Fundamentals",
+      "duration": "6-8 hours",
+      "prerequisites": [],
+      "description": "An introductory course to the world of cloud data services. It covers core data concepts, relational and non-relational data, and analytics workloads on Azure.",
+      "keyTopics": [
+        "Core Data Concepts: Structured vs. Unstructured data, Batch vs. Streaming",
+        "Relational Data: Azure SQL Database, SQL Managed Instance, SQL VMs",
+        "Non-Relational Data: Cosmos DB, Blob Storage, File Storage",
+        "Analytics: Data Warehousing, Azure Synapse, Databricks, Power BI"
+      ],
+      "outcomes": [
+        "Describe core data concepts",
+        "Identify Azure data services",
+        "Describe relational data workloads",
+        "Describe analytics workloads",
+        "Pass the DP-900 certification exam"
+      ],
+      "targetRoles": [
+        "Beginners",
+        "IT Professionals",
+        "Database Administrators",
+        "Business Analysts"
+      ],
+      "modules": [
+        "Core Data Concepts",
+        "Relational Data in Azure",
+        "Non-Relational Data in Azure",
+        "Analytics Workload in Azure"
+      ],
+      "certificationExam": "DP-900",
+      "nextSteps": ["DP-203", "DP-300"],
+      "url": "https://skilltech.club/courses/azure-fundamentals-certification/dp-900-certification/4",
+      "isFree": true,
+      "isPremium": false
+    },
+    {
+      "id": "copilot-studio",
+      "code": "AI-3018",
+      "name": "Foundations of Microsoft Copilot (AI-3018)",
+      "level": "Intermediate",
+      "category": "AI & Automation",
+      "duration": "20-25 hours",
+      "prerequisites": ["AI-900"],
+      "description": "A course designed to turn users into Copilot solution architects. It covers the architecture, extension, implementation, and management of Microsoft Copilot.",
+      "keyTopics": [
+        "Architecture: LLMs, Microsoft Graph, Prompt Engineering",
+        "Extending Copilot: Plugins, Graph Connectors, Power Platform integration",
+        "Implementation & Management: Deployment strategy, Licensing, Security, Copilot Studio"
+      ],
+      "outcomes": [
+        "Design conversational AI experiences",
+        "Build custom copilots with Copilot Studio",
+        "Integrate copilots with business systems",
+        "Deploy and manage copilot solutions",
+        "Extend Microsoft 365 Copilot with plugins and connectors"
+      ],
+      "targetRoles": [
+        "IT/M365 Administrators",
+        "Business Analysts",
+        "Power Platform Developers",
+        "Team Leaders"
+      ],
+      "modules": [
+        "Introduction to Copilot Studio",
+        "Conversational AI Design Principles",
+        "Building Custom Topics and Entities",
+        "Integration with Microsoft 365 and Azure",
+        "Testing and Deployment Strategies"
+      ],
+      "certificationExam": "AI-3018",
+      "nextSteps": ["AI-102"],
+      "url": "https://skilltech.club/courses/microsoft-copilot-studio/ai-3018-copilot-certification/5",
+      "isFree": false,
+      "isPremium": true,
+      "experienceRequired": "Understanding of Microsoft 365 services (Teams, SharePoint, Outlook)"
+    },
+    {
+      "id": "ai-agent",
+      "code": "AI-AGENT",
+      "name": "AI Agent Certification",
+      "level": "Advanced",
+      "category": "AI Engineering",
+      "duration": "15-20 hours",
+      "prerequisites": ["AI-900"],
+      "description": "A guide to building autonomous AI agents using modern frameworks like Azure AI Foundry and Semantic Kernel.",
+      "keyTopics": [
+        "Agent Concepts: Types of Agents, Evolution",
+        "Development: Azure AI Foundry, Semantic Kernel SDK",
+        "Design Patterns: Reflection, Tool Use, Planning, Multi-Agent, React",
+        "Frameworks: Microsoft Agent Framework"
+      ],
+      "outcomes": [
+        "Understand autonomous AI agent architecture",
+        "Build AI agents with Azure AI Foundry",
+        "Implement design patterns for intelligent agents",
+        "Orchestrate multi-agent systems"
+      ],
+      "targetRoles": [
+        "Developers",
+        "IT Professionals",
+        "AI Engineers",
+        "Solution Architects"
+      ],
+      "modules": [
+        "Introduction to AI Agents",
+        "Azure AI Foundry Agent Service",
+        "Semantic Kernel SDK",
+        "Agent Design Patterns",
+        "Multi-Agent Orchestration"
+      ],
+      "certificationExam": null,
+      "nextSteps": ["AI-3026"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-agent-certification/16",
+      "isFree": false,
+      "isPremium": true
+    },
+    {
+      "id": "ai-3016",
+      "code": "AI-3016",
+      "name": "Develop Generative AI Solutions with Azure OpenAI Service",
+      "level": "Intermediate",
+      "category": "AI Engineering",
+      "duration": "10-15 hours",
+      "prerequisites": ["AI-900"],
+      "description": "Focuses on utilizing Azure AI Studio to build generative AI applications.",
+      "keyTopics": [
+        "Azure AI Studio: Model Catalog, Prompt Flow",
+        "RAG: Retrieval Augmented Generation with custom data",
+        "Responsible AI: Content filters, evaluation",
+        "Fine-tuning: Customizing language models"
+      ],
+      "outcomes": [
+        "Build generative AI applications with Azure OpenAI",
+        "Implement RAG patterns with custom data",
+        "Apply responsible AI practices",
+        "Fine-tune language models for specific use cases"
+      ],
+      "targetRoles": [
+        "AI Developers",
+        "Cloud Professionals",
+        "Data Scientists",
+        "Software Engineers"
+      ],
+      "modules": [
+        "Azure AI Studio Overview",
+        "Working with Azure OpenAI Models",
+        "Retrieval Augmented Generation (RAG)",
+        "Prompt Engineering Best Practices",
+        "Responsible AI and Content Filtering",
+        "Model Fine-tuning"
+      ],
+      "certificationExam": "AI-3016",
+      "nextSteps": ["AI-102", "AI-3026"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3016-certification/18",
+      "isFree": false,
+      "isPremium": true,
+      "experienceRequired": "Professionals with C# experience and Azure familiarity"
+    },
+    {
+      "id": "ai-3026",
+      "code": "AI-3026",
+      "name": "Develop AI Agents with Azure AI Foundry",
+      "level": "Advanced",
+      "category": "AI Engineering",
+      "duration": "15-20 hours",
+      "prerequisites": ["AI-900", "AI-3016"],
+      "description": "A learning path focused on creating and orchestrating AI agents using Azure AI Foundry and Semantic Kernel.",
+      "keyTopics": [
+        "Agentic AI: Design patterns (Reflection, Tool Use)",
+        "Azure AI Foundry: Agent Service, Model Catalog",
+        "Semantic Kernel: Plugins, Planning, Multi-Agent orchestration",
+        "Integration: Connecting to APIs and external services"
+      ],
+      "outcomes": [
+        "Design and build autonomous AI agents",
+        "Implement agentic AI design patterns",
+        "Use Semantic Kernel for agent orchestration",
+        "Integrate agents with external systems and APIs"
+      ],
+      "targetRoles": [
+        "AI Developers",
+        "Cloud Professionals",
+        "Data Scientists",
+        "Solution Architects"
+      ],
+      "modules": [
+        "Introduction to Agentic AI",
+        "Azure AI Foundry Agent Service",
+        "Semantic Kernel Framework",
+        "Agent Design Patterns (Reflection, Tool Use, Planning)",
+        "Multi-Agent Orchestration",
+        "API Integration and Tool Calling"
+      ],
+      "certificationExam": "AI-3026",
+      "nextSteps": ["AI-102"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3026-certification/19",
+      "isFree": false,
+      "isPremium": true
+    },
+    {
+      "id": "ai-3004",
+      "code": "AI-3004",
+      "name": "Build Computer Vision Solutions with Azure AI Vision",
+      "level": "Intermediate",
+      "category": "AI Engineering",
+      "duration": "12-15 hours",
+      "prerequisites": ["AI-900"],
+      "description": "Intermediate course on designing and building computer vision solutions.",
+      "keyTopics": [
+        "Image Analysis: Prebuilt models for classification and analysis",
+        "Custom Vision: Training custom models for object detection",
+        "Face Services: Detection and recognition",
+        "OCR: Reading text from images",
+        "GenAI: Vision-enabled generative AI applications"
+      ],
+      "outcomes": [
+        "Implement image analysis solutions",
+        "Build custom computer vision models",
+        "Deploy face detection and recognition services",
+        "Extract text from images using OCR",
+        "Create vision-enabled generative AI applications"
+      ],
+      "targetRoles": [
+        "AI Developers",
+        "Cloud Professionals",
+        "Data Scientists",
+        "Software Engineers"
+      ],
+      "modules": [
+        "Azure AI Vision Overview",
+        "Image Analysis and Classification",
+        "Custom Vision Model Training",
+        "Face Detection and Recognition",
+        "Optical Character Recognition (OCR)",
+        "Vision-Enabled Generative AI"
+      ],
+      "certificationExam": "AI-3004",
+      "nextSteps": ["AI-102"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3004-certification/20",
+      "isFree": false,
+      "isPremium": true
+    },
+    {
+      "id": "ai-3003",
+      "code": "AI-3003",
+      "name": "Build Natural Language Processing Solutions",
+      "level": "Intermediate",
+      "category": "AI Engineering",
+      "duration": "12-15 hours",
+      "prerequisites": ["AI-900"],
+      "description": "Hands-on course for building NLP solutions using Azure AI Language and Speech services.",
+      "keyTopics": [
+        "Text Analysis: Sentiment, key phrases, entity recognition",
+        "Conversational AI: Question answering, Language Understanding (CLU)",
+        "Speech: Recognition and Synthesis",
+        "Translation: Text translation services"
+      ],
+      "outcomes": [
+        "Implement text analysis and sentiment detection",
+        "Build conversational AI solutions",
+        "Deploy speech recognition and synthesis",
+        "Create text translation services",
+        "Implement entity recognition and key phrase extraction"
+      ],
+      "targetRoles": [
+        "AI Developers",
+        "Cloud Professionals",
+        "Data Scientists",
+        "Software Engineers"
+      ],
+      "modules": [
+        "Azure AI Language Services",
+        "Text Analysis and Sentiment Detection",
+        "Entity Recognition and Key Phrases",
+        "Conversational Language Understanding (CLU)",
+        "Question Answering Systems",
+        "Speech Recognition and Synthesis",
+        "Text Translation"
+      ],
+      "certificationExam": "AI-3003",
+      "nextSteps": ["AI-102"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3003-certification/21",
+      "isFree": false,
+      "isPremium": true
+    },
+    {
+      "id": "ai-3002",
+      "code": "AI-3002",
+      "name": "Develop AI Information Extraction Solutions",
+      "level": "Intermediate",
+      "category": "AI Engineering",
+      "duration": "12-15 hours",
+      "prerequisites": ["AI-900"],
+      "description": "Focuses on extracting structured data from documents using Azure Document Intelligence.",
+      "keyTopics": [
+        "Document Intelligence: Prebuilt models (Forms, Receipts, ID) and Custom models",
+        "Knowledge Mining: Integration with Azure AI Search",
+        "Multimodal Analysis: Using Azure AI Content Understanding"
+      ],
+      "outcomes": [
+        "Extract data from documents using prebuilt models",
+        "Train custom document intelligence models",
+        "Implement knowledge mining solutions",
+        "Build multimodal content understanding applications",
+        "Integrate with Azure AI Search"
+      ],
+      "targetRoles": [
+        "AI Developers",
+        "Cloud Professionals",
+        "Data Scientists",
+        "Automation Specialists"
+      ],
+      "modules": [
+        "Azure Document Intelligence Overview",
+        "Prebuilt Document Models",
+        "Custom Model Training",
+        "Knowledge Mining with Azure AI Search",
+        "Multimodal Content Understanding",
+        "Document Processing Pipelines"
+      ],
+      "certificationExam": "AI-3002",
+      "nextSteps": ["AI-102"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-3002-certification/22",
+      "isFree": false,
+      "isPremium": true
+    },
+    {
+      "id": "microservices-aks",
+      "code": "MICROSERVICES-AKS",
+      "name": "Microservices with Containers and AKS",
+      "level": "Advanced",
+      "category": "Azure Development",
+      "duration": "30-35 hours",
+      "prerequisites": ["AZ-204"],
+      "description": "Focuses on Microservice architecture, Docker containerization, and orchestration with Azure Kubernetes Service (AKS).",
+      "keyTopics": [
+        "Docker: Architecture, Commands, Dockerfile, Container Registry (ACR)",
+        "Microservices: Architecture, API Gateway, Communication",
+        "AKS: Cluster deployment, YAML, Pod/Node scaling",
+        "Azure Integration: App Service, Functions (Serverless)"
+      ],
+      "outcomes": [
+        "Design microservices architectures",
+        "Build and deploy Docker containers",
+        "Deploy and manage AKS clusters",
+        "Implement API Gateway patterns",
+        "Scale microservices applications"
+      ],
+      "targetRoles": [
+        "Cloud Developers",
+        "DevOps Engineers",
+        "Solutions Architects",
+        "IT Professionals migrating to microservices"
+      ],
+      "modules": [
+        "Microservices Architecture Fundamentals",
+        "Docker Containerization",
+        "Azure Container Registry (ACR)",
+        "Azure Kubernetes Service (AKS)",
+        "Service Communication and API Gateway",
+        "Scaling and Orchestration",
+        "Integration with Azure Services"
+      ],
+      "certificationExam": null,
+      "nextSteps": ["AZ-400"],
+      "url": "https://skilltech.club/courses/azure-developer-certification/microservices-with-containers-and-aks/24",
+      "isFree": false,
+      "isPremium": true
+    },
+    {
+      "id": "ai-900-2026",
+      "code": "AI-900-2026",
+      "name": "AI-900 Certification (New 2026 Curriculum)",
+      "level": "Beginner",
+      "category": "AI Fundamentals",
+      "duration": "8-10 hours",
+      "prerequisites": [],
+      "description": "The updated 2026 curriculum for AI-900, shifting focus to Microsoft Foundry, Generative AI, and AI Agents.",
+      "keyTopics": [
+        "Microsoft Foundry: Unified AI platform for building and deploying",
+        "Generative AI & Agents: Modern workloads and automation",
+        "Core AI: ML, NLP, Speech, and Computer Vision within the context of Foundry",
+        "Information Extraction: Document intelligence"
+      ],
+      "outcomes": [
+        "Understand Microsoft AI Foundry platform",
+        "Describe generative AI and AI agents",
+        "Explain modern AI workloads on Azure",
+        "Pass the updated AI-900 certification exam"
+      ],
+      "targetRoles": [
+        "Beginners",
+        "IT Professionals",
+        "Business Leaders seeking up-to-date AI literacy",
+        "Students"
+      ],
+      "modules": [
+        "Introduction to Microsoft AI Foundry",
+        "Generative AI Fundamentals",
+        "AI Agents and Automation",
+        "Machine Learning on Azure",
+        "Computer Vision and NLP",
+        "Information Extraction and Document Intelligence"
+      ],
+      "certificationExam": "AI-900",
+      "nextSteps": ["AI-3016", "AI-102"],
+      "url": "https://skilltech.club/courses/azure-ai-fundamentals-certification/ai-900-certification-new/25",
+      "isFree": true,
+      "isPremium": false
+    }
+  ],
+  "products": [
+    {
+      "id": "premium-membership",
+      "name": "Premium Membership",
+      "description": "Unlimited access to all premium courses, live mentor sessions, Interview Kit, and career guidance.",
+      "features": [
+        "Access to all premium courses",
+        "Live 1-to-1 mentor sessions",
+        "Interview Kit with real interview questions",
+        "Resume and LinkedIn profile review",
+        "Career path guidance",
+        "Priority support",
+        "Lifetime access to course updates"
+      ],
+      "url": "https://skilltech.club/premium",
+      "price": "Contact for pricing"
+    },
+    {
+      "id": "interview-kit",
+      "name": "Azure & AI Interview Kit",
+      "description": "Comprehensive interview preparation package with real questions, answers, and strategies.",
+      "features": [
+        "200+ real Azure interview questions",
+        "50+ AI and machine learning questions",
+        "Scenario-based questions with solutions",
+        "Mock interview sessions",
+        "Interview strategies and tips",
+        "Salary negotiation guidance"
+      ],
+      "includedIn": ["premium-membership"],
+      "url": "https://skilltech.club/interview-kit",
+      "price": "Included in Premium Membership"
+    }
+  ],
+  "learningPaths": [
+    {
+      "id": "beginner-cloud",
+      "name": "Cloud Computing Beginner",
+      "description": "Start your cloud journey from scratch",
+      "courses": ["az-900", "ai-900", "dp-900"],
+      "estimatedDuration": "20-28 hours",
+      "targetAudience": "Complete beginners, career switchers, students"
+    },
+    {
+      "id": "azure-administrator",
+      "name": "Azure Administrator",
+      "description": "Become a certified Azure administrator",
+      "courses": ["az-900", "az-104"],
+      "estimatedDuration": "48-62 hours",
+      "targetAudience": "System administrators, IT operations, cloud engineers"
+    },
+    {
+      "id": "azure-developer",
+      "name": "Azure Developer",
+      "description": "Build cloud applications on Azure",
+      "courses": ["az-900", "az-204", "az-400"],
+      "estimatedDuration": "88-112 hours",
+      "targetAudience": "Software developers, application developers, DevOps engineers"
+    },
+    {
+      "id": "ai-engineer",
+      "name": "Azure AI Engineer",
+      "description": "Design and implement AI solutions on Azure",
+      "courses": ["az-900", "ai-900", "ai-102"],
+      "estimatedDuration": "64-80 hours",
+      "targetAudience": "AI developers, data scientists, machine learning engineers"
+    },
+    {
+      "id": "solutions-architect",
+      "name": "Azure Solutions Architect Expert",
+      "description": "Design enterprise-grade Azure solutions",
+      "courses": ["az-900", "az-104", "az-305"],
+      "estimatedDuration": "98-122 hours",
+      "targetAudience": "Solutions architects, technical architects, senior engineers"
+    }
+  ],
+  "certifications": [
+    {
+      "code": "AZ-900",
+      "name": "Microsoft Certified: Azure Fundamentals",
+      "level": "Fundamental",
+      "requiredExams": ["AZ-900"],
+      "prerequisites": []
+    },
+    {
+      "code": "AI-900",
+      "name": "Microsoft Certified: Azure AI Fundamentals",
+      "level": "Fundamental",
+      "requiredExams": ["AI-900"],
+      "prerequisites": []
+    },
+    {
+      "code": "DP-900",
+      "name": "Microsoft Certified: Azure Data Fundamentals",
+      "level": "Fundamental",
+      "requiredExams": ["DP-900"],
+      "prerequisites": []
+    },
+    {
+      "code": "AZ-104",
+      "name": "Microsoft Certified: Azure Administrator Associate",
+      "level": "Associate",
+      "requiredExams": ["AZ-104"],
+      "prerequisites": []
+    },
+    {
+      "code": "AZ-204",
+      "name": "Microsoft Certified: Azure Developer Associate",
+      "level": "Associate",
+      "requiredExams": ["AZ-204"],
+      "prerequisites": []
+    },
+    {
+      "code": "AI-102",
+      "name": "Microsoft Certified: Azure AI Engineer Associate",
+      "level": "Associate",
+      "requiredExams": ["AI-102"],
+      "prerequisites": []
+    },
+    {
+      "code": "AZ-305",
+      "name": "Microsoft Certified: Azure Solutions Architect Expert",
+      "level": "Expert",
+      "requiredExams": ["AZ-305"],
+      "prerequisites": ["AZ-104"]
+    },
+    {
+      "code": "AZ-400",
+      "name": "Microsoft Certified: DevOps Engineer Expert",
+      "level": "Expert",
+      "requiredExams": ["AZ-400"],
+      "prerequisites": ["AZ-104 or AZ-204"]
+    }
+  ],
+  "metadata": {
+    "totalCourses": 17,
+    "freeCourses": 4,
+    "premiumCourses": 13,
+    "fundamentalCertifications": 3,
+    "associateCertifications": 3,
+    "expertCertifications": 2
+  }
+}

@@ -76,4 +76,11 @@
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="skilltechBot\**" />
+    <Content Remove="skilltechBot\**" />
+    <EmbeddedResource Remove="skilltechBot\**" />
+    <None Remove="skilltechBot\**" />
+  </ItemGroup>
+
 </Project>

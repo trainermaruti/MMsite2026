@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "SkillTech Navigator Widget";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/Favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/chat-widget.css">
+</head>
+<body>
+    <!-- Floating Chat Widget Container -->
+    <div class="chat-widget-container" id="chatWidgetContainer">
+        
+        <!-- Chat Popup Window -->
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-window">
+                
+                <!-- Header with Close Button -->
+                <div class="chat-header">
+                    <div class="header-title">
+                        <div class="bot-avatar-small">ST</div>
+                        <div class="header-info">
+                            <h3>SkillTech Navigator</h3>
+                            <div class="status-line">
+                                <span class="status-dot"></span>
+                                <span>Online</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="close-btn" id="closeBtn" aria-label="Close chat">×</button>
+                </div>
+
+                <!-- Message Area -->
+                <div class="chat-messages" id="chatMessages">
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <img src="/images/skilltech-logo.png" alt="SkillTech Logo" class="welcome-logo" />
+                        <h2>Welcome to SkillTech Navigator</h2>
+                        <p>
+                            I can help you choose the right Azure certification, explore our courses, check pricing plans, or book mentorship with Maruti Makwana.
+                        </p>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" onclick="sendQuickMessage('I am new to Cloud and Azure')">
+                                I'm new to Cloud & Azure
+                            </button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('I need a certification')">
+                                I need a certification
+                            </button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('Tell me about pricing')">
+                                Tell me about pricing
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="message-avatar">ST</div>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="chat-input-area">
+                    <div class="chat-input-container">
+                        <input 
+                            type="text" 
+                            class="chat-input" 
+                            id="messageInput" 
+                            placeholder="Ask about courses, certifications, or pricing..."
+                            autocomplete="off"
+                        />
+                        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                            ➤
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Launcher Button -->
+        <button class="chat-launcher" id="chatLauncher" aria-label="Open SkillTech Chat">
+            <span class="launcher-icon open-icon">💬</span>
+            <span class="launcher-icon close-icon">✕</span>
+        </button>
+    </div>
+
+    <script src="~/js/chat-widget.js"></script>
+</body>
+</html>

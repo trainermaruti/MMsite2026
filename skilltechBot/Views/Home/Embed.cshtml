@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillTech Widget - Embed Instructions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #FF9D00;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #263B56;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #FF9D00;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #FF9D00;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #E68900;
+            transform: translateY(-2px);
+        }
+
+        .copy-btn.copied {
+            background: #28A745;
+        }
+
+        .highlight {
+            color: #ce9178;
+        }
+
+        .comment {
+            color: #6a9955;
+        }
+
+        .tag {
+            color: #569cd6;
+        }
+
+        .steps {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #FF9D00;
+        }
+
+        .steps ol {
+            margin-left: 20px;
+        }
+
+        .steps li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .demo-link {
+            display: inline-block;
+            background: #FF9D00;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .demo-link:hover {
+            background: #E68900;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 157, 0, 0.3);
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #1565C0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 SkillTech Chat Widget</h1>
+        <p class="subtitle">Embed our AI-powered chat assistant on any website</p>
+
+        <div class="section">
+            <h2>
+                <span class="badge">STEP 1</span>
+                Copy the Embed Code
+            </h2>
+            <div class="code-block" id="embedCode">
+                <button class="copy-btn" onclick="copyCode('embedCode')">Copy Code</button>
+<span class="comment">&lt;!-- SkillTech Chat Widget --&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+  <span class="comment">// Optional: Configure the widget</span>
+  window.SkillTechConfig = {
+    baseUrl: <span class="highlight">'https://yourdomain.com'</span>,
+    apiUrl: <span class="highlight">'https://yourdomain.com/api/chat'</span>
+  };
+<span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;script</span> src=<span class="highlight">"https://yourdomain.com/js/skilltech-embed.js"</span> async<span class="tag">&gt;&lt;/script&gt;</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="badge">STEP 2</span>
+                Paste Before &lt;/body&gt;
+            </h2>
+            <div class="steps">
+                <ol>
+                    <li>Open your website's HTML file</li>
+                    <li>Find the closing <code>&lt;/body&gt;</code> tag</li>
+                    <li>Paste the embed code just before it</li>
+                    <li>Save and refresh your page</li>
+                </ol>
+            </div>
+            <div class="info-box">
+                <p><strong>💡 Pro Tip:</strong> The widget automatically adapts to mobile devices and won't interfere with your existing site!</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span class="badge">STEP 3</span>
+                Test It Out
+            </h2>
+            <p style="margin-bottom: 15px; color: #666;">See the widget in action on our demo page:</p>
+            <a href="/Home/Demo" class="demo-link">🎯 View Live Demo</a>
+        </div>
+
+        <div class="section">
+            <h2>Alternative: Simple One-Liner</h2>
+            <div class="code-block" id="simpleCode">
+                <button class="copy-btn" onclick="copyCode('simpleCode')">Copy Code</button>
+<span class="tag">&lt;script</span> src=<span class="highlight">"https://yourdomain.com/js/skilltech-embed.js"</span> async<span class="tag">&gt;&lt;/script&gt;</span>
+            </div>
+            <div class="info-box" style="margin-top: 15px;">
+                <p><strong>Note:</strong> This uses default configuration. Update the base URL in the embed script for production use.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(elementId) {
+            const codeBlock = document.getElementById(elementId);
+            const button = codeBlock.querySelector('.copy-btn');
+            const text = codeBlock.textContent.replace('Copy Code', '').replace('Copied!', '').trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy Code';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

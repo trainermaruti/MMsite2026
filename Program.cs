@@ -101,6 +101,12 @@ builder.Services.AddScoped<ChatbotService>();
 // Add SkillTech Review Service (dynamic reviews from SkillTech.club)
 builder.Services.AddScoped<MarutiTrainingPortal.Services.ISkillTechReviewService, MarutiTrainingPortal.Services.SkillTechReviewService>();
 
+// Add AI Bot Services
+builder.Services.AddSingleton<ICourseService, CourseService>();
+builder.Services.AddSingleton<ILeadService, LeadService>();
+builder.Services.AddHttpClient<IGeminiService, GeminiService>();
+builder.Services.AddScoped<IGeminiService, GeminiService>();
+
 // Add Contact Message Repository and Service
 builder.Services.AddScoped<MarutiTrainingPortal.Repositories.IContactMessageRepository, MarutiTrainingPortal.Repositories.ContactMessageRepository>();
 builder.Services.AddScoped<MarutiTrainingPortal.Services.IContactMessageService, MarutiTrainingPortal.Services.ContactMessageService>();

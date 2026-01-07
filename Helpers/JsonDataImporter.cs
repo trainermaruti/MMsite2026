@@ -456,9 +456,17 @@ public class JsonDataImporter
 
         if (settings == null || !settings.Any()) return 0;
         
-        context.SystemSettings.AddRange(settings);
-        await context.SaveChangesAsync();
-        return settings.Count;
+        // Check for existing settings and only add new ones
+        var existingIds = await context.SystemSettings.Select(s => s.Id).ToListAsync();
+        var newSettings = settings.Where(s => !existingIds.Contains(s.Id)).ToList();
+        
+        if (newSettings.Any())
+        {
+            context.SystemSettings.AddRange(newSettings);
+            await context.SaveChangesAsync();
+        }
+        
+        return newSettings.Count;
     }
 
     private static async Task<int> ImportContactMessages(ApplicationDbContext context)

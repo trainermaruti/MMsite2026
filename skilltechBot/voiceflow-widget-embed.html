@@ -1,0 +1,156 @@
+<!-- SkillTech Navigator - Voiceflow Widget Embed Code -->
+<!-- Generated: January 3, 2026 -->
+<!-- Platform: Voiceflow Web Chat Widget -->
+
+<!-- 
+INSTALLATION INSTRUCTIONS:
+========================== 
+
+Option 1: WordPress (WPCode Plugin)
+-----------------------------------
+1. Install WPCode plugin from WordPress repository
+2. Go to: Code Snippets → Header & Footer
+3. Paste this code in FOOTER section (before </body>)
+4. Save and publish
+
+Option 2: Custom HTML
+---------------------
+1. Open your site's main layout file (index.html, footer.php, etc.)
+2. Find the closing </body> tag
+3. Paste this code IMMEDIATELY BEFORE </body>
+4. Save and deploy
+
+Option 3: React/Next.js
+-----------------------
+See VOICEFLOW_DEPLOYMENT.md for React integration guide
+
+IMPORTANT RULES:
+===============
+- ❌ Do NOT paste in <head> section
+- ❌ Do NOT rename variables
+- ❌ Do NOT minify manually
+- ✅ Paste before </body> only
+- ✅ Replace YOUR_PROJECT_ID_HERE with actual Voiceflow Project ID
+-->
+
+<script type="text/javascript">
+  (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+          verify: { projectID: 'YOUR_PROJECT_ID_HERE' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          
+          // SkillTech Navigator Configuration
+          render: {
+            mode: 'embedded', // or 'overlay' for popup
+            launcher: 'button' // or 'proactive' for auto-popup
+          },
+          
+          // Optional: Custom styling
+          assistant: {
+            title: 'SkillTech Navigator',
+            description: 'Azure Certification Advisor',
+            color: '#0078D4', // Azure Blue
+            avatar: 'https://skilltech.club/assets/logo.png', // Optional: Replace with actual logo URL
+            launcher: 'https://skilltech.club/assets/chat-icon.png' // Optional: Custom launcher icon
+          },
+          
+          // Optional: User identification (for lead tracking)
+          // user: {
+          //   name: 'User Name',
+          //   email: 'user@example.com'
+          // }
+        });
+      };
+      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
+      v.type = "text/javascript";
+      s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+</script>
+
+<!-- 
+CUSTOMIZATION OPTIONS:
+=====================
+
+1. Change Widget Position:
+   Add after line 'versionID: "production",'
+   
+   position: 'right', // or 'left'
+   offset: { x: 20, y: 20 } // Distance from corner in pixels
+
+2. Disable Widget on Specific Pages:
+   Wrap script in conditional:
+   
+   <?php if (!is_page('contact')) { ?>
+     [script here]
+   <?php } ?>
+
+3. Hide Widget Initially (Show on Button Click):
+   Change 'launcher: "button"' to 'launcher: "hide"'
+   
+   Then add button somewhere on page:
+   <button onclick="window.voiceflow.chat.open()">Ask Navigator</button>
+
+4. Track Events in Google Analytics:
+   Add after window.voiceflow.chat.load({...}):
+   
+   window.voiceflow.chat.on('open', function() {
+     gtag('event', 'chat_opened', {
+       'event_category': 'engagement',
+       'event_label': 'SkillTech Navigator'
+     });
+   });
+
+PROACTIVE MESSAGE CONFIGURATION:
+================================
+
+To enable proactive message (appears after 10 seconds):
+Add to assistant configuration:
+
+proactive: {
+  enabled: true,
+  delay: 10000, // milliseconds (10 seconds)
+  message: 'Quick check — are you exploring the Beginner Azure path (AZ-900) or aiming for an advanced role like Architect?'
+}
+
+VERIFICATION:
+============
+
+After installation:
+1. Open your website
+2. Widget should appear bottom-right
+3. Click to open chat
+4. Say "Hi" and verify 3-path router appears
+5. Test each flow (Beginner, Course Selector, Mentorship)
+6. Check browser console for errors (F12 → Console)
+
+TROUBLESHOOTING:
+===============
+
+Widget not appearing:
+- Check script is before </body>
+- Verify Project ID is correct
+- Clear browser cache (Ctrl+Shift+R)
+- Check browser console for errors
+
+Widget loads but doesn't respond:
+- Verify Voiceflow project is published
+- Check Knowledge Base files are uploaded
+- Confirm System Prompt is saved in AI Persona
+
+Styling issues:
+- Add !important to CSS overrides if needed
+- Use browser DevTools to inspect widget iframe
+
+SUPPORT:
+========
+
+Voiceflow Support: support@voiceflow.com
+SkillTech Technical: support@skilltech.club
+Documentation: See VOICEFLOW_DEPLOYMENT.md
+
+-->
+
+<!-- End SkillTech Navigator Widget -->
