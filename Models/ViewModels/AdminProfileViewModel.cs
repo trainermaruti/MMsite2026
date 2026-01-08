@@ -61,14 +61,6 @@ namespace MarutiTrainingPortal.Models.ViewModels
         [Display(Name = "SkillTech Website URL")]
         public string? SkillTechUrl { get; set; }
 
-        [Url(ErrorMessage = "Invalid Twitter URL")]
-        [Display(Name = "Twitter/X Profile URL")]
-        public string? TwitterUrl { get; set; }
-
-        [Url(ErrorMessage = "Invalid GitHub URL")]
-        [Display(Name = "GitHub Profile URL")]
-        public string? GitHubUrl { get; set; }
-
         public DateTime UpdatedDate { get; set; }
     }
 

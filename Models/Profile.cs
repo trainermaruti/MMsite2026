@@ -17,8 +17,6 @@ namespace MarutiTrainingPortal.Models
         public string InstagramUrl { get; set; }
         public string YouTubeUrl { get; set; }
         public string SkillTechUrl { get; set; }
-        public string TwitterUrl { get; set; }
-        public string GitHubUrl { get; set; }
         public string CertificationsAndAchievements { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime UpdatedDate { get; set; } = DateTime.Now;

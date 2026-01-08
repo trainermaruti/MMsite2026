@@ -1,5 +1,38 @@
 /* ================================================
-   SKILLTECH CHAT WIDGET - FLOATING POPUP STYLES
+   SKILLTECH NAVIGATOR - ENTERPRISE AI ASSISTANT
+   Microsoft Azure-Grade Floating Chat Interface
+   ================================================ */
+
+/* ================================================
+   DESIGN RATIONALE
+   ================================================
+   
+   VISUAL HIERARCHY:
+   1. User messages (primary focus)
+   2. Bot responses (secondary focus)
+   3. UI chrome (minimal, supportive)
+   
+   DEPTH STRATEGY:
+   - Light mode: Subtle shadows, clear borders
+   - Dark mode: Elevated surfaces, depth through layers
+   
+   COLOR PHILOSOPHY:
+   - Use site's primary blue as accent
+   - Bot messages: neutral, calm backgrounds
+   - User messages: primary brand color
+   - Never compete with main content
+   
+   SPACING SCALE:
+   - Compact: 4px, 8px (micro elements)
+   - Comfortable: 12px, 16px (standard spacing)
+   - Generous: 20px, 24px (major sections)
+   
+   BORDER RADIUS SYSTEM:
+   - Small UI: 8px (buttons, pills)
+   - Medium: 12px (message bubbles)
+   - Large: 16px (container, cards)
+   - Circle: 50% (launcher, avatars)
+   
    ================================================ */
 
 * {
@@ -9,90 +42,171 @@
 }
 
 :root {
-    /* SkillTech Brand Colors */
-    --orange-primary: #FF9D00;
-    --orange-hover: #E68900;
-    --orange-light: #FFF3E0;
-    --dark-blue: #263B56;
-    --white-bg: #FFFFFF;
-    --light-grey-bg: #F8F9FA;
-    --light-grey-border: #DEE2E6;
-    --card-border: #E9ECEF;
-    --text-primary: #212529;
-    --text-secondary: #6C757D;
-    --text-muted: #ADB5BD;
-    --success-green: #28A745;
-    --shadow-sm: rgba(0, 0, 0, 0.05) 0px 2px 4px 0px;
-    --shadow-md: rgba(0, 0, 0, 0.1) 0px 4px 8px 0px;
-    --shadow-lg: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px;
-    --shadow-xl: rgba(0, 0, 0, 0.2) 0px 10px 25px 0px;
-}
-
-body {
-    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: var(--text-primary);
+    /* ================================================
+       LIGHT MODE - Clean, Professional, High Contrast
+       ================================================ */
+    
+    /* Primary Accent - Dark Navy Blue (matching workspace buttons) */
+    --chat-primary: #001f3f;
+    --chat-primary-hover: #003366;
+    --chat-primary-active: #001a33;
+    --chat-primary-light: rgba(0, 31, 63, 0.08);
+    
+    /* Surface Colors - Layered Depth */
+    --chat-surface-base: #ffffff;
+    --chat-surface-elevated: #ffffff;
+    --chat-surface-overlay: #fafafa;
+    
+    /* Message Backgrounds */
+    --chat-msg-bot: #f3f4f6;
+    --chat-msg-user: #001f3f;
+    --chat-msg-system: #f9fafb;
+    
+    /* Text Hierarchy */
+    --chat-text-primary: #1f2937;
+    --chat-text-secondary: #6b7280;
+    --chat-text-tertiary: #9ca3af;
+    --chat-text-inverse: #ffffff;
+    
+    /* Borders - Subtle Separation */
+    --chat-border: #e5e7eb;
+    --chat-border-hover: #d1d5db;
+    --chat-border-focus: #001f3f;
+    
+    /* Shadows - Microsoft Design Language */
+    --chat-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --chat-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --chat-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --chat-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* Status Colors */
+    --chat-success: #10b981;
+    --chat-warning: #f59e0b;
+    --chat-error: #ef4444;
+    
+    /* Input States */
+    --chat-input-bg: #ffffff;
+    --chat-input-border: #d1d5db;
+    --chat-input-focus-ring: rgba(0, 31, 63, 0.12);
+    
+    /* Scrollbar */
+    --chat-scrollbar-thumb: #d1d5db;
+    --chat-scrollbar-hover: #9ca3af;
 }
 
 /* ================================================
-   FLOATING WIDGET CONTAINER - FORCE LIGHT MODE
+   DARK MODE - Depth, Elevation, Subtle AI Gradients
+   ================================================ */
+
+.dark-theme,
+.dark-mode,
+body.dark-theme,
+body.dark-mode {
+    /* Primary Accent - Lighter Dark Blue for Dark Backgrounds */
+    --chat-primary: #2563eb;
+    --chat-primary-hover: #3b82f6;
+    --chat-primary-active: #1d4ed8;
+    --chat-primary-light: rgba(37, 99, 235, 0.12);
+    
+    /* Surface Colors - Layered Depth (NOT Pure Black) */
+    --chat-surface-base: #0f172a;
+    --chat-surface-elevated: #1e293b;
+    --chat-surface-overlay: #0f172a;
+    
+    /* Message Backgrounds */
+    --chat-msg-bot: #1e293b;
+    --chat-msg-user: #3b82f6;
+    --chat-msg-system: #1e293b;
+    
+    /* Text Hierarchy - High Contrast */
+    --chat-text-primary: #f1f5f9;
+    --chat-text-secondary: #cbd5e1;
+    --chat-text-tertiary: #94a3b8;
+    --chat-text-inverse: #0f172a;
+    
+    /* Borders - Visible Separation */
+    --chat-border: rgba(148, 163, 184, 0.2);
+    --chat-border-hover: rgba(148, 163, 184, 0.3);
+    --chat-border-focus: #2563eb;
+    
+    /* Shadows - Depth in Dark Mode */
+    --chat-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --chat-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --chat-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --chat-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+    
+    /* Status Colors - Adjusted for Dark */
+    --chat-success: #34d399;
+    --chat-warning: #fbbf24;
+    --chat-error: #f87171;
+    
+    /* Input States */
+    --chat-input-bg: #1e293b;
+    --chat-input-border: rgba(148, 163, 184, 0.2);
+    --chat-input-focus-ring: rgba(37, 99, 235, 0.15);
+    
+    /* Scrollbar */
+    --chat-scrollbar-thumb: #475569;
+    --chat-scrollbar-hover: #64748b;
+}
+
+body {
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ================================================
+   FLOATING CONTAINER - Bottom Right Persistent
    ================================================ */
 
 .chat-widget-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 40px;
+    right: 40px;
     z-index: 999999;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 12px;
-    /* Force light mode for entire widget */
-    color-scheme: light !important;
-}
-
-/* Force all widget elements to use light mode colors */
-.chat-widget-container *,
-.chat-popup,
-.chat-popup * {
-    color-scheme: light !important;
+    gap: 16px;
 }
 
 /* ================================================
-   LAUNCHER BUTTON
+   LAUNCHER BUTTON - Professional, Calm, Trustworthy
    ================================================ */
 
 .chat-launcher {
-    width: 80px;
-    height: 80px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
-    background: #FFFFFF !important;
-    border: 3px solid var(--orange-primary) !important;
-    color: white !important;
+    background: var(--chat-primary) !important;
+    border: none;
+    color: var(--chat-text-inverse) !important;
     font-size: 26px;
     cursor: pointer;
-    box-shadow: var(--shadow-lg);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: var(--chat-shadow-lg);
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: static;
+    position: relative;
     overflow: hidden;
 }
 
 .chat-launcher:hover {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-xl);
-    background: #FFFFFF !important;
-    border-color: var(--orange-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--chat-shadow-xl);
+    background: var(--chat-primary-hover) !important;
 }
 
 .chat-launcher:active {
-    transform: scale(0.95);
+    transform: translateY(0);
+    box-shadow: var(--chat-shadow-md);
 }
 
 .launcher-icon {
     position: absolute;
-    transition: all 0.3s ease;
+    transition: opacity 200ms ease, transform 200ms ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,42 +221,54 @@ body {
 
 .launcher-icon.close-icon {
     opacity: 0;
-    color: #000000 !important;
-    font-size: 32px;
-    font-weight: 700;
+    color: var(--chat-text-inverse) !important;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .chat-launcher.active .open-icon {
     opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
 }
 
 .chat-launcher.active .close-icon {
     opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
 }
 
 /* ================================================
-   POPUP WINDOW - FORCE LIGHT MODE
+   POPUP CONTAINER - Elevated Card with Depth
+   ================================================
+   
+   Design Notes:
+   - Uses layered approach: outer container + inner surface
+   - Border in dark mode for clear separation
+   - Shadow creates floating effect without being aggressive
+   - Border radius matches site's card system
+   
    ================================================ */
 
 .chat-popup {
     position: fixed;
-    bottom: 90px;
-    right: 20px;
+    bottom: 100px;
+    right: 24px;
     width: 400px;
-    height: 650px;
-    max-height: 85vh;
-    background: #FFFFFF !important;
+    max-width: calc(100vw - 48px);
+    height: 600px;
+    max-height: calc(100vh - 140px);
+    background: var(--chat-surface-elevated);
     border-radius: 16px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), var(--shadow-xl);
+    border: 1px solid var(--chat-border);
+    box-shadow: var(--chat-shadow-xl);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-
+    
     /* Animation */
     opacity: 0;
-    transform: translateY(30px) scale(0.9);
+    transform: translateY(16px) scale(0.96);
     pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chat-popup.open {
@@ -156,41 +282,62 @@ body {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    background: #FFFFFF !important;
+    background: transparent;
 }
 
 /* ================================================
-   CHAT HEADER
+   HEADER - Subtle AI Gradient, Restrained, Professional
+   ================================================
+   
+   Design Rationale:
+   - Gradient is ONLY in header, subtle, never loud
+   - Light mode: Clean azure blue
+   - Dark mode: Deep indigo with slight purple hint
+   - Height: 72px for comfortable tap targets
+   - Close button: Minimal, professional
+   
    ================================================ */
 
 .chat-header {
-    background: linear-gradient(135deg, var(--orange-primary) 0%, var(--orange-hover) 100%) !important;
-    color: white !important;
-    padding: 18px 20px;
+    /* Light Mode: Dark Navy Blue Gradient (matching workspace) */
+    background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+    
+    /* Dark Mode Override (via body class) */
+    padding: 20px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--shadow-sm);
+    min-height: 72px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.dark-theme .chat-header,
+.dark-mode .chat-header,
+body.dark-theme .chat-header,
+body.dark-mode .chat-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
 }
 
 .header-title {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex: 1;
 }
 
 .bot-avatar-small {
-    width: 44px;
-    height: 44px;
-    background: #FFFFFF !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 14px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     overflow: hidden;
 }
 
@@ -203,10 +350,12 @@ body {
 
 .header-info h3 {
     margin: 0;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    color: white !important;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #ffffff !important;
+    line-height: 1.4;
+    -webkit-text-fill-color: #ffffff;
 }
 
 .status-line {
@@ -215,98 +364,113 @@ body {
     gap: 6px;
     font-size: 12px;
     font-weight: 500;
-    opacity: 0.95;
+    opacity: 0.9;
     margin-top: 2px;
-    color: white !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.85);
 }
 
 .status-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--success-green);
+    width: 6px;
+    height: 6px;
+    background: var(--chat-success);
     border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse {
-
-    0%,
-    100% {
+    0%, 100% {
         opacity: 1;
         transform: scale(1);
     }
-
     50% {
-        opacity: 0.6;
-        transform: scale(0.9);
+        opacity: 0.7;
+        transform: scale(0.95);
     }
 }
 
 .close-btn {
-    background: rgba(255, 255, 255, 0.3) !important;
-    border: 2px solid rgba(255, 255, 255, 0.6) !important;
-    color: white !important;
-    font-size: 28px;
-    font-weight: 700;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
+    color: #ffffff !important;
+    font-size: 18px;
+    font-weight: 400;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    line-height: 0.8;
-    padding-bottom: 2px;
+    transition: all 150ms ease;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 .close-btn:hover {
-    background: rgba(255, 255, 255, 0.5) !important;
-    border-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
     transform: rotate(90deg);
 }
 
+.close-btn:active {
+    transform: rotate(90deg) scale(0.95);
+}
+
 /* ================================================
-   CHAT MESSAGES AREA
+   CHAT MESSAGES AREA - Primary Focus, Maximum Readability
+   ================================================
+   
+   Design Principles:
+   - Generous padding for comfortable reading
+   - Overlay background slightly different from base
+   - Scrollbar minimal but functional
+   - Proper spacing between messages (16px)
+   
    ================================================ */
 
 .chat-messages {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: #F8F9FA !important;
+    background: var(--chat-surface-overlay);
     min-height: 0;
 }
 
-/* Scrollbar Styling */
+/* ================================================
+   SCROLLBAR - Minimal, Modern, Microsoft-Style
+   ================================================ */
+
 .chat-messages::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .chat-messages::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 10px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background: var(--orange-primary);
-    border-radius: 10px;
+    background: var(--chat-scrollbar-thumb);
+    border-radius: 3px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-    background: var(--orange-hover);
+    background: var(--chat-scrollbar-hover);
 }
 
 .chat-messages {
     scrollbar-width: thin;
-    scrollbar-color: var(--orange-primary) transparent;
+    scrollbar-color: var(--chat-scrollbar-thumb) transparent;
 }
 
 /* ================================================
-   WELCOME SCREEN
+   WELCOME SCREEN - First Impression, Calm, Helpful
    ================================================ */
 
 .welcome-screen {
@@ -315,89 +479,120 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 16px 20px 36px 20px;
-    background: #FFFFFF !important;
+    padding: 24px 20px;
+    background: var(--chat-surface-base);
+    border: 1px solid var(--chat-border);
     border-radius: 12px;
-    gap: 12px;
+    gap: 16px;
 }
 
 .welcome-logo {
-    width: 120px;
-    height: auto;
+    width: 80px;
+    height: 80px;
     margin: 0;
     padding: 0;
     object-fit: contain;
-    display: block;
+    display: none;
 }
 
 .welcome-screen h2 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 0;
-    margin-top: 0;
-    color: var(--dark-blue) !important;
-    letter-spacing: -0.4px;
-    display: none;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--chat-text-primary) !important;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
 }
 
 .welcome-screen p {
-    color: var(--text-secondary) !important;
+    color: var(--chat-text-secondary) !important;
     font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 0;
-    margin-top: 0;
+    line-height: 1.6;
+    margin: 0;
     font-weight: 400;
-    display: none;
+    max-width: 320px;
 }
 
-/* Quick Actions */
+/* ================================================
+   QUICK ACTION PILLS - First-Class UI Elements
+   ================================================
+   
+   Design Strategy:
+   - Look like native site buttons
+   - Clear hover state with color change
+   - Active state for feedback
+   - 8px border radius (small UI scale)
+   - Proper tap target size (44px min height)
+   
+   ================================================ */
+
 .quick-actions {
     display: flex;
     flex-direction: column;
     gap: 8px;
     width: 100%;
+    margin-top: 8px;
 }
 
 .quick-action-btn {
-    background: #FFFFFF !important;
-    border: 2px solid var(--orange-primary) !important;
-    padding: 12px 18px;
-    border-radius: 12px;
-    color: var(--orange-primary) !important;
+    background: var(--chat-surface-base);
+    border: 1px solid var(--chat-border);
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: var(--chat-text-primary) !important;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 13px;
-    font-weight: 600;
-    box-shadow: var(--shadow-sm);
+    transition: all 150ms ease;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: left;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    box-shadow: var(--chat-shadow-sm);
 }
 
 .quick-action-btn:hover {
-    background: var(--orange-primary) !important;
-    color: white !important;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    background: var(--chat-primary);
+    color: var(--chat-text-inverse) !important;
+    border-color: var(--chat-primary);
+    transform: translateY(-1px);
+    box-shadow: var(--chat-shadow-md);
 }
 
 .quick-action-btn:active {
     transform: translateY(0);
+    box-shadow: var(--chat-shadow-sm);
 }
 
 /* ================================================
-   MESSAGE BUBBLES
+   MESSAGE BUBBLES - Calm, Distinct, Never Loud
+   ================================================
+   
+   Visual Hierarchy:
+   1. User messages: Primary brand color (most prominent)
+   2. Bot messages: Neutral gray (supportive, not competing)
+   3. System messages: Minimal, informational
+   
+   Spacing System:
+   - Gap between messages: 16px
+   - Padding inside bubbles: 12px 16px
+   - Border radius: 12px (medium scale)
+   - Max width: 80% (prevents wall-to-wall text)
+   
    ================================================ */
 
 .message {
     display: flex;
-    gap: 10px;
-    animation: messageSlide 0.4s ease-out;
+    gap: 12px;
+    animation: messageSlideIn 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes messageSlide {
+@keyframes messageSlideIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(8px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -409,113 +604,131 @@ body {
 }
 
 .message-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 13px;
     flex-shrink: 0;
-    letter-spacing: 0.5px;
+    letter-spacing: -0.01em;
     overflow: hidden;
+    margin-top: 2px;
 }
 
 .message-avatar img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    padding: 5px;
+    object-fit: cover;
 }
 
 .message.bot .message-avatar {
-    background: #FFFFFF !important;
-    color: white !important;
-    box-shadow: var(--shadow-sm);
-    border: 2px solid var(--orange-primary) !important;
+    background: var(--chat-primary-light);
+    color: var(--chat-primary);
+    border: 1px solid var(--chat-border);
 }
 
 .message.user .message-avatar {
-    background: var(--dark-blue) !important;
-    color: white !important;
-    box-shadow: var(--shadow-sm);
-}
-
-.message-content {
-    max-width: 75%;
-    border-radius: 14px;
-    padding: 12px 16px;
-    line-height: 1.5;
-    font-size: 14px;
-    box-shadow: var(--shadow-sm);
-}
-
-.message.bot .message-content {
-    background: #FFFFFF !important;
-    border: 1px solid var(--card-border) !important;
-    color: #212529 !important;
-}
-
-.message.bot .message-content * {
-    color: #212529 !important;
-}
-
-.message.user .message-content {
-    background: var(--orange-light) !important;
-    border: 1px solid var(--orange-primary) !important;
-    color: #263B56 !important;
-}
-
-.message.user .message-content * {
-    color: #263B56 !important;
-}
-
-.message-time {
-    font-size: 10px;
-    color: var(--text-muted) !important;
-    margin-top: 4px;
-    font-weight: 400;
-}
-
-/* Goal Badge */
-.goal-badge {
-    display: inline-block;
-    background: var(--orange-light) !important;
-    border: 1px solid var(--orange-primary) !important;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--orange-primary) !important;
-    margin-top: 6px;
+    background: var(--chat-primary);
+    color: var(--chat-text-inverse);
+    border: none;
 }
 
 /* ================================================
-   TYPING INDICATOR
+   MESSAGE CONTENT - Readability is Priority #1
+   ================================================ */
+
+.message-content {
+    max-width: 80%;
+    border-radius: 12px;
+    padding: 12px 16px;
+    line-height: 1.6;
+    font-size: 14px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.message.bot .message-content {
+    background: var(--chat-msg-bot);
+    border: 1px solid var(--chat-border);
+    color: var(--chat-text-primary) !important;
+    border-bottom-left-radius: 4px;
+}
+
+.message.bot .message-content * {
+    color: var(--chat-text-primary) !important;
+}
+
+.message.bot .message-content a {
+    color: var(--chat-primary) !important;
+    text-decoration: underline;
+}
+
+.message.user .message-content {
+    background: var(--chat-msg-user);
+    border: none;
+    color: var(--chat-text-inverse) !important;
+    border-bottom-right-radius: 4px;
+}
+
+.message.user .message-content * {
+    color: var(--chat-text-inverse) !important;
+}
+
+/* ================================================
+   MESSAGE METADATA - Timestamps, Badges
+   ================================================ */
+
+.message-time {
+    font-size: 11px;
+    color: var(--chat-text-tertiary) !important;
+    margin-top: 6px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.goal-badge {
+    display: inline-block;
+    background: var(--chat-primary-light);
+    border: 1px solid var(--chat-border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--chat-primary) !important;
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* ================================================
+   TYPING INDICATOR - System Message
    ================================================ */
 
 .typing-indicator {
     display: none;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 8px;
 }
 
 .typing-dots {
-    background: #FFFFFF !important;
-    border: 1px solid var(--card-border) !important;
-    border-radius: 14px;
+    background: var(--chat-msg-bot);
+    border: 1px solid var(--chat-border);
+    border-radius: 12px;
     padding: 12px 16px;
     display: flex;
-    gap: 5px;
-    box-shadow: var(--shadow-sm);
+    gap: 6px;
+    align-items: center;
 }
 
 .typing-dot {
-    width: 7px;
-    height: 7px;
-    background: var(--orange-primary) !important;
+    width: 6px;
+    height: 6px;
+    background: var(--chat-text-tertiary);
     border-radius: 50%;
-    animation: typingDot 1.4s ease-in-out infinite;
+    animation: typingPulse 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .typing-dot:nth-child(2) {
@@ -526,265 +739,291 @@ body {
     animation-delay: 0.4s;
 }
 
-@keyframes typingDot {
-
-    0%,
-    60%,
-    100% {
+@keyframes typingPulse {
+    0%, 60%, 100% {
         opacity: 0.3;
         transform: scale(0.8);
     }
-
     30% {
         opacity: 1;
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 }
 
 /* ================================================
-   INPUT AREA
+   INPUT AREA - Sturdy, Professional, Clear States
+   ================================================
+   
+   Design Strategy:
+   - Clear visual separation from chat history
+   - Input feels "enterprise-grade", not casual
+   - Focus state is obvious but not aggressive
+   - Send button: always visible, always ready
+   - Disabled state: clearly communicated
+   
+   Measurements:
+   - Area padding: 20px
+   - Input padding: 12px 16px
+   - Input height: ~44px (comfortable tap target)
+   - Border radius: 24px (pill-shaped)
+   - Send button: 40px circle
+   
    ================================================ */
 
 .chat-input-area {
-    padding: 16px;
-    border-top: 1px solid var(--card-border) !important;
-    background: #FFFFFF !important;
+    padding: 20px;
+    border-top: 1px solid var(--chat-border);
+    background: var(--chat-surface-elevated);
 }
 
 .chat-input-container {
     display: flex;
-    gap: 10px;
-    align-items: center;
+    gap: 12px;
+    align-items: flex-end;
 }
 
 .chat-input {
     flex: 1;
-    background: #F8F9FA !important;
-    border: 2px solid var(--light-grey-border) !important;
-    border-radius: 12px;
+    background: #ffffff !important;
+    border: 2px solid #e2e8f0;
+    border-radius: 24px;
     padding: 12px 16px;
-    color: var(--text-primary) !important;
+    color: #1e293b !important;
     font-size: 14px;
-    font-family: 'Inter Tight', sans-serif;
-    transition: all 0.3s ease;
+    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    resize: none;
+    min-height: 44px;
+    max-height: 120px;
+    transition: all 150ms ease;
+    -webkit-text-fill-color: #1e293b;
+}
+
+.dark-theme .chat-input,
+.dark-mode .chat-input,
+body.dark-theme .chat-input,
+body.dark-mode .chat-input {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    -webkit-text-fill-color: #1e293b;
+    border: 3px solid #475569 !important;
 }
 
 .chat-input:focus {
     outline: none;
-    border-color: var(--orange-primary) !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 0 0 3px rgba(255, 157, 0, 0.1);
+    border-color: var(--chat-border-focus);
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px var(--chat-input-focus-ring);
+}
+
+.chat-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--chat-surface-overlay);
 }
 
 .chat-input::placeholder {
-    color: #ADB5BD !important;
+    color: var(--chat-text-tertiary) !important;
+    opacity: 1;
+}
+
+.dark-theme .chat-input::placeholder,
+.dark-mode .chat-input::placeholder,
+body.dark-theme .chat-input::placeholder,
+body.dark-mode .chat-input::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1;
 }
 
 .send-btn {
-    width: 44px;
-    height: 44px;
-    background: var(--orange-primary) !important;
+    width: 40px;
+    height: 40px;
+    background: var(--chat-primary);
     border: none;
-    border-radius: 10px;
-    color: white !important;
+    border-radius: 50%;
+    color: var(--chat-text-inverse) !important;
     font-size: 18px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 150ms ease;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--chat-shadow-sm);
 }
 
-.send-btn:hover {
-    background: var(--orange-hover) !important;
-    transform: scale(1.05);
-    box-shadow: var(--shadow-md);
+.send-btn:hover:not(:disabled) {
+    background: var(--chat-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--chat-shadow-md);
 }
 
-.send-btn:active {
-    transform: scale(0.95);
+.send-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--chat-shadow-sm);
 }
 
 .send-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
     transform: none;
 }
 
 /* ================================================
-   CRITICAL: FORCE BOTTOM-RIGHT POSITIONING
+   RESPONSIVE DESIGN - Mobile Optimization
    ================================================ */
 
-/* Force container to always be in bottom-right corner */
-#chatWidgetContainer,
-.chat-widget-container {
-    position: fixed !important;
-    bottom: 20px !important;
-    right: 20px !important;
-    top: auto !important;
-    left: auto !important;
+@media (max-width: 480px) {
+    .chat-widget-container {
+        bottom: 50px;
+        right: 30px;
+    }
+    
+    .chat-launcher {
+        width: 68px;
+        height: 68px;
+        font-size: 24px;
+    }
+    
+    .chat-popup {
+        width: calc(100vw - 32px);
+        height: calc(100vh - 100px);
+        max-height: calc(100vh - 100px);
+        right: 16px;
+        bottom: 84px;
+    }
+    
+    .chat-header {
+        padding: 16px 20px;
+        min-height: 64px;
+    }
+    
+    .header-info h3 {
+        font-size: 15px;
+    }
+    
+    .chat-messages {
+        padding: 16px;
+    }
+    
+    .message-content {
+        max-width: 85%;
+        font-size: 14px;
+    }
+    
+    .chat-input-area {
+        padding: 16px;
+    }
 }
 
-/* Ensure launcher button stays within container */
-#chatLauncher,
-.chat-launcher {
-    position: static !important;
+@media (min-width: 481px) and (max-width: 768px) {
+    .chat-popup {
+        width: 380px;
+        height: 580px;
+    }
 }
 
 /* ================================================
-   MOBILE RESPONSIVENESS
+   ACCESSIBILITY & INTERACTION REFINEMENTS
    ================================================ */
 
-/* Small Mobile Devices (up to 480px) */
-@media (max-width: 480px) {
+/* Focus visible for keyboard navigation */
+.chat-launcher:focus-visible,
+.close-btn:focus-visible,
+.quick-action-btn:focus-visible,
+.send-btn:focus-visible {
+    outline: 2px solid var(--chat-primary);
+    outline-offset: 2px;
+}
 
-    /* Force container to bottom-right on mobile */
-    #chatWidgetContainer,
-    .chat-widget-container {
-        position: fixed !important;
-        bottom: 35px !important;
-        right: 22px !important;
-        top: auto !important;
-        left: auto !important;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .chat-popup,
+    .message,
+    .chat-launcher,
+    .quick-action-btn,
+    .send-btn {
+        animation: none;
+        transition: none;
     }
+    
+    .typing-dot {
+        animation: none;
+    }
+    
+    .status-dot {
+        animation: none;
+    }
+}
 
-    /* Make popup full screen on mobile */
+/* High contrast mode support */
+@media (prefers-contrast: high) {
     .chat-popup {
-        width: 100vw;
-        height: 100vh;
-        max-height: 100vh;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        top: 0;
-        border-radius: 0;
-        transform: translateY(100%);
+        border-width: 2px;
+    }
+    
+    .message.bot .message-content {
+        border-width: 2px;
+    }
+    
+    .quick-action-btn {
+        border-width: 2px;
+    }
+}
+
+/* ================================================
+   PRODUCTION NOTES & IMPLEMENTATION CHECKLIST
+   ================================================
+   
+   MANDATORY UPDATES IN HTML:
+   1. Ensure chat container has proper ARIA labels
+   2. Add role="dialog" to .chat-popup
+   3. Add aria-expanded to .chat-launcher
+   4. Ensure focus trap when chat is open
+   5. Add aria-live="polite" to .chat-messages
+   
+   COLOR VARIABLE OVERRIDE:
+   - Light mode uses default :root values
+   - Dark mode uses body.dark-theme or body.dark-mode class
+   - Test both modes thoroughly
+   
+   TESTING CHECKLIST:
+   □ Light mode visibility (all states)
+   □ Dark mode visibility (all states)
+   □ Mobile responsive (320px - 480px)
+   □ Tablet responsive (481px - 768px)
+   □ Keyboard navigation works
+   □ Focus states visible
+   □ Screen reader compatibility
+   □ Long message handling
+   □ Scrollbar behavior
+   □ Input multiline expansion
+   □ Disabled button states
+   □ Hover states on touch devices
+   
+   PERFORMANCE:
+   - All transitions use transform/opacity (GPU accelerated)
+   - No layout thrashing
+   - Smooth 60fps animations
+   - Minimal repaints
+   
+   ================================================ */
+    .chat-popup {
+        width: calc(100vw - 20px);
+        max-width: 380px;
+        height: 600px;
+        max-height: calc(100vh - 120px);
+        bottom: 90px;
+        right: 10px;
+        left: auto;
+        top: auto;
+        border-radius: 16px;
     }
 
     .chat-popup.open {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
         position: fixed;
-    }
-
-    /* Hide launcher when chat is open on mobile */
-    .chat-popup.open~.chat-launcher {
-        display: none;
     }
 
     /* Adjust launcher button size and position */
-    .chat-launcher {
-        position: fixed;
-        bottom: 35px;
-        right: 22px;
-        width: 68px !important;
-        height: 68px !important;
-        font-size: 24px;
-    }
-
-    .chat-launcher .launcher-icon.open-icon img {
-        width: 42px !important;
-        height: 42px !important;
-    }
-
-    .chat-header {
-        padding: 16px 18px;
-    }
-
-    .bot-avatar-small {
-        width: 40px;
-        height: 40px;
-        font-size: 13px;
-    }
-
-    .header-info h3 {
-        font-size: 16px;
-    }
-
-    .status-line {
-        font-size: 11px;
-    }
-
-    .welcome-logo {
-        width: 100px;
-    }
-
-    .welcome-screen h2 {
-        font-size: 20px;
-    }
-
-    .welcome-screen p {
-        font-size: 13px;
-    }
-
-    .message-content {
-        max-width: 82%;
-        font-size: 13px;
-        padding: 10px 14px;
-    }
-
-    .message-avatar {
-        width: 32px;
-        height: 32px;
-        font-size: 12px;
-    }
-
-    .chat-input {
-        font-size: 14px;
-        padding: 10px 14px;
-    }
-
-    .send-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
-}
-
-/* Tablet and Medium Mobile (481px to 768px) */
-@media (max-width: 768px) and (min-width: 481px) {
-    .chat-widget-container {
-        bottom: 18px;
-        right: 18px;
-    }
-
-    .chat-launcher {
-        position: fixed;
-        width: 70px !important;
-        height: 70px !important;
-        font-size: 24px;
-    }
-
-    .chat-launcher .launcher-icon.open-icon img {
-        width: 40px !important;
-        height: 40px !important;
-    }
-
-    .chat-popup {
-        width: 90vw;
-        max-width: 380px;
-        height: 85vh;
-        max-height: 650px;
-        bottom: 100px;
-        right: 18px;
-    }
-}
-
-/* Larger Tablets (769px to 992px) */
-@media (max-width: 992px) and (min-width: 769px) {
-    .chat-launcher {
-        width: 75px !important;
-        height: 75px !important;
-    }
-
-    .chat-launcher .launcher-icon.open-icon img {
-        width: 42px !important;
-        height: 42px !important;
-    }
-
-    .chat-popup {
-        width: 400px;
-        height: 650px;
-    }
-}
+/* End of SkillTech Navigator - Enterprise AI Assistant Styles */

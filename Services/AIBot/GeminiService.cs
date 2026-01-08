@@ -33,7 +33,7 @@ namespace MarutiTrainingPortal.Services
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "Gemini API key is not configured. Please add it to appsettings.json"
+                        ErrorMessage = "I'm currently not available. 😊 Our team is working on this!\n\n**Please reach out directly for help:**\n\n👨‍💼 **Mentor:** [marutimakwana.com](https://marutimakwana.com/)\n\n💬 **Contact:** [marutimakwana.com/contact](https://marutimakwana.com/contact)\n\n📧 **Email:** marutimct@gmail.com\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n🌐 **Visit:** [skilltech.club/contact](https://skilltech.club/home/contactus)"
                     };
                 }
 
@@ -126,14 +126,14 @@ namespace MarutiTrainingPortal.Services
                         return new ChatResponse
                         {
                             Success = false,
-                            ErrorMessage = "⚠️ Daily API quota limit reached. The chatbot will be available again after the quota resets (typically at midnight UTC). Please try again later or contact support."
+                            ErrorMessage = "I'm getting quite a workout today! 😅 Please wait a moment and try again.\n\n**If you need direct help, you can reach us at:**\n\n👨‍💼 **Mentor:** [marutimakwana.com](https://marutimakwana.com/)\n\n💬 **Contact:** [marutimakwana.com/contact](https://marutimakwana.com/contact)\n\n📧 **Email:** marutimct@gmail.com\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n🌐 **Visit:** [skilltech.club/contact](https://skilltech.club/home/contactus)"
                         };
                     }
                     
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "🤖 Whoa! Too many questions at once! Give me a moment to catch my breath... ⏳✨"
+                        ErrorMessage = "I'm experiencing high demand right now. Please wait a few seconds and ask me again! 🙏\n\n**If you need direct help, you can reach us at:**\n\n👨‍💼 **Mentor:** [marutimakwana.com](https://marutimakwana.com/)\n\n💬 **Contact:** [marutimakwana.com/contact](https://marutimakwana.com/contact)\n\n📧 **Email:** marutimct@gmail.com\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n🌐 **Visit:** [skilltech.club/contact](https://skilltech.club/home/contactus)"
                     };
                 }
 
@@ -146,7 +146,7 @@ namespace MarutiTrainingPortal.Services
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "The AI service is temporarily unavailable due to a configuration issue. Please try again shortly."
+                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n👨‍💼 **Mentor:** [marutimakwana.com](https://marutimakwana.com/)\n\n💬 **Contact:** [marutimakwana.com/contact](https://marutimakwana.com/contact)\n\n📧 **Email:** support@skilltech.club\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n🌐 **Visit:** [skilltech.club/contact](https://skilltech.club/home/contactus)"
                     };
                 }
 
@@ -157,7 +157,7 @@ namespace MarutiTrainingPortal.Services
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "The AI service is temporarily unavailable due to a configuration issue. Please try again shortly."
+                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n👨‍💼 **Mentor:** [marutimakwana.com](https://marutimakwana.com/)\n\n💬 **Contact:** [marutimakwana.com/contact](https://marutimakwana.com/contact)\n\n📧 **Email:** support@skilltech.club\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n🌐 **Visit:** [skilltech.club/contact](https://skilltech.club/home/contactus)"
                     };
                 }
 
@@ -168,7 +168,7 @@ namespace MarutiTrainingPortal.Services
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "The AI service is temporarily unavailable due to a configuration issue. Please try again shortly."
+                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n👨‍💼 **Mentor:** [marutimakwana.com](https://marutimakwana.com/)\n\n💬 **Contact:** [marutimakwana.com/contact](https://marutimakwana.com/contact)\n\n📧 **Email:** support@skilltech.club\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n🌐 **Visit:** [skilltech.club/contact](https://skilltech.club/home/contactus)"
                     };
                 }
 
@@ -185,7 +185,7 @@ namespace MarutiTrainingPortal.Services
                 return new ChatResponse
                 {
                     Success = false,
-                    ErrorMessage = "An error occurred while processing your request. Please try again."
+                    ErrorMessage = "Oops! Something went wrong on my end. 😊\n\n**If you need direct help, you can reach us at:**\n\n👨‍💼 **Mentor:** [marutimakwana.com](https://marutimakwana.com/)\n\n💬 **Contact:** [marutimakwana.com/contact](https://marutimakwana.com/contact)\n\n📧 **Email:** support@skilltech.club\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n🌐 **Visit:** [skilltech.club/contact](https://skilltech.club/home/contactus)"
                 };
             }
         }

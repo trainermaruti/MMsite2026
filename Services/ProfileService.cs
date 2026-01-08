@@ -38,8 +38,6 @@ namespace MarutiTrainingPortal.Services
                 InstagramUrl = profile.InstagramUrl,
                 YouTubeUrl = profile.YouTubeUrl,
                 SkillTechUrl = profile.SkillTechUrl,
-                TwitterUrl = profile.TwitterUrl,
-                GitHubUrl = profile.GitHubUrl,
                 UpdatedDate = profile.UpdatedDate
             };
         }
@@ -73,8 +71,6 @@ namespace MarutiTrainingPortal.Services
             profile.InstagramUrl = model.InstagramUrl;
             profile.YouTubeUrl = model.YouTubeUrl;
             profile.SkillTechUrl = model.SkillTechUrl;
-            profile.TwitterUrl = model.TwitterUrl;
-            profile.GitHubUrl = model.GitHubUrl;
             profile.UpdatedDate = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

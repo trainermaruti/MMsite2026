@@ -325,9 +325,12 @@
         });
     </script>
 
-    <!-- AI Chat Widget -->
-    <link rel="stylesheet" href="~/css/chat-widget.css">
-    <div class="chat-widget-container" id="chatWidgetContainer">
+    @* AI Chat Widget - Only show on home page *@
+    @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && 
+         ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+    {
+        <link rel="stylesheet" href="~/css/chat-widget.css?v=12.3" />
+        <div class="chat-widget-container" id="chatWidgetContainer">
         <div class="chat-popup" id="chatPopup">
             <div class="chat-window">
                 <div class="chat-header">
@@ -346,12 +349,12 @@
                 <div class="chat-messages" id="chatMessages">
                     <div class="welcome-screen" id="welcomeScreen">
                         <img src="/images/skilltech-logo.png" alt="SkillTech Logo" class="welcome-logo" />
-                        <h2>Welcome to SkillTech Navigator</h2>
-                        <p>I can help you choose the right Azure certification, explore our courses, check pricing plans, or book mentorship with Maruti Makwana.</p>
+                        <h2>Plan your Azure journey with clarity.</h2>
+                        <p>Get guidance on certifications, learning paths, and next career steps.</p>
                         <div class="quick-actions">
-                            <button class="quick-action-btn" onclick="sendQuickMessage('I am new to Cloud and Azure')">I'm new to Cloud & Azure</button>
-                            <button class="quick-action-btn" onclick="sendQuickMessage('I need a certification')">I need a certification</button>
-                            <button class="quick-action-btn" onclick="sendQuickMessage('Tell me about pricing')">Tell me about pricing</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('I am new to Azure and Cloud')">I'm new to Azure & Cloud</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('Help me choose a certification')">Help me choose a certification</button>
+                            <button class="quick-action-btn" onclick="sendQuickMessage('View pricing and plans')">View pricing & plans</button>
                         </div>
                     </div>
                     <div class="typing-indicator" id="typingIndicator">
@@ -372,11 +375,12 @@
             </div>
         </div>
         <button class="chat-launcher" id="chatLauncher" aria-label="Open SkillTech Chat">
-            <span class="launcher-icon open-icon"><img src="/Favicon.png" alt="Chat" style="width: 45px; height: 45px;" /></span>
+            <span class="launcher-icon open-icon"><img src="/Favicon.png" alt="Chat" style="width: 50px; height: 50px;" /></span>
             <span class="launcher-icon close-icon">✕</span>
         </button>
     </div>
     <script src="~/js/chat-widget.js"></script>
+    }
     
     @await RenderSectionAsync("Scripts", required: false)
 </body>

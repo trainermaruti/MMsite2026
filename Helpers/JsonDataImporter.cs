@@ -312,6 +312,12 @@ public class JsonDataImporter
         var jsonData = await File.ReadAllTextAsync(jsonPath);
         Console.WriteLine($"   📄 JSON content length: {jsonData.Length:N0} characters");
         
+        if (string.IsNullOrWhiteSpace(jsonData))
+        {
+            Console.WriteLine($"   ⚠️  File is empty");
+            return 0;
+        }
+        
         var trainings = JsonSerializer.Deserialize<List<Training>>(jsonData, JsonOptions);
 
         if (trainings == null || !trainings.Any())
@@ -436,14 +442,24 @@ public class JsonDataImporter
         var jsonPath = GetJsonFilePath("ProfilesDatabase.json");
         if (!File.Exists(jsonPath)) return 0;
 
-        var jsonData = await File.ReadAllTextAsync(jsonPath);
+        var jsonData = await File.ReadAllTextAsync(jsonPath);        if (string.IsNullOrWhiteSpace(jsonData)) return 0;
+                if (string.IsNullOrWhiteSpace(jsonData)) return 0;
+        
         var profiles = JsonSerializer.Deserialize<List<Profile>>(jsonData, JsonOptions);
 
         if (profiles == null || !profiles.Any()) return 0;
         
-        context.Profiles.AddRange(profiles);
-        await context.SaveChangesAsync();
-        return profiles.Count;
+        // Check for existing profiles and only add new ones
+        var existingIds = await context.Profiles.Select(p => p.Id).ToListAsync();
+        var newProfiles = profiles.Where(p => !existingIds.Contains(p.Id)).ToList();
+        
+        if (newProfiles.Any())
+        {
+            context.Profiles.AddRange(newProfiles);
+            await context.SaveChangesAsync();
+        }
+        
+        return newProfiles.Count;
     }
 
     private static async Task<int> ImportSystemSettings(ApplicationDbContext context)

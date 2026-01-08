@@ -41,8 +41,6 @@ namespace MarutiTrainingPortal.Controllers
                     InstagramUrl = "#",
                     YouTubeUrl = "#",
                     SkillTechUrl = "#",
-                    TwitterUrl = "#",
-                    GitHubUrl = "#",
                     CertificationsAndAchievements = "Setting up..."
                 };
             }
@@ -73,8 +71,6 @@ namespace MarutiTrainingPortal.Controllers
                     InstagramUrl = "#",
                     YouTubeUrl = "#",
                     SkillTechUrl = "#",
-                    TwitterUrl = "#",
-                    GitHubUrl = "#",
                     CertificationsAndAchievements = "Setting up..."
                 };
             }

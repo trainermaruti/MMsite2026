@@ -133,8 +133,6 @@ namespace MarutiTrainingPortal.Data
                     InstagramUrl = "https://www.instagram.com/marutimakwana?igsh=MWttazg1dGRkbTU3cg==",
                     YouTubeUrl = "https://www.youtube.com/@skilltechclub",
                     SkillTechUrl = "https://skilltech.club",
-                    TwitterUrl = "https://twitter.com/maruti",
-                    GitHubUrl = "https://github.com/maruti",
                     CertificationsAndAchievements = "Azure Certified Trainer, AI Specialist, AWS Certified Solutions Architect",
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow
