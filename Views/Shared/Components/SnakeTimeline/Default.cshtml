@@ -28,6 +28,81 @@
         border: 1px solid var(--border-color) !important;
     }
     
+    /* Dark Mode - Universal Coverage (Multiple Approaches) */
+    
+    /* Method 1: Media query for system dark mode preference */
+    @@media (prefers-color-scheme: dark) {
+        .timeline-heading,
+        .timeline-stat,
+        .stat-number,
+        .timeline-subheading,
+        .timeline-stat-label,
+        .timeline-badge-text,
+        .snake-timeline-wrapper span,
+        .snake-timeline-wrapper h2,
+        .snake-timeline-wrapper p {
+            color: #ffffff !important;
+        }
+    }
+    
+    /* Method 2: Class-based dark mode (various conventions) */
+    .dark .timeline-heading,
+    .dark .timeline-stat,
+    .dark .stat-number,
+    .dark .timeline-subheading,
+    .dark .timeline-stat-label,
+    .dark .timeline-badge-text,
+    .dark .snake-timeline-wrapper span,
+    .dark .snake-timeline-wrapper h2,
+    .dark .snake-timeline-wrapper p,
+    html.dark-mode .timeline-heading,
+    html.dark-mode .timeline-stat,
+    html.dark-mode .stat-number,
+    html.dark-mode .timeline-subheading,
+    html.dark-mode .timeline-stat-label,
+    html.dark-mode .timeline-badge-text,
+    html.dark-mode .snake-timeline-wrapper span,
+    html.dark-mode .snake-timeline-wrapper h2,
+    html.dark-mode .snake-timeline-wrapper p,
+    html.dark-theme .timeline-heading,
+    html.dark-theme .timeline-stat,
+    html.dark-theme .stat-number,
+    html.dark-theme .timeline-subheading,
+    html.dark-theme .timeline-stat-label,
+    html.dark-theme .timeline-badge-text,
+    html.dark-theme .snake-timeline-wrapper span,
+    html.dark-theme .snake-timeline-wrapper h2,
+    html.dark-theme .snake-timeline-wrapper p,
+    body.dark-mode .timeline-heading,
+    body.dark-mode .timeline-stat,
+    body.dark-mode .stat-number,
+    body.dark-mode .timeline-subheading,
+    body.dark-mode .timeline-stat-label,
+    body.dark-mode .timeline-badge-text,
+    body.dark-mode .snake-timeline-wrapper span,
+    body.dark-mode .snake-timeline-wrapper h2,
+    body.dark-mode .snake-timeline-wrapper p,
+    body.dark-theme .timeline-heading,
+    body.dark-theme .timeline-stat,
+    body.dark-theme .stat-number,
+    body.dark-theme .timeline-subheading,
+    body.dark-theme .timeline-stat-label,
+    body.dark-theme .timeline-badge-text,
+    body.dark-theme .snake-timeline-wrapper span,
+    body.dark-theme .snake-timeline-wrapper h2,
+    body.dark-theme .snake-timeline-wrapper p,
+    [data-theme="dark"] .timeline-heading,
+    [data-theme="dark"] .timeline-stat,
+    [data-theme="dark"] .stat-number,
+    [data-theme="dark"] .timeline-subheading,
+    [data-theme="dark"] .timeline-stat-label,
+    [data-theme="dark"] .timeline-badge-text,
+    [data-theme="dark"] .snake-timeline-wrapper span,
+    [data-theme="dark"] .snake-timeline-wrapper h2,
+    [data-theme="dark"] .snake-timeline-wrapper p {
+        color: #ffffff !important;
+    }
+    
     .snake-timeline-nodes > div {
         animation: fadeInUp 0.6s ease-out backwards;
     }

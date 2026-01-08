@@ -544,26 +544,30 @@ body {
    MOBILE RESPONSIVENESS
    ================================================ */
 
+/* Small Mobile Devices (up to 480px) */
 @media (max-width: 480px) {
+    /* Keep container normal unless chat is open */
     .chat-widget-container {
-        bottom: 0;
-        right: 0;
-        left: 0;
-        top: 0;
+        bottom: 16px;
+        right: 16px;
     }
 
+    /* Make popup full screen on mobile */
     .chat-popup {
         width: 100vw;
         height: 100vh;
         max-height: 100vh;
         bottom: 0;
         right: 0;
+        left: 0;
+        top: 0;
         border-radius: 0;
         transform: translateY(100%);
     }
 
     .chat-popup.open {
         transform: translateY(0);
+        position: fixed;
     }
 
     /* Hide launcher when chat is open on mobile */
@@ -571,16 +575,32 @@ body {
         display: none;
     }
 
+    /* Adjust launcher button size and position */
     .chat-launcher {
-        bottom: 20px;
-        right: 20px;
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
         width: 56px;
         height: 56px;
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .chat-header {
         padding: 16px 18px;
+    }
+
+    .bot-avatar-small {
+        width: 40px;
+        height: 40px;
+        font-size: 13px;
+    }
+
+    .header-info h3 {
+        font-size: 16px;
+    }
+
+    .status-line {
+        font-size: 11px;
     }
 
     .welcome-logo {
@@ -596,14 +616,57 @@ body {
     }
 
     .message-content {
-        max-width: 80%;
+        max-width: 82%;
         font-size: 13px;
+        padding: 10px 14px;
+    }
+
+    .message-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .chat-input {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    .send-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
 }
 
+/* Tablet and Medium Mobile (481px to 768px) */
 @media (max-width: 768px) and (min-width: 481px) {
+    .chat-widget-container {
+        bottom: 18px;
+        right: 18px;
+    }
+
+    .chat-launcher {
+        position: fixed;
+        width: 58px;
+        height: 58px;
+        font-size: 24px;
+    }
+
     .chat-popup {
-        width: 360px;
-        height: 600px;
+        width: 90vw;
+        max-width: 380px;
+        height: 85vh;
+        max-height: 650px;
+        bottom: 88px;
+        right: 18px;
+    }
+}
+
+/* Larger Tablets (769px to 992px) */
+@media (max-width: 992px) and (min-width: 769px) {
+    .chat-popup {
+        width: 380px;
+        height: 650px;
     }
 }
