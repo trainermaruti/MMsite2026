@@ -70,12 +70,14 @@ The SkillTech AI Navigator chatbot has been successfully integrated into your we
 ## Configuration
 
 ### Gemini API Key
-The API key is configured in `appsettings.json`:
-```json
-"Gemini": {
-  "ApiKey": "AIzaSyAinnrbpvu0xGXJGEB-ftVB5LAEB0Cyk1g"
-}
+
+**IMPORTANT:** The API key is now stored in User Secrets for security.
+
+To set up locally, run:
+```bash
+dotnet user-secrets set "Gemini:ApiKey" "YOUR_API_KEY_HERE"
 ```
+
 
 ### Data Files
 - Course catalog: `/wwwroot/data/full_course_catalog.json`
