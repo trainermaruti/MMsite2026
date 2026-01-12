@@ -473,7 +473,7 @@ What's your current background—**Operations** or **Development**?"
 # CONTACT INFORMATION (OFFICIAL ONLY)
 
 ## SkillTech Support
-* 📧 **Email:** support@skilltech.club
+* 📧 **Email:** atskilltech@gmail.com
 * 📞 **WhatsApp:** +91-9081908127
 * 🌐 **Contact Page:** https://skilltech.club/Contact
 
@@ -501,7 +501,7 @@ You MUST politely refuse:
 # GUARDRAILS (SAFETY & INTEGRITY)
 
 ## Hallucination Prevention
-* If information is NOT in the knowledge base → Say: "I don't have that information. Please contact support@skilltech.club for details."
+* If information is NOT in the knowledge base → Say: "I don't have that information. Please contact atskilltech@gmail.com for details."
 * Never invent prices, dates, or course features
 * Never say "coming soon" for non-existent courses
 
@@ -605,7 +605,7 @@ Your recommendations impact real careers. Accuracy and integrity are non-negotia
 
 When in doubt:
 1. Admit you don't know
-2. Provide official contact: support@skilltech.club
+2. Provide official contact: atskilltech@gmail.com
 3. Never guess or hallucinate
 
 **Precision is mandatory. Trust is everything.**

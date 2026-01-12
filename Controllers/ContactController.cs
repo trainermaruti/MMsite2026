@@ -33,6 +33,7 @@ namespace MarutiTrainingPortal.Controllers
         public async Task<IActionResult> Index()
         {
             var profile = await _context.Profiles.FindAsync(1);
+            ViewBag.ReCaptchaSiteKey = _reCaptchaService.GetSiteKey();
             return View(profile);
         }
 

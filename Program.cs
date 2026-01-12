@@ -6,6 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// IMPORTANT: Load user secrets even in Production for local development
+// User secrets are stored securely on your local machine, not in the repo
+if (builder.Environment.IsDevelopment() || builder.Environment.IsProduction())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
 // Ensure static web assets are enabled even in Production mode locally
 // This fixes the 404 error for MarutiTrainingPortal.styles.css when running locally in Production environment
 builder.WebHost.UseStaticWebAssets();

@@ -27,13 +27,14 @@ namespace MarutiTrainingPortal.Services
         {
             try
             {
-                var apiKey = _configuration["Gemini:ApiKey"];
+                // Try environment variable first (for deployment), then appsettings
+                var apiKey = Environment.GetEnvironmentVariable("GEMINI_API") ?? _configuration["Gemini:ApiKey"];
                 if (string.IsNullOrEmpty(apiKey))
                 {
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "I'm currently not available. 😊 Our team is working on this!\n\n**Please reach out directly for help:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** support@skilltech.club"
+                        ErrorMessage = "I'm currently not available. 😊 Our team is working on this!\n\n**Please reach out directly for help:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** atskilltech@gmail.com"
                     };
                 }
 
@@ -55,27 +56,19 @@ namespace MarutiTrainingPortal.Services
                     };
                 }
 
-                // Build conversation contents with system prompt and catalog
+                // Build conversation contents
+                // Use Gemini's systemInstruction parameter to avoid repeating the prompt
                 var catalogContext = _courseService.GetCatalogContext();
                 var fullSystemPrompt = _systemPrompt + "\n\n" + catalogContext;
                 
-                var contents = new List<object>
-                {
-                    new
-                    {
-                        role = "user",
-                        parts = new[] { new { text = fullSystemPrompt } }
-                    },
-                    new
-                    {
-                        role = "model",
-                        parts = new[] { new { text = "Understood. I am SkillTech Navigator, the official AI career guide for SkillTech Club and Maruti Makwana. I'm ready to help with Microsoft Azure and AI certification guidance, following all formatting rules and conversation flows. I have access to the complete course catalog and knowledge base." } }
-                    }
-                };
+                _logger.LogInformation("System prompt length: {Length} characters", fullSystemPrompt.Length);
+                
+                var contents = new List<object>();
 
                 // Add conversation history if provided
                 if (request.History != null && request.History.Any())
                 {
+                    _logger.LogInformation("Adding {Count} history messages", request.History.Count);
                     foreach (var msg in request.History)
                     {
                         contents.Add(new
@@ -96,6 +89,10 @@ namespace MarutiTrainingPortal.Services
                 var requestBody = new
                 {
                     contents = contents,
+                    systemInstruction = new
+                    {
+                        parts = new[] { new { text = fullSystemPrompt } }
+                    },
                     generationConfig = new
                     {
                         temperature = 0.7,
@@ -126,14 +123,14 @@ namespace MarutiTrainingPortal.Services
                         return new ChatResponse
                         {
                             Success = false,
-                            ErrorMessage = "I'm getting quite a workout today! 😅 Please wait a moment and try again.\n\n**If you need direct help, you can reach us at:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** support@skilltech.club"
+                            ErrorMessage = "I'm getting quite a workout today! 😅 Please wait a moment and try again.\n\n**If you need direct help, you can reach us at:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** atskilltech@gmail.com"
                         };
                     }
                     
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "I'm experiencing high demand right now. Please wait a few seconds and ask me again! 🙏\n\n**If you need direct help, you can reach us at:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** support@skilltech.club"
+                        ErrorMessage = "I'm experiencing high demand right now. Please wait a few seconds and ask me again! 🙏\n\n**If you need direct help, you can reach us at:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** atskilltech@gmail.com"
                     };
                 }
 
@@ -146,7 +143,7 @@ namespace MarutiTrainingPortal.Services
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** support@skilltech.club"
+                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n📱 **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** atskilltech@gmail.com"
                     };
                 }
 
@@ -157,7 +154,7 @@ namespace MarutiTrainingPortal.Services
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** support@skilltech.club"
+                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** atskilltech@gmail.com"
                     };
                 }
 
@@ -168,7 +165,7 @@ namespace MarutiTrainingPortal.Services
                     return new ChatResponse
                     {
                         Success = false,
-                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** support@skilltech.club"
+                        ErrorMessage = "I'm having trouble processing that right now. Please try asking your question again in a moment! 🤔\n\n**If you need direct help, you can reach us at:**\n\n **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** atskilltech@gmail.com"
                     };
                 }
 
@@ -185,7 +182,7 @@ namespace MarutiTrainingPortal.Services
                 return new ChatResponse
                 {
                     Success = false,
-                    ErrorMessage = "Oops! Something went wrong on my end. 😊\n\n**If you need direct help, you can reach us at:**\n\n **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** support@skilltech.club"
+                    ErrorMessage = "Oops! Something went wrong on my end. 😊\n\n**If you need direct help, you can reach us at:**\n\n **WhatsApp:** [+91 90819 08127](https://api.whatsapp.com/send?phone=%2B919081908127&text=Hi%2C%20I%20have%20a%20query%20regarding%20your%20learning%20community.)\n\n📧 **Email:** atskilltech@gmail.com"
                 };
             }
         }

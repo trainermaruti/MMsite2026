@@ -62,4 +62,8 @@ jobs:
           app-name: 'mmsite2026'
           slot-name: 'Production'
           package: .
+        env:
+          SmtpSettings__Password: ${{ secrets.SMTP_PASSWORD }}
+          Gemini__ApiKey: ${{ secrets.GEMINI_API_KEY }}
+          ReCaptcha__SecretKey: ${{ secrets.RECAPTCHA_SECRET_KEY }}
           

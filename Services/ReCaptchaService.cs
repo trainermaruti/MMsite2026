@@ -7,15 +7,27 @@ namespace MarutiTrainingPortal.Services
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         private readonly string _secretKey;
+        private readonly string _siteKey;
         private readonly string _verifyUrl;
 
         public ReCaptchaService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-            _secretKey = _configuration["ReCaptcha:SecretKey"] ?? throw new InvalidOperationException("ReCaptcha SecretKey not configured");
+            
+            // Try environment variables first (for deployment), then appsettings
+            _secretKey = Environment.GetEnvironmentVariable("RECAPTCHA_SECRET") 
+                        ?? _configuration["ReCaptcha:SecretKey"] 
+                        ?? throw new InvalidOperationException("ReCaptcha SecretKey not configured");
+            
+            _siteKey = Environment.GetEnvironmentVariable("RECAPTCHA_SITEKEY") 
+                      ?? _configuration["ReCaptcha:SiteKey"] 
+                      ?? throw new InvalidOperationException("ReCaptcha SiteKey not configured");
+            
             _verifyUrl = _configuration["ReCaptcha:VerifyUrl"] ?? "https://www.google.com/recaptcha/api/siteverify";
         }
+
+        public string GetSiteKey() => _siteKey;
 
         public async Task<(bool IsValid, string ErrorMessage)> VerifyAsync(string responseToken, string? remoteIp = null)
         {

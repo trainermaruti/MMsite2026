@@ -1,84 +1,159 @@
-# Gemini API Key Setup Guide
+# API Keys and Secrets Setup Guide
 
 ## Security Notice
-⚠️ **The Gemini API key is now secured using .NET User Secrets**
-
-Your API key is stored securely outside the project directory and will NOT be committed to Git.
-
-## For Developers Setting Up Locally
-
-### Main Project (MarutiTrainingPortal)
-```powershell
-cd c:\Users\Skill\Desktop\MMsite2026-1
-dotnet user-secrets set "Gemini:ApiKey" "YOUR_API_KEY_HERE"
-```
-
-### SkilltechBot Project
-```powershell
-cd c:\Users\Skill\Desktop\MMsite2026-1\skilltechBot
-dotnet user-secrets set "Gemini:ApiKey" "YOUR_API_KEY_HERE"
-```
-
-## Verification
-
-To verify your secrets are set correctly:
-
-```powershell
-# For main project
-cd c:\Users\Skill\Desktop\MMsite2026-1
-dotnet user-secrets list
-
-# For skilltechBot
-cd c:\Users\Skill\Desktop\MMsite2026-1\skilltechBot
-dotnet user-secrets list
-```
-
-You should see:
-```
-Gemini:ApiKey = YOUR_API_KEY_HERE
-```
-
-## For Production Deployment
-
-For Azure deployment, use Azure App Service Configuration:
-
-1. Go to Azure Portal → Your App Service
-2. Navigate to **Configuration** → **Application settings**
-3. Add new setting:
-   - **Name**: `Gemini:ApiKey`
-   - **Value**: Your actual Gemini API key
-4. Save changes and restart the app
-
-## How It Works
-
-- In **development**: The app reads the API key from User Secrets
-- In **production**: The app reads from Azure App Service Configuration or environment variables
-- User Secrets are stored at: `%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json`
-- This file is NOT part of your project and will never be committed to Git
-
-## Getting a Gemini API Key
-
-1. Visit [Google AI Studio](https://aistudio.google.com/apikey)
-2. Sign in with your Google account
-3. Click "Get API Key" or "Create API Key"
-4. Copy the generated key
-5. Store it using the commands above
-
-## Good Security Practices
-
-✅ **DO:**
-- Use User Secrets for local development
-- Use Azure App Service Configuration for production
-- Keep your API key private
-- Rotate your API key periodically
-
-❌ **DON'T:**
-- Commit API keys in appsettings.json
-- Share your API key in chat, email, or documentation
-- Push API keys to Git repositories
-- Store API keys in source code comments
+**NEVER** commit API keys or secrets to version control. All sensitive configuration should be stored as environment variables:
+- `GEMINI_API` - Gemini AI API key
+- `RECAPTCHA_SITEKEY` - ReCaptcha site key  
+- `RECAPTCHA_SECRET` - ReCaptcha secret key
 
 ---
 
-**Status**: ✅ Your API key is now secure!
-**Last Updated**: January 8, 2026
+
+## Setup Instructions
+
+### For Local Development (Windows PowerShell)
+
+**Option 1: Set for current session only**
+```powershell
+$env:GEMINI_API = "YOUR_GEMINI_API_KEY"
+$env:RECAPTCHA_SITEKEY = "YOUR_RECAPTCHA_SITE_KEY"
+$env:RECAPTCHA_SECRET = "YOUR_RECAPTCHA_SECRET_KEY"
+```
+
+**Option 2: Set permanently (User level - RECOMMENDED)**
+```powershell
+[System.Environment]::SetEnvironmentVariable('GEMINI_API', 'YOUR_GEMINI_API_KEY', 'User')
+[System.Environment]::SetEnvironmentVariable('RECAPTCHA_SITEKEY', 'YOUR_RECAPTCHA_SITE_KEY', 'User')
+[System.Environment]::SetEnvironmentVariable('RECAPTCHA_SECRET', 'YOUR_RECAPTCHA_SECRET_KEY', 'User')
+```
+
+**Option 3: Set permanently (System level - requires admin)**
+```powershell
+[System.Environment]::SetEnvironmentVariable('GEMINI_API', 'YOUR_GEMINI_API_KEY', 'Machine')
+[System.Environment]::SetEnvironmentVariable('RECAPTCHA_SITEKEY', 'YOUR_RECAPTCHA_SITE_KEY', 'Machine')
+[System.Environment]::SetEnvironmentVariable('RECAPTCHA_SECRET', 'YOUR_RECAPTCHA_SECRET_KEY', 'Machine')
+```
+
+After setting permanently, **restart your terminal/IDE** for changes to take effect.
+
+---
+
+
+### For Azure App Service Deployment
+
+1. Go to Azure Portal → Your App Service
+2. Navigate to **Settings** → **Configuration**
+3. Under **Application settings**, click **+ New application setting**
+4. Add all three secrets:
+   - **Name**: `GEMINI_API` | **Value**: Your Gemini API key
+   - **Name**: `RECAPTCHA_SITEKEY` | **Value**: Your ReCaptcha site key
+   - **Name**: `RECAPTCHA_SECRET` | **Value**: Your ReCaptcha secret key
+5. Click **OK** for each, then **Save**
+6. **Restart** your App Service
+
+---
+
+### For Docker Deployment
+
+**In docker-compose.yml:**
+```yaml
+services:
+  webapp:
+    environment:
+      - GEMINI_API=${GEMINI_API}
+```
+
+**Or pass directly:**
+```bash
+docker run -e GEMINI_API="YOUR_API_KEY_HERE" your-image
+```
+
+---
+
+### For Other Cloud Providers
+
+**AWS Elastic Beanstalk:**
+- Configuration → Software → Environment properties
+- Add: `GEMINI_API` = your key
+
+**Google Cloud Run:**
+```bash
+gcloud run services update SERVICE_NAME \
+  --set-env-vars GEMINI_API="YOUR_API_KEY_HERE"
+```
+
+**Heroku:**
+```bash
+heroku config:set GEMINI_API="YOUR_API_KEY_HERE"
+```
+
+---
+
+## Verification
+
+To verify the environment variables are set:
+
+**PowerShell:**
+```powershell
+$env:GEMINI_API
+$env:RECAPTCHA_SITEKEY
+$env:RECAPTCHA_SECRET
+```
+
+**CMD:**
+```cmd
+echo %GEMINI_API%
+echo %RECAPTCHA_SITEKEY%
+echo %RECAPTCHA_SECRET%
+```
+
+**Linux/Mac:**
+```bash
+echo $GEMINI_API
+echo $RECAPTCHA_SITEKEY
+echo $RECAPTCHA_SECRET
+```
+
+---
+
+## How It Works
+
+The application checks for the API key in this order:
+1. **Environment variable** `GEMINI_API` (preferred for production)
+2. **appsettings.json** `Gemini:ApiKey` (fallback for development)
+
+Code implementation in `GeminiService.cs`:
+```csharp
+var apiKey = Environment.GetEnvironmentVariable("GEMINI_API") ?? _configuration["Gemini:ApiKey"];
+```
+
+---
+
+## Security Best Practices
+
+✅ **DO:**
+- Use environment variables for production
+- Store keys in Azure Key Vault or similar secret management systems
+- Keep `appsettings.json` with empty ApiKey in source control
+- Use `appsettings.Development.json` for local development (gitignored)
+
+❌ **DON'T:**
+- Hardcode API keys in source code
+- Commit API keys to Git repositories
+- Share API keys in team chats or emails
+- Use production keys in development environments
+
+---
+
+## Troubleshooting
+
+**Bot shows "I'm currently not available" error:**
+- Verify environment variable is set: `$env:GEMINI_API`
+- Restart your application after setting the variable
+- Check Azure App Service configuration if deployed
+- Verify the API key is valid at https://aistudio.google.com/app/apikey
+
+**Environment variable not working:**
+- Restart your terminal/IDE after setting
+- Check spelling: `GEMINI_API` (case-sensitive on Linux/Mac)
+- For system-level changes, you may need to restart Windows

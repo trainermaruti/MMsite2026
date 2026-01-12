@@ -27,7 +27,8 @@ namespace SkillTechNavigator.Services
         {
             try
             {
-                var apiKey = _configuration["Gemini:ApiKey"];
+                // Try environment variable first (for deployment), then appsettings
+                var apiKey = Environment.GetEnvironmentVariable("GEMINI_API") ?? _configuration["Gemini:ApiKey"];
                 if (string.IsNullOrEmpty(apiKey))
                 {
                     return new ChatResponse
