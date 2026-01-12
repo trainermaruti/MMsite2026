@@ -38,6 +38,18 @@ namespace MarutiTrainingPortal.Services
                     };
                 }
 
+                // Check conversation message count (user messages only)
+                var userMessageCount = (request.History?.Count(m => m.Role == "user") ?? 0) + 1; // +1 for current message
+                if (userMessageCount > 5)
+                {
+                    return new ChatResponse
+                    {
+                        Reply = "Thank you for chatting with me! 😊\n\nI hope I've been helpful so far.\n\nFor personalized guidance, detailed discussions, or next steps specific to your career, it's best to connect directly with our team:\n\n📧 **Email:** atskilltech@gmail.com\n📱 **WhatsApp:** +91 90819 08127\n\nThey'll be able to assist you further.",
+                        Success = true,
+                        Goal = "Message Limit Reached"
+                    };
+                }
+
                 // Detect if this is a first message (greeting)
                 var isFirstMessage = IsGreeting(request.Message) || 
                                    (request.History == null || !request.History.Any());

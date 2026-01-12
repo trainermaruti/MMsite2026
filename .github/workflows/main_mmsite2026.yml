@@ -26,6 +26,11 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Inject secrets into web.config
+        run: |
+          (Get-Content web.config) -replace 'YOUR_GEMINI_API_KEY_HERE', '${{ secrets.GEMINI_API }}' | Set-Content web.config
+        shell: pwsh
+
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 

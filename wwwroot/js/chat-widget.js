@@ -147,7 +147,7 @@ async function sendMessage() {
         hideTypingIndicator();
 
         if (data.success) {
-            addMessage(data.reply, 'bot', data.goal);
+            addMessage(data.reply, 'bot');
         } else {
             addMessage(data.errorMessage || 'Sorry, I encountered an error. Please try again.', 'bot');
         }
@@ -190,13 +190,6 @@ function addMessage(content, role, goal = null) {
     // Use formatText to convert markdown to HTML
     textDiv.innerHTML = formatText(content);
     contentDiv.appendChild(textDiv);
-
-    if (goal && role === 'bot') {
-        const goalBadge = document.createElement('div');
-        goalBadge.className = 'goal-badge';
-        goalBadge.textContent = `${goal}`;
-        contentDiv.appendChild(goalBadge);
-    }
 
     const timeDiv = document.createElement('div');
     timeDiv.className = 'message-time';
